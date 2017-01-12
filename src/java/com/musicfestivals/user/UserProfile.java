@@ -15,24 +15,20 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author marija
- */
 @Entity
 @Table(name = "user_profile")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "UserProfile.control", query = "SELECT u FROM UserProfile u where u.username = :username AND u.password = :password")
-    , @NamedQuery(name = "UserProfile.findAll", query = "SELECT u FROM UserProfile u")
+    @NamedQuery(name = "UserProfile.findAll", query = "SELECT u FROM UserProfile u")
+    , @NamedQuery(name = "UserProfile.control", query = "SELECT u FROM UserProfile u WHERE u.username = :username AND u.password=:password")
     , @NamedQuery(name = "UserProfile.findById", query = "SELECT u FROM UserProfile u WHERE u.id = :id")
     , @NamedQuery(name = "UserProfile.findByFirstName", query = "SELECT u FROM UserProfile u WHERE u.firstName = :firstName")
     , @NamedQuery(name = "UserProfile.findByLastName", query = "SELECT u FROM UserProfile u WHERE u.lastName = :lastName")
     , @NamedQuery(name = "UserProfile.findByUsername", query = "SELECT u FROM UserProfile u WHERE u.username = :username")
-    , @NamedQuery(name = "UserProfile.findByKind", query = "SELECT u FROM UserProfile u WHERE u.kind = :kind")
-    , @NamedQuery(name = "UserProfile.findByPassword", query = "SELECT u FROM UserProfile u WHERE u.password = :password")})
+    , @NamedQuery(name = "UserProfile.findByPassword", query = "SELECT u FROM UserProfile u WHERE u.password = :password")
+    , @NamedQuery(name = "UserProfile.findByPhone", query = "SELECT u FROM UserProfile u WHERE u.phone = :phone")
+    , @NamedQuery(name = "UserProfile.findByEmail", query = "SELECT u FROM UserProfile u WHERE u.email = :email")
+    , @NamedQuery(name = "UserProfile.findByKind", query = "SELECT u FROM UserProfile u WHERE u.kind = :kind")})
 public class UserProfile implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,22 +43,20 @@ public class UserProfile implements Serializable {
     private String lastName;
     @Column(name = "username")
     private String username;
-    @Column(name = "kind")
-    private Short kind;
-    @Basic(optional = false)
     @Column(name = "password")
     private String password;
+    @Column(name = "phone")
+    private String phone;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "kind")
+    private Short kind;
 
     public UserProfile() {
     }
 
     public UserProfile(Long id) {
         this.id = id;
-    }
-
-    public UserProfile(Long id, String password) {
-        this.id = id;
-        this.password = password;
     }
 
     public Long getId() {
@@ -97,20 +91,36 @@ public class UserProfile implements Serializable {
         this.username = username;
     }
 
-    public Short getKind() {
-        return kind;
-    }
-
-    public void setKind(Short kind) {
-        this.kind = kind;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Short getKind() {
+        return kind;
+    }
+
+    public void setKind(Short kind) {
+        this.kind = kind;
     }
 
     @Override
@@ -137,5 +147,5 @@ public class UserProfile implements Serializable {
     public String toString() {
         return "com.musicfestivals.user.UserProfile[ id=" + id + " ]";
     }
-    
+
 }
