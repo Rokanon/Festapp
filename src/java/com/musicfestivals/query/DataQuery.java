@@ -5,6 +5,7 @@
  */
 package com.musicfestivals.query;
 
+import com.musicfestivals.app.AuthorizationBean;
 import com.musicfestivals.user.UserProfile;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,7 +25,14 @@ public class DataQuery {
     public boolean loginControl(String username, String password) {
         try {
             UserProfile up = em.createNamedQuery("UserProfile.control", UserProfile.class).setParameter("username", username).setParameter("password", password).getSingleResult();
-            return up != null;
+            AuthorizationBean authorization = new AuthorizationBean();
+            if (up != null) {
+                authorization.setUser(up);
+                return true;
+            } else {
+                authorization.getUser().setKind((short) -1);
+                return false;
+            }
 
         } catch (Exception e) {
             return false;

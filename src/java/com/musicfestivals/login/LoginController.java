@@ -15,7 +15,8 @@ public class LoginController implements Serializable {
     private String password;
     private final DataQuery query = new DataQuery();
     public final String loginControl(){
-        // TODO: hash password before continue
+        System.out.println("Login control invoked!");
+        // TODO: hash password before continue, do this in RegistrationController also
         if (query.loginControl(username, password)){
             return "home.xhtml?faces-redirect=true";
         }

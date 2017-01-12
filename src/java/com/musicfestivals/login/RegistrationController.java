@@ -24,10 +24,10 @@ public class RegistrationController implements Serializable {
     private String password;
     private String passwordRepeated; // TODO: in passValidation check if match
     private final DataQuery query = new DataQuery();
-    private final StringBuilder errorsSB = new StringBuilder("");
+    private StringBuilder errorsSB;
 
     public final String registrationControl() {
-
+        errorsSB = new StringBuilder("");
         if (validateUser()) {
             UserProfile user = new UserProfile();
             user.setEmail(email);
@@ -44,6 +44,10 @@ public class RegistrationController implements Serializable {
             RequestContext.getCurrentInstance().update("growl");
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes", "Registration succesfull!"));
+            LoginController lc = new LoginController();
+            lc.setPassword(password);
+            lc.setUsername(username);
+            lc.loginControl();
             return "home.xhtml?faces-redirect=true";
         } else {
             RequestContext.getCurrentInstance().update("growl");
