@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-
 public class DataQuery {
 
     EntityManagerFactory emf;
@@ -32,4 +31,23 @@ public class DataQuery {
         }
     }
 
+    public boolean registrationUsernameControl(String username) {
+        try {
+            UserProfile up = em.createNamedQuery("UserProfile.findByUsername", UserProfile.class).setParameter("username", username).getSingleResult();
+            if (up == null) {
+                System.out.println("\nUsername doesnt exists");
+                return false;
+            } else {
+                System.out.println("\nUsername exists");
+                return true;
+            }
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public EntityManager getEntityManager() {
+        return this.em;
+    }
 }

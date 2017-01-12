@@ -5,12 +5,86 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>TODO supply a title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Registration</title>
+    </h:head>
+    <h:body>
+        <p:growl id="growl" sticky="true" showDetail="true"/>
+        <h:form>
+            <p:panelGrid columns="2">
+                <f:facet name="header">Registration:</f:facet>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="First name:" />    
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{registration.firstName}"/>
+                    </p:column>                   
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Last name:" />
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{registration.lastName}"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Last name:" />
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{registration.lastName}"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Username:" />
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{registration.username}"/>
+                    </p:column>
+                </p:row>
+                <p:row>        
+                    <p:column>
+                        <h:outputText value="Password:" />
+                    </p:column>
+                    <p:column>
+                        <p:password value="#{registration.password}" />
+                    </p:column>                    
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Repeat password:" />
+                    </p:column>
+                    <p:column>
+                        <p:password value="#{registration.passwordRepeated}" />
+                    </p:column>     
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Contact Phone:" />
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{registration.phone}"/>
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Email:" />
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{registration.email}"/>
+                    </p:column>
+                </p:row>
+                <f:facet name="footer">
+                    <p:commandButton value="Register" action="#{registration.registrationControl}"/>
+                </f:facet> 
+            </p:panelGrid>
+        </h:form>
+    </h:body>
 </html>

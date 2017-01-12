@@ -15,12 +15,12 @@ public class LoginController implements Serializable {
     private String password;
     private final DataQuery query = new DataQuery();
     public final String loginControl(){
+        // TODO: hash password before continue
         if (query.loginControl(username, password)){
             return "home.xhtml?faces-redirect=true";
         }
         RequestContext.getCurrentInstance().update("growl");
         FacesContext fc = FacesContext.getCurrentInstance();
-        // TODO: check if pass or user or both invalid and add it to faces message
         fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Username or password invalid"));
         return "";
     }
