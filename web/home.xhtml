@@ -13,15 +13,18 @@ xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
         </style>
     </h:head>
  <h:body>
-     <h3> Music Festivals Home </h3>
-     <c:if test="#{appAuthorization.admin}">
+     <h3> Music Festivals Home </h3> 
+     <h:form>
+        <p:commandButton value="Logout" action="#{login.logoutControl}"/> 
+     </h:form>
+     <c:if test="#{appAuthorization.admin}"> 
          <p:outputLabel value="Welcome admin" style="background-color: #bedbed"/>
      </c:if>
      <c:if test="#{appAuthorization.member}">
-         <p:outputLabel value="Welcome #{appAuthorization.user.username}" style="background-color: #bedbed"/>
+         <p:outputLabel value="Welcome #{appAuthorization.userName}" style="background-color: #bedbed"/>
      </c:if>
      <c:if test="#{appAuthorization.anonymous}">
-         <p:outputLabel value="Why so anonymous?" style="background-color: #bedbed"/>
+         <p:outputLabel value="Why so guest?" style="background-color: #bedbed"/>
      </c:if>
  </h:body>
 </html>

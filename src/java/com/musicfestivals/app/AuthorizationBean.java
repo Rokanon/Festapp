@@ -9,28 +9,33 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class AuthorizationBean implements Serializable {
     
-    private UserProfile user;
+    private static UserProfile loggedInUser;
 
-    public UserProfile getUser() {
-        if (user == null) {
-            user = new UserProfile();
-            user.setKind((short)-1);
-        }
-        return user;
-    }
-
-    public void setUser(UserProfile user) {
-        this.user = user;
-    }
-    
     public boolean isAdmin(){
-        return getUser().getKind() == 1;
+        return getLoggedInUser().getKind() == 1;
     }
     
     public boolean isMember() {
-        return getUser().getKind() == 0;
+        return getLoggedInUser().getKind() == 0;
     }
     public boolean isAnonymous() {
-        return getUser().getKind() == -1;
+        return getLoggedInUser().getKind() == -1;
+    }
+
+    public static UserProfile getLoggedInUser() {
+        if (loggedInUser == null) {
+            loggedInUser = new UserProfile(); 
+            System.out.println("Logged user = null");
+        }
+        return loggedInUser;
+    }
+
+    public static void setLoggedInUser(UserProfile aLoggedInUser) {
+        System.out.println("set logged user, loged user kind is; " + aLoggedInUser.getKind());
+        loggedInUser = aLoggedInUser;
+    }
+    
+    public String getUserName() {
+        return getLoggedInUser().getUsername();
     }
 }

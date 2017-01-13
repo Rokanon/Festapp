@@ -25,12 +25,12 @@ public class DataQuery {
     public boolean loginControl(String username, String password) {
         try {
             UserProfile up = em.createNamedQuery("UserProfile.control", UserProfile.class).setParameter("username", username).setParameter("password", password).getSingleResult();
-            AuthorizationBean authorization = new AuthorizationBean();
             if (up != null) {
-                authorization.setUser(up);
+                System.out.println("UP NOT NULL, kind=" + up.getKind());
+                AuthorizationBean.setLoggedInUser(up);
                 return true;
             } else {
-                authorization.getUser().setKind((short) -1);
+                AuthorizationBean.getLoggedInUser().setKind((short) -1);
                 return false;
             }
 

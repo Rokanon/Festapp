@@ -53,6 +53,14 @@ public class UserProfile implements Serializable {
     private Short kind;
 
     public UserProfile() {
+        firstName = "";
+        lastName = "";
+        username = "";
+        password = "";
+        phone = "";
+        email = "";
+        id = 0l;
+        kind = -1;
     }
 
     public UserProfile(Long id) {
