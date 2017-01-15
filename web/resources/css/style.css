@@ -1,0 +1,20 @@
+.logoutButton{
+    position: absolute;
+    top: 8px;
+    right: 16px;
+    font-size: 18px;
+}
+.loggedUser {
+    position: absolute;
+    top: 19px;
+    right: 135px;
+    font-size: 18px;
+}
+
+.navMenu {
+    width: 100%;
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    border-right: none;
+    font-size: 25px;
+}

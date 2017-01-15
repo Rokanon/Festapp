@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_profile")
 @NamedQueries({
-    @NamedQuery(name = "UserProfile.findAll", query = "SELECT u FROM UserProfile u")
+      @NamedQuery(name = "UserProfile.findAll", query = "SELECT u FROM UserProfile u")
     , @NamedQuery(name = "UserProfile.control", query = "SELECT u FROM UserProfile u WHERE u.username = :username AND u.password=:password")
     , @NamedQuery(name = "UserProfile.findById", query = "SELECT u FROM UserProfile u WHERE u.id = :id")
     , @NamedQuery(name = "UserProfile.findByFirstName", query = "SELECT u FROM UserProfile u WHERE u.firstName = :firstName")
@@ -154,6 +154,19 @@ public class UserProfile implements Serializable {
     @Override
     public String toString() {
         return "com.musicfestivals.user.UserProfile[ id=" + id + " ]";
+    }
+    
+    public String getKindToString(){
+        if (null == getKind()) {
+            return "Unknown";
+        } else switch (getKind()) {
+            case 1:
+                return "Admin";
+            case 0:
+                return "Member";
+            default:
+                return "Unknown";
+        }
     }
 
 }
