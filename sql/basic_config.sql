@@ -13,3 +13,11 @@ create table user_profile(
     kind tinyint(2) default 0,
     primary key(id)
 );
+create table festival(
+    id bigint(20) not null auto_increment,
+    title varchar(20),
+    genre varchar(20),
+    begin_date timestamp default '2000-01-01 00:00:00',
+    end_date timestamp default '2000-01-01 00:00:00',
+    primary key(id)
+);
