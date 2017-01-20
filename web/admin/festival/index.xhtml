@@ -4,14 +4,57 @@
       xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Festivals</title>
+        <title>Music festivals</title>
         <h:outputStylesheet library="css" name="style.css"  />
     </h:head>
     <h:body>
+        <h3> Music Festivals List </h3> 
         <ui:insert name="header">
             <ui:include src="/templates/header.xhtml" />
         </ui:insert> 
-        <h3> List of users </h3>
+
+        <h:form id="filter">
+            <h:panelGrid columns="5" cellpadding="5">
+                <p:outputLabel value="Title"/>
+                <p:outputLabel for="from" value="From"/>
+                <p:outputLabel for="to" value="To"/>
+                <p:outputLabel value="Pleace"/>
+                <p:outputLabel value="Artist"/>
+
+                <p:inputText placeholder="title" value="#{festivalList.filter.title}"/>
+                <p:calendar id="from" placeholder="from" value="#{festivalList.filter.begin_date}"/>
+                <p:calendar id="to" placeholder="to" value="#{festivalList.filter.end_date}"/>
+                <p:inputText placeholder="place" value="#{festivalList.filter.place}"/>
+                <p:inputText placeholder="artist" value="#{festivalList.filter.artist}"/>
+            </h:panelGrid>
+            <p:commandButton value="Search" action="#{festivalList.setFilterSet(true)}">
+                <f:ajax render="table"/>
+            </p:commandButton>
+        </h:form>
+
+        <f:view>
+            <p:dataTable var="festival" value="#{festivalList.fest}" id="table">
+                <p:column headerText="Title">
+                    <h:outputText value="#{festival.title}" />
+                </p:column>
+                <p:column headerText="Genre">
+                    <h:outputText value="#{festival.genre}" />
+                </p:column>
+                <p:column headerText="Begin date">
+                    <h:outputText value="#{festival.beginDate}" >
+                        <f:convertDateTime pattern="dd.MM.yy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="End date">
+                    <h:outputText value="#{festival.endDate}" >
+                        <f:convertDateTime pattern="dd.MM.yy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="">
+                    <p:button href="form.xhtml" title="Apply" value="Apply"/>
+                </p:column>
+            </p:dataTable>
+        </f:view>
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 

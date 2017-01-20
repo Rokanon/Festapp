@@ -13,7 +13,7 @@ create table user_profile(
     kind tinyint(2) default 0,
     primary key(id)
 );
-alter table user_profile add column verified default 0;
+alter table user_profile add column verified tinyint(2) default 0;
 
 create table festival(
     id bigint(20) not null auto_increment,
@@ -23,6 +23,8 @@ create table festival(
     end_date timestamp default '2000-01-01 00:00:00',
     primary key(id)
 );
+alter table festival add column place varchar(20);
+alter table festival add column artist varchar(20);
 
 create table ticket (
     id bigint(20) not null auto_increment,
