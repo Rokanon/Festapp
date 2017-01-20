@@ -25,7 +25,7 @@ public class LoginController implements Serializable {
         }
         RequestContext.getCurrentInstance().update("growl");
         FacesContext fc = FacesContext.getCurrentInstance();
-        fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Username or password invalid"));
+        fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Username or password invalid, or account still not aproved!"));
         return "";
     }
     public final String logoutControl(){

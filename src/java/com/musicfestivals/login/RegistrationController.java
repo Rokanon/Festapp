@@ -43,11 +43,10 @@ public class RegistrationController implements Serializable {
 
             RequestContext.getCurrentInstance().update("growl");
             FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes", "Registration succesfull!"));
+            fc.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes", "Registration succesfull! You have to wait till admin aproves your request to login."));
             LoginController lc = new LoginController();
             lc.setPassword(password);
-            lc.setUsername(username);
-            lc.loginControl();
+            lc.setUsername(username);            
             return "home.xhtml?faces-redirect=true";
         } else {
             RequestContext.getCurrentInstance().update("growl");

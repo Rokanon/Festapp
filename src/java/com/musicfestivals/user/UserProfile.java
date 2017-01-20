@@ -19,8 +19,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_profile")
 @NamedQueries({
-    @NamedQuery(name = "UserProfile.findAll", query = "SELECT u FROM UserProfile u")
-    , @NamedQuery(name = "UserProfile.control", query = "SELECT u FROM UserProfile u WHERE u.username = :username AND u.password=:password")
+    @NamedQuery(name = "UserProfile.findAll", query = "SELECT u FROM UserProfile u order by u.verified ASC")
+    , @NamedQuery(name = "UserProfile.control", query = "SELECT u FROM UserProfile u WHERE u.username = :username AND u.password=:password AND u.verified=1")
     , @NamedQuery(name = "UserProfile.findById", query = "SELECT u FROM UserProfile u WHERE u.id = :id")
     , @NamedQuery(name = "UserProfile.findByFirstName", query = "SELECT u FROM UserProfile u WHERE u.firstName = :firstName")
     , @NamedQuery(name = "UserProfile.findByLastName", query = "SELECT u FROM UserProfile u WHERE u.lastName = :lastName")

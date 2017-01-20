@@ -39,6 +39,16 @@ public class DataQuery {
         }
     }
 
+    public boolean changePasswordControl(String username, String password) {
+        try {
+            UserProfile up = em.createNamedQuery("UserProfile.control", UserProfile.class).setParameter("username", username).setParameter("password", password).getSingleResult();
+            return up != null;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public boolean registrationUsernameControl(String username) {
         try {
             UserProfile up = em.createNamedQuery("UserProfile.findByUsername", UserProfile.class).setParameter("username", username).getSingleResult();

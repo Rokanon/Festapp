@@ -13,7 +13,7 @@
         </ui:insert> 
         <h3> List of users </h3>
         <f:view>
-            <p:dataTable var="user" value="#{userList.userList}" >
+            <p:dataTable id="table" var="user" value="#{userList.userList}" >
                 <p:column headerText="First Name">
                     <h:outputText value="#{user.firstName}" />
                 </p:column>
@@ -21,7 +21,23 @@
                     <h:outputText value="#{user.lastName}" />
                 </p:column>
                 <p:column headerText="Username">
+                    <h:outputText value="#{user.username}" />
+                </p:column>
+                <p:column headerText="Kind">
                     <h:outputText value="#{user.kindToString}" />
+                </p:column>
+                <p:column headerText="Requests">
+                    <h:form>
+                        <h:commandButton value="Accept"  actionListener="#{userList.acceptUser(user.id)}" rendered="#{user.verified == 0}">
+                            <f:ajax render="table"/>
+                        </h:commandButton>
+                        <h:commandButton value="Reject" actionListener="#{userList.rejectUser(user.id)}" rendered="#{user.verified == 0}">
+                            <f:ajax render="table"/>
+                        </h:commandButton>
+                        <h:commandButton value="Remove" actionListener="#{userList.removeUser(user.id)}" rendered="#{user.verified == 1}">
+                            <f:ajax render="table"/>
+                        </h:commandButton>   
+                    </h:form>
                 </p:column>
             </p:dataTable>
         </f:view>

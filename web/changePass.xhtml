@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Change password</title>
+    </h:head>
+    <h:body>
+        <p:growl id="growl" sticky="true" showDetail="true"/>
+        <h:form>
+            <p:panelGrid columns="4">
+                <f:facet name="header">Change password</f:facet>                
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Username:" />
+                    </p:column>
+                    <p:column>
+                        <p:inputText value="#{changePass.username}"/>
+                    </p:column>
+                </p:row>
+                <p:row>        
+                    <p:column>
+                        <h:outputText value="Old assword:" />
+                    </p:column>
+                    <p:column>
+                        <p:password value="#{changePass.password}" />
+                    </p:column>                    
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="New password:" />
+                    </p:column>
+                    <p:column>
+                        <p:password value="#{changePass.newPassword}" />
+                    </p:column>     
+                </p:row>
+                <p:row>
+                    <p:column>
+                        <h:outputText value="Repeat new password:" />
+                    </p:column>
+                    <p:column>
+                        <p:password value="#{changePass.repeatPassword}" />
+                    </p:column>     
+                </p:row>                
+                <f:facet name="footer">
+                    <p:commandButton value="Change" action="#{changePass.changePassword}"/>
+                </f:facet> 
+            </p:panelGrid>
+        </h:form>
+        <script type="text/javascript">
+            
+        </script>
+            
+    </h:body>
+</html>
