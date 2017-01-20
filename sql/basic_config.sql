@@ -13,6 +13,8 @@ create table user_profile(
     kind tinyint(2) default 0,
     primary key(id)
 );
+alter table user_profile add column verified default 0;
+
 create table festival(
     id bigint(20) not null auto_increment,
     title varchar(20),
@@ -21,3 +23,18 @@ create table festival(
     end_date timestamp default '2000-01-01 00:00:00',
     primary key(id)
 );
+
+create table ticket (
+    id bigint(20) not null auto_increment,
+    user_id bigint(20),
+    festival_id bigint(20),
+    primary key(id)
+);
+
+
+
+
+-- inserting data
+
+insert into user_profile(first_name,last_name,username, password, phone, email, kind, verified) VALUES ('Pera', 'Peric', 'pera987', '100j@d1n', '0645555555', 'pera.peric@gmail.com', 0, 0);
+insert into user_profile(first_name,last_name,username, password, phone, email, kind, verified) VALUES ('Mika', 'Peric', 'Mika987', 'mikaperic555', '0645555555', 'mika.peric@gmail.com', 0, 0);
