@@ -2,14 +2,17 @@ package com.musicfestivals.festival;
 
 import com.musicfestivals.query.DataQuery;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.tomcat.util.http.FastHttpDateFormat;
 
 @ManagedBean(name = "festivalList")
 @RequestScoped
@@ -28,22 +31,122 @@ public class FestivalList implements Serializable {
             CriteriaBuilder cb = query.getEntityManager().getCriteriaBuilder();
             CriteriaQuery q = cb.createQuery(Festival.class);
             Root<Festival> c = q.from(Festival.class);
-            q.select(c);
-            ParameterExpression<String> title = cb.parameter(String.class);
-            ParameterExpression<Date> begin_date = cb.parameter(Date.class);
-            ParameterExpression<Date> end_date = cb.parameter(Date.class);
-            ParameterExpression<String> place = cb.parameter(String.class);
-//            ParameterExpression<String> artist = cb.parameter(String.class);
+            String years;
+            String months;
+            String days;
 
-            q.where(
-//                    cb.and(
-                            cb.like(c.get("title"), "%" + filter.getTitle() + "%")
-//                            cb.like(c.get("place"), "%" + filter.getPlace() + "%")
-//                    )
-            );
+            List<Predicate> predicates = new ArrayList<Predicate>();
+            // search by fields, title, dates (both), place and artist
+            if (!"".equals(filter.getTitle())) {
+                predicates.add(
+                        cb.like(c.get("title"), "%" + filter.getTitle() + "%"));
+            }
+            if (filter.getBeginDate() != null) {
+                Date datum = filter.getBeginDate();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(datum);
+                int year = cal.get(Calendar.YEAR);
+                years = "" + year;
+                int month = cal.get(Calendar.MONTH);
+                month = month + 1;
+                if (month / 10 == 0) {
+                    StringBuilder m = new StringBuilder("0");
+                    m.append(month % 10);
+                    months = m.toString();
+                } else {
+                    StringBuilder m = new StringBuilder();
+                    m.append(month);
+                    months = m.toString();
+                }
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                day = day + 1;
+                if (day / 10 == 0) {
+                    StringBuilder m = new StringBuilder("0");
+                    m.append(day % 10);
+                    days = m.toString();
+                } else {
+                    StringBuilder m = new StringBuilder();
+                    m.append(day);
+                    days = m.toString();
+                }
+                predicates.add(
+                        cb.like(c.get("beginDate"), years + "-" + months + "-" + days + "%"));
+            }
+            if (filter.getEndDate() != null) {
+                Date datum = filter.getEndDate();
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(datum);
+                int year = cal.get(Calendar.YEAR);
+                years = "" + year;
+                int month = cal.get(Calendar.MONTH);
+                month = month + 1;
+                if (month / 10 == 0) {
+                    StringBuilder m = new StringBuilder("0");
+                    m.append(month % 10);
+                    months = m.toString();
+                } else {
+                    StringBuilder m = new StringBuilder();
+                    m.append(month);
+                    months = m.toString();
+                }
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+                day = day + 1;
+                if (day / 10 == 0) {
+                    StringBuilder m = new StringBuilder("0");
+                    m.append(day % 10);
+                    days = m.toString();
+                } else {
+                    StringBuilder m = new StringBuilder();
+                    m.append(day);
+                    days = m.toString();
+                }
+                predicates.add(
+                        cb.like(c.get("endDate"), years + "-" + months + "-" + days + "%"));
+            }
+            if (!"".equals(filter.getPlace())) {
+                predicates.add(
+                        cb.like(c.get("place"), "%" + filter.getPlace() + "%"));
+            }
+            if (!"".equals(filter.getArtist())) {
+                predicates.add(
+                        cb.like(c.get("artist"), "%" + filter.getArtist() + "%"));
+            }
+//            if (predicates == null) {
+//                Date datum = new Date(System.currentTimeMillis());
+//                Calendar cal = Calendar.getInstance();
+//                int year = cal.get(Calendar.YEAR);
+//                years = "" + year;
+//                int month = cal.get(Calendar.MONTH);
+//                month = month + 1;
+//                if (month / 10 == 0) {
+//                    StringBuilder m = new StringBuilder("0");
+//                    m.append(month % 10);
+//                    months = m.toString();
+//                } else {
+//                    StringBuilder m = new StringBuilder();
+//                    m.append(month);
+//                    months = m.toString();
+//                }
+//                int day = cal.get(Calendar.DAY_OF_MONTH);
+//                day = day + 1;
+//                if (day / 10 == 0) {
+//                    StringBuilder m = new StringBuilder("0");
+//                    m.append(day % 10);
+//                    days = m.toString();
+//                } else {
+//                    StringBuilder m = new StringBuilder();
+//                    m.append(day);
+//                    days = m.toString();
+//                }
+//                predicates.add(
+//                        cb.(c.get("endDate"), years + "-" + months + "-" + days + "%"));
+//            }
+                q.select(c).where(predicates.toArray(new Predicate[]{}));
+
+            System.out.println("BeginDate: " + filter.getBeginDate());
             list = query.getEntityManager().createQuery(q).getResultList();
             for (int i = 0; i < list.size(); i++) {
-                System.out.println("List Size: " + list.size() + " List title: " + list.get(i).getTitle());
+                System.out.println("List Size: " + list.size() + " List title: " + list.get(i).getTitle() + "\nBeginDate" + list.get(i).getBeginDate() + " \nEndDate: " + list.get(i).getEndDate());
             }
         }
         return list;

@@ -35,6 +35,13 @@ create table ticket (
     primary key(id)
 );
 
+create table image(
+    id bigint(20) not null auto_increment, 
+    festival_id bigint(20),
+    img mediumblob,
+    primary key(id)
+);
+
 
 
 

@@ -6,6 +6,8 @@
     <class>com.musicfestivals.user.UserProfile</class>
     <class>com.musicfestivals.festival.Festival</class>
     <class>com.musicfestivals.ticket.Ticket</class>
+    <class>com.musicfestivals.app.Image</class>
+    <class>com.musicfestivals.img.Image</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fest?zeroDateTimeBehavior=convertToNull"/>
