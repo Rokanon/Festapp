@@ -22,8 +22,8 @@
                 <p:outputLabel value="Artist"/>
 
                 <p:inputText placeholder="title" value="#{festivalList.filter.title}"/>
-                <p:calendar id="from" placeholder="from" value="#{festivalList.filter.begin_date}"/>
-                <p:calendar id="to" placeholder="to" value="#{festivalList.filter.end_date}"/>
+                <p:calendar id="from" placeholder="from" value="#{festivalList.filter.beginDate}"/>
+                <p:calendar id="to" placeholder="to" value="#{festivalList.filter.endDate}"/>
                 <p:inputText placeholder="place" value="#{festivalList.filter.place}"/>
                 <p:inputText placeholder="artist" value="#{festivalList.filter.artist}"/>
             </h:panelGrid>
@@ -36,9 +36,6 @@
                     <p:column headerText="Title">
                         <h:outputText value="#{festival.title}" />
                     </p:column>
-                    <p:column headerText="Genre">
-                        <h:outputText value="#{festival.genre}" />
-                    </p:column>
                     <p:column headerText="Begin date">
                         <h:outputText value="#{festival.beginDate}" >
                             <f:convertDateTime pattern="dd.MM.yy"/>
@@ -49,8 +46,11 @@
                             <f:convertDateTime pattern="dd.MM.yy"/>
                         </h:outputText>
                     </p:column>
+                    <p:column headerText="Place">
+                        <h:outputText value="#{festival.place}" />
+                    </p:column>
                     <p:column headerText="">
-                        <p:button href="form.xhtml" title="Apply" value="Apply"/>
+                        <p:button href="form.xhtml" title="buy" value="Buy ticket"/>
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>
