@@ -59,6 +59,10 @@ public class Festival implements Serializable {
     @Column(name = "end_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
+    @Column(name = "place")
+    private String place;
+    @Column(name = "artist")
+    private String artist;
 
     public Festival() {
     }
@@ -152,6 +156,22 @@ public class Festival implements Serializable {
 
     public void setTimesSeen(Long timesSeen) {
         this.timesSeen = timesSeen;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
     
 }
