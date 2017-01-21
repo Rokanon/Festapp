@@ -24,12 +24,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "festival")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Festival.findAll", query = "SELECT f FROM Festival f")
-    , @NamedQuery(name = "Festival.findById", query = "SELECT f FROM Festival f WHERE f.id = :id")
-    , @NamedQuery(name = "Festival.findByTitle", query = "SELECT f FROM Festival f WHERE f.title = :title")
-    , @NamedQuery(name = "Festival.findByGenre", query = "SELECT f FROM Festival f WHERE f.genre = :genre")
-    , @NamedQuery(name = "Festival.findByBeginDate", query = "SELECT f FROM Festival f WHERE f.beginDate = :beginDate")
-    , @NamedQuery(name = "Festival.findByEndDate", query = "SELECT f FROM Festival f WHERE f.endDate = :endDate")})
+    @NamedQuery(name = "Festival.findAll", query = "SELECT f FROM Festival f WHERE f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findById", query = "SELECT f FROM Festival f WHERE f.id = :id and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByTimesSeen", query = "SELECT f FROM Festival f WHERE f.timesSeen= :timesSeen and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByTicketsSold", query = "SELECT f FROM Festival f WHERE f.ticketsSold = :ticketsSold and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.topFiveBySoldTickets", query = "SELECT f FROM Festival f where f.endDate >= CURRENT_TIMESTAMP ORDER BY f.ticketsSold desc")
+    , @NamedQuery(name = "Festival.upcoming", query = "SELECT f FROM Festival f where f.endDate >= CURRENT_TIMESTAMP ORDER BY f.endDate ASC")
+    , @NamedQuery(name = "Festival.topFiveByTimesSeen", query = "SELECT f FROM Festival f where f.endDate >= CURRENT_TIMESTAMP ORDER BY f.timesSeen desc")
+    , @NamedQuery(name = "Festival.findByTitle", query = "SELECT f FROM Festival f WHERE f.title = :title and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByGenre", query = "SELECT f FROM Festival f WHERE f.genre = :genre and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByBeginDate", query = "SELECT f FROM Festival f WHERE f.beginDate = :beginDate and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByEndDate", query = "SELECT f FROM Festival f WHERE f.endDate = :endDate and f.endDate >= CURRENT_TIMESTAMP")})
 public class Festival implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,6 +43,10 @@ public class Festival implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    @Column(name = "tickets_sold")
+    private Long ticketsSold;
+    @Column(name = "times_seen")
+    private Long timesSeen;
     @Column(name = "title")
     private String title;
     @Column(name = "genre")
@@ -127,6 +136,22 @@ public class Festival implements Serializable {
     @Override
     public String toString() {
         return "com.musicfestivals.festival.Festival[ id=" + id + " ]";
+    }
+
+    public Long getTicketsSold() {
+        return ticketsSold;
+    }
+
+    public void setTicketsSold(Long ticketsSold) {
+        this.ticketsSold = ticketsSold;
+    }
+
+    public Long getTimesSeen() {
+        return timesSeen;
+    }
+
+    public void setTimesSeen(Long timesSeen) {
+        this.timesSeen = timesSeen;
     }
     
 }

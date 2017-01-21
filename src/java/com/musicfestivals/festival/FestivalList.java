@@ -1,6 +1,7 @@
 package com.musicfestivals.festival;
 
 import com.musicfestivals.query.DataQuery;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -78,5 +79,22 @@ public class FestivalList {
 
     public void setFilter(FestivalFilter filter) {
         this.filter = filter;
+    }
+    
+    public List<Festival> getTopFiveSeenAdmin(){
+        List<Festival> list;
+        System.out.println("hello from load top 5");
+        list = query.getEntityManager().createNamedQuery("Festival.topFiveByTimesSeen", Festival.class).setMaxResults(5).getResultList();
+        return list;
+    }
+    public List<Festival> getTopFiveTicketSoldAdmin(){
+        List<Festival> list;
+        list = query.getEntityManager().createNamedQuery("Festival.topFiveBySoldTickets", Festival.class).setMaxResults(5).getResultList();
+        return list;
+    }
+    public List<Festival> getLastFiveUpcoming(){
+        List<Festival> list;
+        list = query.getEntityManager().createNamedQuery("Festival.upcoming", Festival.class).setMaxResults(5).getResultList();
+        return list;
     }
 }

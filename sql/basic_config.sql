@@ -45,8 +45,8 @@ insert into user_profile(first_name,last_name,username, password, phone, email, 
 
 
 insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Beer fest", "Rock" ,"2017-08-22 00:00:00", "2017-08-26 00:00:00", 25, 7);
-insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Guca", "Folk" ,"2017-08-22 00:00:00", "2017-08-26 00:00:00", 55, 15);
-insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Foam fest", "Techno" ,"2017-08-22 00:00:00", "2017-08-26 00:00:00", 56, 25);
-insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Exit", "multiple" ,"2017-08-22 00:00:00", "2017-08-26 00:00:00", 100, 78);
-insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Novogodisnji festival", "Rock" ,"2017-08-22 00:00:00", "2017-08-26 00:00:00", 32, 17);
-insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Lim fest", "Rock" ,"2017-08-22 00:00:00", "2017-08-26 00:00:00", 4, 2);
+insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Guca", "Folk" ,"2017-08-12 00:00:00", "2017-08-20 00:00:00", 55, 15);
+insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Foam fest", "Techno" ,"2017-08-28 00:00:00", "2017-09-02 00:00:00", 56, 25);
+insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Exit", "multiple" ,"2017-07-08 00:00:00", "2017-07-12 00:00:00", 100, 78);
+insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Novogodisnji festival", "Rock" ,"2016-12-25 00:00:00", "2017-01-05 00:00:00", 32, 17);
+insert into festival(title, genre, begin_date, end_date, times_seen, tickets_sold) values ("Lim fest", "Rock" ,"2017-08-01 00:00:00", "2017-08-04 00:00:00", 4, 2);
