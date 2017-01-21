@@ -1,18 +1,19 @@
 package com.musicfestivals.festival;
 
 import com.musicfestivals.query.DataQuery;
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.faces.bean.RequestScoped;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 @ManagedBean(name = "festivalList")
-@ViewScoped
-public class FestivalList {
+@RequestScoped
+public class FestivalList implements Serializable {
 
     private List<Festival> festList;
     private final DataQuery query = new DataQuery();
@@ -21,31 +22,29 @@ public class FestivalList {
 
     public List<Festival> loadList() {
         List<Festival> list = null;
-        EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("Eclipselink_JPA");
-        EntityManager entitymanager = emfactory.createEntityManager();
         if (!filterSet) {
             list = query.getEntityManager().createNamedQuery("Festival.findAll").getResultList();
         } else {
-            StringBuilder sb = new StringBuilder("Select f from Festival f where true ");
-            
-            if (filter.getTitle() != null) {
-                sb.append(" and f.title like '%").append(filter.getTitle()).append("%'");
+            CriteriaBuilder cb = query.getEntityManager().getCriteriaBuilder();
+            CriteriaQuery q = cb.createQuery(Festival.class);
+            Root<Festival> c = q.from(Festival.class);
+            q.select(c);
+            ParameterExpression<String> title = cb.parameter(String.class);
+            ParameterExpression<Date> begin_date = cb.parameter(Date.class);
+            ParameterExpression<Date> end_date = cb.parameter(Date.class);
+            ParameterExpression<String> place = cb.parameter(String.class);
+//            ParameterExpression<String> artist = cb.parameter(String.class);
+
+            q.where(
+//                    cb.and(
+                            cb.like(c.get("title"), "%" + filter.getTitle() + "%")
+//                            cb.like(c.get("place"), "%" + filter.getPlace() + "%")
+//                    )
+            );
+            list = query.getEntityManager().createQuery(q).getResultList();
+            for (int i = 0; i < list.size(); i++) {
+                System.out.println("List Size: " + list.size() + " List title: " + list.get(i).getTitle());
             }
-//            if (filter.getBegin_date() ){
-//                sb.append("and begin_date like '").append(filter.getBegin_date()).append("'");
-//            }
-//            if (filter.getEnd_date()!= null){
-//                sb.append("and end_date like '").append(filter.getEnd_date()).append("'");
-//            }
-//            if (filter.getPlace()!= null){
-//                sb.append("and place like '").append(filter.getPlace()).append("'");
-//            }
-//            if (filter.getArtist()!= null){
-//                sb.append("and place like '").append(filter.getArtist()).append("'");
-//            }
-            Query query = entitymanager.createQuery(sb.toString());
-            list = query.getResultList();
-//            list = query.getEntityManager().crea("Festival.doFilter" + sb.toString(), Festival.class).getResultList();
         }
         return list;
     }
@@ -80,19 +79,21 @@ public class FestivalList {
     public void setFilter(FestivalFilter filter) {
         this.filter = filter;
     }
-    
-    public List<Festival> getTopFiveSeenAdmin(){
+
+    public List<Festival> getTopFiveSeenAdmin() {
         List<Festival> list;
         System.out.println("hello from load top 5");
         list = query.getEntityManager().createNamedQuery("Festival.topFiveByTimesSeen", Festival.class).setMaxResults(5).getResultList();
         return list;
     }
-    public List<Festival> getTopFiveTicketSoldAdmin(){
+
+    public List<Festival> getTopFiveTicketSoldAdmin() {
         List<Festival> list;
         list = query.getEntityManager().createNamedQuery("Festival.topFiveBySoldTickets", Festival.class).setMaxResults(5).getResultList();
         return list;
     }
-    public List<Festival> getLastFiveUpcoming(){
+
+    public List<Festival> getLastFiveUpcoming() {
         List<Festival> list;
         list = query.getEntityManager().createNamedQuery("Festival.upcoming", Festival.class).setMaxResults(5).getResultList();
         return list;
