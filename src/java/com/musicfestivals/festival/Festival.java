@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Festival.findAll", query = "SELECT f FROM Festival f WHERE f.endDate >= CURRENT_TIMESTAMP")
-    , @NamedQuery(name = "Festival.findById", query = "SELECT f FROM Festival f WHERE f.id = :id and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findById", query = "SELECT f FROM Festival f WHERE f.id = :id")
     , @NamedQuery(name = "Festival.findByTimesSeen", query = "SELECT f FROM Festival f WHERE f.timesSeen= :timesSeen and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByTicketsSold", query = "SELECT f FROM Festival f WHERE f.ticketsSold = :ticketsSold and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.topFiveBySoldTickets", query = "SELECT f FROM Festival f where f.endDate >= CURRENT_TIMESTAMP ORDER BY f.ticketsSold desc")

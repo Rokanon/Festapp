@@ -35,7 +35,7 @@ public class LoginController implements Serializable {
         UserProfile guest = new UserProfile();
         AuthorizationBean.setLoggedInUser(guest);        
         System.out.println("Before return");
-        return "login.xhtml?faces-redirect=true"; // Valja pogledati, ne vraca na login.html kada se udje u npr festivals...
+        return "success";
     }
 
     public String getUsername() {
