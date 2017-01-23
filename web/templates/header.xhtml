@@ -11,15 +11,15 @@
             <c:if test="#{appAuthorization.admin || appAuthorization.member}">
                 <p:outputLabel value="#{appAuthorization.userName}" class="loggedUser"/>
                 <h:form class="logoutButton">
-                    <p:commandButton value="Logout" actionListener="#{login.logoutControl}" action="logout"/> 
+                    <p:commandButton value="Logout" actionListener="#{login.logoutControl()}" action="logout"/> 
                 </h:form>
             </c:if>
             <c:if test="#{appAuthorization.admin}">
                 <h:panelGroup layout="cols" class="navMenu">
                     <h:link value="Home" outcome="/home" />&nbsp;
-                    <h:link value="Users" outcome="/admin/user/index" />&nbsp;
-                    <h:link value="Festivals" outcome="/admin/festival/index" />&nbsp;                    
-                    <h:link value="Festivals" outcome="/admin/ticket/index" />&nbsp;                    
+                    <h:link value="Users" outcome="/userindex" />&nbsp;
+                    <h:link value="Festivals" outcome="/festivalindex" />&nbsp;                    
+                    <h:link value="Tickets" outcome="/ticketindex" />&nbsp;                    
                 </h:panelGroup>
             </c:if> 
             <c:if test="#{appAuthorization.member}">

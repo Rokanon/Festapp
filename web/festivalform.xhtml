@@ -20,7 +20,7 @@
                 <h:outputText value="End Date" />
                 <p:calendar id="to" placeholder="End" value="#{festivalForm.festival.endDate}"/>
             </p:panelGrid>
-             <p:commandLink value="Upload Images" action="/admin/images/form.xhtml">
+             <p:commandLink value="Upload Images" action="imagesform.xhtml">
                  <f:param name="dataId" value="#{festivalForm.festival.id}"/>
              </p:commandLink><br/>
              <p:commandButton action="#{festivalForm.save}" value="Save"/>
