@@ -24,7 +24,6 @@ create table festival(
     primary key(id)
 );
 alter table festival add column place varchar(20);
-alter table festival add column artist varchar(20);
 alter table festival add column times_seen bigint(20) default 0;
 alter table festival add column tickets_sold bigint(20) default 0;
 

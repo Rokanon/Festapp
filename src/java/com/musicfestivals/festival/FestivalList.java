@@ -107,10 +107,7 @@ public class FestivalList implements Serializable {
                 predicates.add(
                         cb.like(c.get("place"), "%" + filter.getPlace() + "%"));
             }
-            if (!"".equals(filter.getArtist())) {
-                predicates.add(
-                        cb.like(c.get("artist"), "%" + filter.getArtist() + "%"));
-            }
+
 //            if (predicates == null) {
 //                Date datum = new Date(System.currentTimeMillis());
 //                Calendar cal = Calendar.getInstance();

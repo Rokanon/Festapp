@@ -8,13 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <body>
-        <ui:composition> 
-            <c:if test="#{appAuthorization.admin || appAuthorization.member}">
-                <p:outputLabel value="#{appAuthorization.userName}" class="loggedUser"/>
-                <h:form class="logoutButton">
-                    <p:commandButton value="Logout" action="#{login.logoutControl}"/> 
-                </h:form>
-            </c:if>
+        <ui:composition>             
             <c:if test="#{appAuthorization.admin}">
                 <br/>
                 <h:outputText class="header" value="5 Most seen festivals"/> <br/>

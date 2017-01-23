@@ -35,7 +35,7 @@ public class LoginController implements Serializable {
         UserProfile guest = new UserProfile();
         AuthorizationBean.setLoggedInUser(guest);        
         System.out.println("Before return");
-        return "success";
+        return "login.xhtml?faces-redirect=true";
     }
 
     public String getUsername() {

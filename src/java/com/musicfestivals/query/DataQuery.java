@@ -7,11 +7,12 @@ package com.musicfestivals.query;
 
 import com.musicfestivals.app.AuthorizationBean;
 import com.musicfestivals.user.UserProfile;
+import java.io.Serializable;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class DataQuery {
+public class DataQuery implements Serializable{
 
     EntityManagerFactory emf;
     EntityManager em;
