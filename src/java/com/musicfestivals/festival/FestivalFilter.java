@@ -7,7 +7,7 @@ public class FestivalFilter {
     private Date beginDate;
     private Date endDate;
     private String place;
-
+   
     public String getTitle() {
         return title;
     }
