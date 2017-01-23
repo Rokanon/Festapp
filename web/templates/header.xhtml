@@ -17,9 +17,9 @@
             <c:if test="#{appAuthorization.admin}">
                 <h:panelGroup layout="cols" class="navMenu">
                     <h:link value="Home" outcome="/home" />&nbsp;
-                    <h:link value="Users" outcome="/userindex" />&nbsp;
-                    <h:link value="Festivals" outcome="/festivalindex" />&nbsp;                    
-                    <h:link value="Tickets" outcome="/ticketindex" />&nbsp;                    
+                    <h:link value="Users" outcome="/user-index" />&nbsp;
+                    <h:link value="Festivals" outcome="/festival-index" />&nbsp;                    
+                    <h:link value="Tickets" outcome="/ticket-index" />&nbsp;                    
                 </h:panelGroup>
             </c:if> 
             <c:if test="#{appAuthorization.member}">

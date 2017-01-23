@@ -14,16 +14,18 @@
         </ui:insert> 
 
         <h:form id="filter">
-            <h:panelGrid columns="4" cellpadding="5">
+            <h:panelGrid columns="5" cellpadding="5">
                 <p:outputLabel value="Title"/>
                 <p:outputLabel for="from" value="From"/>
                 <p:outputLabel for="to" value="To"/>
                 <p:outputLabel value="Place"/>
+                <p:outputLabel value="Artist"/>
 
                 <p:inputText placeholder="title" value="#{festivalList.filter.title}"/>
                 <p:calendar id="from" placeholder="from" value="#{festivalList.filter.beginDate}"/>
                 <p:calendar id="to" placeholder="to" value="#{festivalList.filter.endDate}"/>
                 <p:inputText placeholder="place" value="#{festivalList.filter.place}"/>
+                <p:inputText placeholder="artist" value=""/>
             </h:panelGrid>
             <p:commandButton value="Search" action="#{festivalList.setFilterSet(true)}" update="table">
                 <f:ajax render="table"/>
@@ -48,7 +50,7 @@
                         <h:outputText value="#{festival.place}" />
                     </p:column>
                     <p:column headerText="">
-                        <p:button href="festivalform.xhtml" title="buy" value="Buy ticket"/>
+                        <p:button href="festival-form.xhtml" title="buy" value="Buy ticket"/>
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>
