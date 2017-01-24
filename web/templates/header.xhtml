@@ -14,14 +14,16 @@
                     <p:commandButton value="Logout" action="#{login.logoutControl()}"/> 
                 </h:form>
             </c:if>
-            <c:if test="#{appAuthorization.admin || appAuthorization.member}">
-                <h:panelGroup layout="cols" class="navMenu">
-                    <h:link value="Home" outcome="/home" />&nbsp;
+            <h:panelGroup layout="cols" class="navMenu">
+                <h:link value="Home" outcome="/home" />&nbsp;
+                <c:if test="#{appAuthorization.admin}">
                     <h:link value="Users" outcome="/user-index" />&nbsp;
-                    <h:link value="Festivals" outcome="/festival-index" />&nbsp;                    
-                    <h:link value="Tickets" outcome="/ticket-index" />&nbsp;                    
-                </h:panelGroup>
-            </c:if> 
+                </c:if>
+                <h:link value="Festivals" outcome="/festival-index" />&nbsp; 
+                <c:if test="#{appAuthorization.admin}">
+                    <h:link value="Tickets" outcome="/ticket-index" />&nbsp;  
+                </c:if>
+            </h:panelGroup>
             <c:if test="#{appAuthorization.member}">
 
             </c:if>
