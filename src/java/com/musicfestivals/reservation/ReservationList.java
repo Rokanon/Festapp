@@ -1,5 +1,6 @@
 package com.musicfestivals.reservation;
 
+import com.musicfestivals.app.AuthorizationBean;
 import com.musicfestivals.query.DataQuery;
 import java.io.Serializable;
 import java.util.List;
@@ -13,10 +14,19 @@ public class ReservationList implements Serializable {
     private final DataQuery query = new DataQuery();
     
     private List<Reservation> reservationList;
+    private List<Reservation> reservationListUser;
+    
+    long userId = AuthorizationBean.getLoggedInUser().getId();
     
     public List<Reservation> loadList() {
         List<Reservation> list = null;
         list = query.getEntityManager().createNamedQuery("Reservation.findByBought", Reservation.class).setParameter("bought", false).getResultList();
+        return list;
+    }
+    
+    public List<Reservation> loadListUser() {
+        List<Reservation> list = null;
+        list = query.getEntityManager().createNamedQuery("Reservation.findByUserBought", Reservation.class).setParameter("userId", userId).setParameter("bought", false).getResultList();
         return list;
     }
     
@@ -39,6 +49,16 @@ public class ReservationList implements Serializable {
         }
     }
     
+    public void rejectTicket(long id) {
+        transactionCheck(); 
+        Reservation res = query.getEntityManager().createNamedQuery("Reservation.findById", Reservation.class).setParameter("id", id).getSingleResult();
+        if (res != null) {
+            query.getEntityManager().remove(res);
+            query.getEntityManager().getTransaction().commit();
+            getReservationListUser().remove(res);
+        }
+    }
+    
     private void transactionCheck() {
         if (!query.getEntityManager().getTransaction().isActive()) {
             query.getEntityManager().getTransaction().begin();
@@ -54,5 +74,16 @@ public class ReservationList implements Serializable {
 
     public void setReservationList(List<Reservation> reservationList) {
         this.reservationList = reservationList;
+    }
+
+    public List<Reservation> getReservationListUser() {
+        if (reservationListUser == null) {
+            reservationListUser = loadListUser();
+        }
+        return reservationListUser;
+    }
+
+    public void setReservationListUser(List<Reservation> reservationListUser) {
+        this.reservationListUser = reservationListUser;
     }
 }

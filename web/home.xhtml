@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3c.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Music festivals</title>
         <h:outputStylesheet library="css" name="style.css"  />
@@ -15,6 +15,28 @@
         <ui:insert name="top-festivals">
             <ui:include src="templates/top-festivals.xhtml" />
         </ui:insert>
+        <c:if test="#{appAuthorization.member}">
+            <h:panelGroup id="table" >
+                <p:dataTable var="reservation" value="#{reservationList.loadListUser()}" >
+                    <p:column headerText="Festival">
+                        <h:outputText value="#{reservation.festivalId}" />
+                    </p:column>
+                    <p:column headerText="User">
+                        <h:outputText value="#{reservation.userId}" />
+                    </p:column>
+                    <p:column headerText="Time of reservation">
+                        <h:outputText value="#{reservation.timeOfReservation}" />
+                    </p:column>
+                    <p:column headerText="Pending">
+                        <h:form>
+                            <h:commandButton value="Reject" actionListener="#{reservationList.rejectTicket(reservation.id)}">
+                                <f:ajax render="table"/>
+                            </h:commandButton> 
+                        </h:form>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </c:if>
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 
