@@ -14,7 +14,7 @@
                     <p:commandButton value="Logout" action="#{login.logoutControl()}"/> 
                 </h:form>
             </c:if>
-            <c:if test="#{appAuthorization.admin}">
+            <c:if test="#{appAuthorization.admin || appAuthorization.member}">
                 <h:panelGroup layout="cols" class="navMenu">
                     <h:link value="Home" outcome="/home" />&nbsp;
                     <h:link value="Users" outcome="/user-index" />&nbsp;

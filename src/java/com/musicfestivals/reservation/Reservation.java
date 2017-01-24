@@ -45,9 +45,9 @@ public class Reservation implements Serializable {
     @Column(name = "id")
     private Long id;
     @Column(name = "festival_id")
-    private BigInteger festivalId;
+    private Long festivalId;
     @Column(name = "user_id")
-    private BigInteger userId;
+    private Long userId;
     @Basic(optional = false)
     @Column(name = "time_of_reservation")
     @Temporal(TemporalType.TIMESTAMP)
@@ -77,19 +77,19 @@ public class Reservation implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getFestivalId() {
+    public Long getFestivalId() {
         return festivalId;
     }
 
-    public void setFestivalId(BigInteger festivalId) {
+    public void setFestivalId(Long festivalId) {
         this.festivalId = festivalId;
     }
 
-    public BigInteger getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(BigInteger userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

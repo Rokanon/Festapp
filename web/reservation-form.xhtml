@@ -15,19 +15,19 @@
             <p:panelGrid columns="2">
                 <f:facet name="header">Festival</f:facet>
                 <h:outputText value="Title" />
-                <p:inputText value="#{festivalForm.festival.title}" readonly="true"/>
+                <p:inputText value="#{reservationForm.festival.title}" readonly="true"/>
                 <h:outputText value="Genre" />
-                <p:inputText value="#{festivalForm.festival.genre}" readonly="true"/>
+                <p:inputText value="#{reservationForm.festival.genre}" readonly="true"/>
                 <h:outputText value="Begin Date" />
-                <p:calendar id="from" placeholder="From" value="#{festivalForm.festival.beginDate}" readonly="true"/>
+                <p:calendar id="from" placeholder="From" value="#{reservationForm.festival.beginDate}" readonly="true"/>
                 <h:outputText value="End Date" />
-                <p:calendar id="to" placeholder="End" value="#{festivalForm.festival.endDate}" readonly="true"/>
+                <p:calendar id="to" placeholder="End" value="#{reservationForm.festival.endDate}" readonly="true"/>
             </p:panelGrid>
-            <p:selectOneRadio id="timing" value="">
-                <f:selectItem itemLabel="One day" itemValue="0" />
-                <f:selectItem itemLabel="Whole festival" itemValue="1" />
-            </p:selectOneRadio>
-            <p:commandButton action="#{festivalForm.buy}" value="Buy"/>
+            <h:selectOneMenu value="#{reservationForm.selectedItem}">
+                <f:selectItems value="#{reservationForm.availableItems.entrySet()}" var="entry"
+                               itemValue="#{entry.key}" itemLabel="#{entry.value}" />
+            </h:selectOneMenu>
+            <p:commandButton action="#{reservationForm.reserveTicket()}" value="Reserve"/>
 
         </h:form>
         <ui:insert name="footer" >
