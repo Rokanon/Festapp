@@ -1,10 +1,9 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-/**
- * Author:  johnnybre
- * Created: Jan 24, 2017
- */
-
+create table reservation(
+    id bigint(20) not null auto_increment,
+    festival_id bigint(20),
+    user_id bigint(20),
+    time_of_reservation timestamp default current_timestamp,
+    duration_time int,
+    bought boolean,
+    primary key(id)
+)
