@@ -26,7 +26,7 @@ public class ReservationList implements Serializable {
     
     public List<Reservation> loadListUser() {
         List<Reservation> list = null;
-        list = query.getEntityManager().createNamedQuery("Reservation.findByUserBought", Reservation.class).setParameter("userId", userId).setParameter("bought", false).getResultList();
+        list = query.getEntityManager().createNamedQuery("Reservation.findByUserId", Reservation.class).setParameter("userId", userId).getResultList();
         return list;
     }
     
