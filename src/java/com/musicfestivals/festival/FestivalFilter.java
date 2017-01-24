@@ -7,6 +7,7 @@ public class FestivalFilter {
     private Date beginDate;
     private Date endDate;
     private String place;
+    private String artist;
    
     public String getTitle() {
         return title;
@@ -38,6 +39,14 @@ public class FestivalFilter {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
 
     

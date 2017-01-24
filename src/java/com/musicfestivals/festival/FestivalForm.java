@@ -11,11 +11,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import com.musicfestivals.app.JSFParamGetter;
+import javax.faces.bean.ViewScoped;
+
 
 @ManagedBean(name = "festivalForm")
-@RequestScoped
+@ViewScoped
 public class FestivalForm implements Serializable {
 
     private List<Image> images;
@@ -27,9 +29,8 @@ public class FestivalForm implements Serializable {
     public void init() {
         try {
             FacesContext fc = FacesContext.getCurrentInstance();
-            long dataId = Long.parseLong(fc.getExternalContext().getRequestParameterMap().get("dataId"));
-            back = fc.getExternalContext().getRequestParameterMap().get("back");
-            System.out.println("Data id from pc: " + dataId);
+            JSFParamGetter paramGeter = new JSFParamGetter(fc);
+            long dataId = paramGeter.getLongParametar("dataId");            
             if (dataId > 0) {
                 setFestival(query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult());
             }
