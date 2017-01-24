@@ -22,12 +22,13 @@ public class FestivalForm implements Serializable {
     private Festival festival;
     private final DataQuery query = new DataQuery();
     private String back;
+    private long dataId;
 
     @PostConstruct
     public void init() {
         try {
             FacesContext fc = FacesContext.getCurrentInstance();
-            long dataId = Long.parseLong(fc.getExternalContext().getRequestParameterMap().get("dataId"));
+            dataId = Long.parseLong(fc.getExternalContext().getRequestParameterMap().get("dataId"));
             back = fc.getExternalContext().getRequestParameterMap().get("back");
             System.out.println("Data id from pc: " + dataId);
             if (dataId > 0) {
@@ -43,15 +44,13 @@ public class FestivalForm implements Serializable {
         query.getEntityManager().getTransaction().commit();
         goBack();
     }
-    
-    public void cancel(){
+
+    public void cancel() {
         goBack();
     }
 
     public Festival getFestival() {
-        if (festival == null) {
-            festival = new Festival();
-        }
+        festival = query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult();
         return festival;
     }
 
@@ -73,4 +72,11 @@ public class FestivalForm implements Serializable {
         }
     }
 
+    public long getDataId() {
+        return dataId;
+    }
+
+    public void setDataId(long dataId) {
+        this.dataId = dataId;
+    }
 }
