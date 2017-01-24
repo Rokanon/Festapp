@@ -1,6 +1,7 @@
 package com.musicfestivals.reservation;
 
 import com.musicfestivals.app.AuthorizationBean;
+import com.musicfestivals.app.JSFParamGetter;
 import com.musicfestivals.festival.Festival;
 import com.musicfestivals.query.DataQuery;
 import com.musicfestivals.user.UserProfile;
@@ -13,33 +14,36 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.persistence.EntityManager;
 
 @ManagedBean(name = "reservationForm")
-@RequestScoped
+@ViewScoped
 public class ReservationForm {
 
     private Festival festival;
-    private DataQuery query = new DataQuery();
-    private long dataId;
-    private Reservation reservation;
+    private final DataQuery query = new DataQuery();
     private int durationFlag;
-    long pera = 4;
-    private SelectItem selectedItem;
-    
+    private String selectedItem;
+
     @PostConstruct
     public void init() {
-//        try {
-//            FacesContext fc = FacesContext.getCurrentInstance();
-//            dataId = Long.parseLong(fc.getExternalContext().getRequestParameterMap().get("dataId"));
-//            if (dataId > 0) {
-//                setFestival(query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult());
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+
+            FacesContext fc = FacesContext.getCurrentInstance();
+            JSFParamGetter paramGetter = new JSFParamGetter(fc);
+            long dataId = paramGetter.getLongParametar("dataId");
+            if (dataId > 0) {
+                setFestival(query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult());
+            } else {
+                setFestival(new Festival());
+            }
+            System.out.println("Data id=" + dataId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int daysBetween(Date d1, Date d2) {
@@ -53,50 +57,27 @@ public class ReservationForm {
     }
 
     public void reserveTicket() {
-        reservation = new Reservation();
+        Reservation reservation = new Reservation();
         long up = AuthorizationBean.getLoggedInUser().getId();
         reservation.setUserId(up);
-        System.out.println("res usr id " + reservation.getUserId());
-        reservation.setFestivalId(festival.getId());
-        System.out.println("res fes id " + reservation.getFestivalId());
+        reservation.setFestivalId(getFestival().getId());
         reservation.setBought(false);
-        System.out.println("res bou " + reservation.getBought());
-        if ("full".equals(selectedItem.getValue().toString())) {
+        if ("full".equals(getSelectedItem())) {
             reservation.setDurationTime(duration());
         } else {
             reservation.setDurationTime(1);
         }
-        System.out.println("res dur time" + reservation.getDurationTime());
 
         query.getEntityManager().persist(reservation);
         query.getEntityManager().getTransaction().commit();
     }
 
     public Festival getFestival() {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        dataId = Long.parseLong(fc.getExternalContext().getRequestParameterMap().get("dataId"));
-        festival = query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult();
         return festival;
     }
 
     public void setFestival(Festival festival) {
         this.festival = festival;
-    }
-
-    public long getDataId() {
-        return dataId;
-    }
-
-    public void setDataId(long dataId) {
-        this.dataId = dataId;
-    }
-
-    public Reservation getReservation() {
-        return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
 
     public int getDurationFlag() {
@@ -107,11 +88,18 @@ public class ReservationForm {
         this.durationFlag = durationFlag;
     }
 
-    public SelectItem getSelectedItem() {
+    public SelectItem[] getSelectedItems() {
+        SelectItem[] ret = new SelectItem[2];
+        ret[0] = new SelectItem("one", "One");
+        ret[1] = new SelectItem("full", "Full");
+        return ret;
+    }
+
+    public String getSelectedItem() {
         return selectedItem;
     }
 
-    public void setSelectedItem(SelectItem selectedItem) {
+    public void setSelectedItem(String selectedItem) {
         this.selectedItem = selectedItem;
     }
 }
