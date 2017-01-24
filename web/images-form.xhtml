@@ -13,11 +13,17 @@
             <ui:include src="/templates/header.xhtml" />
         </ui:insert> 
         <h:form enctype="multipart/form-data">
-            <h:outputText value="#{uploadImage.festival.title}"/>
-            <p:growl showDetail="true"/>
-            <p:fileUpload value="#{uploadImage.file}" mode="simple" disabled="true"/>
-            <p:commandButton value="Upload" icon="ui-icon-arrow-u" ajax="false" actionListener="#{uploadImage.upload}" disabled="true"/>
+            <h:outputText value="#{uploadImage.festival.title}" styleClass="header"/>
+            <p:growl id="growl" showDetail="true"/>
+            <p:fileUpload cancelLabel="#{msg['cancel']}" update="growl" 
+                          fileUploadListener="#{uploadImage.fileUpload}"
+                          multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
         </h:form>
+        <f:view>
+            <p:galleria value="#{imageList.imageList}" var="image" panelWidth="500" panelHeight="315" showCaption="true" id="imagesList">
+                <p:graphicImage value="/resources/images/tmp/#{image.fileName}" title="#{image.fileName}"/>
+            </p:galleria>
+        </f:view>
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 

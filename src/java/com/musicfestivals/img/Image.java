@@ -1,30 +1,36 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.musicfestivals.img;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
-import javax.imageio.ImageIO;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author johnnybre
+ */
 @Entity
 @Table(name = "image")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Image.findAll", query = "SELECT i FROM Image i")
     , @NamedQuery(name = "Image.findById", query = "SELECT i FROM Image i WHERE i.id = :id")
-    , @NamedQuery(name = "Image.findByFestivalId", query = "SELECT i FROM Image i WHERE i.festivalId = :festivalId")})
+    , @NamedQuery(name = "Image.findByFestivalId", query = "SELECT i FROM Image i WHERE i.festivalId = :festivalId")
+    , @NamedQuery(name = "Image.findByFileName", query = "SELECT i FROM Image i WHERE i.fileName = :fileName")
+    , @NamedQuery(name = "Image.findByFileSize", query = "SELECT i FROM Image i WHERE i.fileSize = :fileSize")})
 public class Image implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,10 +40,11 @@ public class Image implements Serializable {
     @Column(name = "id")
     private Long id;
     @Column(name = "festival_id")
-    private Long festivalId;
-    @Lob
-    @Column(name = "img")
-    private byte[] img;
+    private long festivalId;
+    @Column(name = "file_name")
+    private String fileName;
+    @Column(name = "file_size")
+    private long fileSize;
 
     public Image() {
     }
@@ -54,20 +61,20 @@ public class Image implements Serializable {
         this.id = id;
     }
 
-    public Long getFestivalId() {
+    public long getFestivalId() {
         return festivalId;
     }
 
-    public void setFestivalId(Long festivalId) {
+    public void setFestivalId(long festivalId) {
         this.festivalId = festivalId;
     }
 
-    public byte[] getImg() {
-        return img;
+    public long getFileSize() {
+        return fileSize;
     }
 
-    public void setImg(byte[] img) {
-        this.img = img;
+    public void setFileSize(long fileSize) {
+        this.fileSize = fileSize;
     }
 
     @Override
@@ -94,10 +101,13 @@ public class Image implements Serializable {
     public String toString() {
         return "com.musicfestivals.img.Image[ id=" + id + " ]";
     }
-    
-    public BufferedImage getImgInJpg() throws IOException{
-        BufferedImage buffImg = ImageIO.read(new ByteArrayInputStream(getImg()));
-        return buffImg;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
     
 }

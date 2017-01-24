@@ -37,7 +37,8 @@ create table ticket (
 create table image(
     id bigint(20) not null auto_increment, 
     festival_id bigint(20),
-    img mediumblob,
+    file_name varchar(100),
+    file_size bigint(20),
     primary key(id)
 );
 

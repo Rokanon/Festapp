@@ -49,10 +49,17 @@
                     <p:column headerText="Place">
                         <h:outputText value="#{festival.place}" />
                     </p:column>
-                    <p:column headerText="">
-                        <!--<p:button href="festival-form.xhtml?dataId='#{festival.id}'" title="buy" value="Buy ticket"/>-->
-                        <h:outputLink value="reservation-form.xhtml?dataId=#{festival.id}">Buy</h:outputLink>
-                    </p:column>
+                    <c:if test="#{appAuthorization.admin}">
+                        <p:column headerText="">                        
+                            <h:outputLink value="festival-form.xhtml?dataId=#{festival.id}">Edit</h:outputLink>
+                        </p:column>
+                    </c:if>
+                    <c:if test="#{appAuthorization.member}">
+                        <p:column headerText="">                        
+                            <h:outputLink value="reservation-form.xhtml?dataId=#{festival.id}">Buy</h:outputLink>
+                        </p:column>
+                    </c:if>
+
                 </p:dataTable>
             </h:panelGroup>
         </h:form>
