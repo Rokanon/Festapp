@@ -21,7 +21,6 @@ public class ReservationForm {
         try {
             FacesContext fc = FacesContext.getCurrentInstance();
             dataId = Long.parseLong(fc.getExternalContext().getRequestParameterMap().get("dataId"));
-//            System.out.println("Data id from pc: " + dataId);
             if (dataId > 0) {
                 setFestival(query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult());
             }

@@ -50,7 +50,8 @@
                         <h:outputText value="#{festival.place}" />
                     </p:column>
                     <p:column headerText="">
-                        <p:button href="festival-form.xhtml" title="buy" value="Buy ticket"/>
+                        <!--<p:button href="festival-form.xhtml?dataId='#{festival.id}'" title="buy" value="Buy ticket"/>-->
+                        <h:outputLink value="reservation-form.xhtml?dataId=#{festival.id}">Buy</h:outputLink>
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>
