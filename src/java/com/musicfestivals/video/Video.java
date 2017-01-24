@@ -104,10 +104,10 @@ public class Video implements Serializable {
     }
 
     public int getKind() {
-        if (getFileName().endsWith("avi")) {
-            return KIND_AVI;
-        } else {
+        if (getFileName().endsWith("ram")) {
             return KIND_RAM;
+        } else {
+            return KIND_AVI;
         }
     }
 
