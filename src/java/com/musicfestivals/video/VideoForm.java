@@ -41,11 +41,13 @@ public class VideoForm implements Serializable {
     public void fileUpload(FileUploadEvent event) throws IOException {
         Video uploadedVideo = new Video();
 
+        String path = FacesContext.getCurrentInstance().getExternalContext()
+                .getRealPath("/");
         SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmss");
         long fileSize = event.getFile().getSize();
         String extension = "." + event.getFile().getFileName().substring(event.getFile().getFileName().lastIndexOf('.') + 1);
-        String name = fmt.format(new Date()) + extension;
-        File file = new File(GlobalVars.getPathToVideos()+ name);
+        String name = fmt.format(new Date()) + extension.toLowerCase();
+         File file = new File(path + "/resources/videos/tmp/" + name);
 
         InputStream is = event.getFile().getInputstream();
         OutputStream out = new FileOutputStream(file);
@@ -59,6 +61,7 @@ public class VideoForm implements Serializable {
         uploadedVideo.setFestivalId(getFestival().getId());
         uploadedVideo.setFileName(name);
         uploadedVideo.setFileSize(fileSize);
+        transactionCheck();
         query.getEntityManager().persist(uploadedVideo);
         query.getEntityManager().getTransaction().commit();
     }
@@ -69,5 +72,11 @@ public class VideoForm implements Serializable {
 
     public void setFestival(Festival festival) {
         this.festival = festival;
+    }
+
+    private void transactionCheck() {
+        if (!query.getEntityManager().getTransaction().isActive()) {
+            query.getEntityManager().getTransaction().begin();
+        }
     }
 }

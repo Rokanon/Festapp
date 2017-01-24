@@ -20,8 +20,8 @@
                           multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
         </h:form>
         <f:view>
-            <p:galleria value="#{imageList.imageList}" var="image" panelWidth="500" panelHeight="315" showCaption="true" id="imagesList">
-                <p:graphicImage value="/resources/images/tmp/#{image.fileName}" title="#{image.fileName}"/>
+            <p:galleria value="#{imageList.imageList}" var="image" panelWidth="500" panelHeight="315" showCaption="true" id="imagesList" rendered="#{imageList.imageList != null}">
+                <p:graphicImage value="/resources/images/tmp/#{image.fileName}" title="#{image.fileName}" />
             </p:galleria>
         </f:view>
         <ui:insert name="footer" >

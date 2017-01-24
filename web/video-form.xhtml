@@ -17,10 +17,10 @@
             <p:growl id="growl" showDetail="true"/>
             <p:fileUpload cancelLabel="#{msg['cancel']}" update="growl" 
                           fileUploadListener="#{uploadVideo.fileUpload}"
-                          multiple="false" allowTypes="/(\.|\/)(avi|ram|wmv)$/" sizeLimit="10485760"/>
+                          multiple="false" allowTypes="/(\.|\/)(avi|ram|wmv|AVI|RAM|WMV)$/" sizeLimit="10485760"/>
         </h:form>
         <f:view>
-            <ui:repeat id="items" value="#{videoList.videoList}" var="media">
+            <ui:repeat id="items" value="#{videoList.videoList}" var="media" rendered="#{videoList.videoList != null}">
                 <ui:fragment rendered="#{media.kind eq 0}">
                     <h3>AVI</h3>
                     <p:media value="/resources/videos/tmp/#{media.fileName}" width="250" height="300" player="windows">

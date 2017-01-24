@@ -44,12 +44,18 @@ public class ImageForm implements Serializable {
     public void fileUpload(FileUploadEvent event) throws IOException {
         Image uploadedImage = new Image();
 
+        String path = FacesContext.getCurrentInstance().getExternalContext()
+                .getRealPath("/");
         SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMddHHmmss");
         long fileSize = event.getFile().getSize();
         String extension = "." + event.getFile().getFileName().substring(event.getFile().getFileName().lastIndexOf('.') + 1);
         String name = fmt.format(new Date()) + extension;
-        File file = new File(GlobalVars.getPathToImages() + name);
 
+        File file = new File(path + "/resources/images/tmp/" + name);
+        System.out.println("path of a file " + file.getAbsolutePath());
+        System.out.println("path of a file " + file.getCanonicalPath());
+        System.out.println("path of a file " + path + "/resources/images/tmp/" + name);
+        System.out.println("");
         InputStream is = event.getFile().getInputstream();
         OutputStream out = new FileOutputStream(file);
         BufferedImage img = ImageIO.read(is);
@@ -57,16 +63,11 @@ public class ImageForm implements Serializable {
         BufferedImage scaledImg;
         scaledImg = resizeImage(img, type);
         ImageIO.write(scaledImg, "jpg", out);
-        byte buf[] = new byte[1024];
-        int len;
-        while ((len = is.read(buf)) > 0) {
-            out.write(buf, 0, len);
-        }
-        is.close();
-        out.close();
+
         uploadedImage.setFestivalId(getFestival().getId());
         uploadedImage.setFileName(name);
         uploadedImage.setFileSize(fileSize);
+        transactionCheck();
         query.getEntityManager().persist(uploadedImage);
         query.getEntityManager().getTransaction().commit();
     }
@@ -86,5 +87,11 @@ public class ImageForm implements Serializable {
 
     public void setFestival(Festival festival) {
         this.festival = festival;
+    }
+
+    private void transactionCheck() {
+        if (!query.getEntityManager().getTransaction().isActive()) {
+            query.getEntityManager().getTransaction().begin();
+        }
     }
 }
