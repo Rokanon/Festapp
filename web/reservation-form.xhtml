@@ -24,8 +24,7 @@
                 <p:calendar id="to" placeholder="End" value="#{reservationForm.festival.endDate}" readonly="true"/>
             </p:panelGrid>
             <h:selectOneMenu value="#{reservationForm.selectedItem}">
-                <f:selectItem itemValue="one" itemLabel="One day" />
-                <f:selectItem itemValue="full" itemLabel="Whole festival"/>
+                <f:selectItems value="#{reservationForm.selectedItems}" />
             </h:selectOneMenu>
             <p:commandButton action="#{reservationForm.reserveTicket()}" value="Reserve"/>
 

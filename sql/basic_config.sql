@@ -41,6 +41,13 @@ create table image(
     file_size bigint(20),
     primary key(id)
 );
+create table video(
+    id bigint(20) not null auto_increment, 
+    festival_id bigint(20),
+    file_name varchar(100),
+    file_size bigint(20),
+    primary key(id)
+);
 
 
 

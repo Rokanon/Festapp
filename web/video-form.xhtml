@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"    
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Buy tickets for Festival</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+    <h:body>
+        <ui:insert name="header">
+            <ui:include src="/templates/header.xhtml" />
+        </ui:insert> 
+        <h:form enctype="multipart/form-data">
+            <h:outputText value="#{uploadVideo.festival.title}" styleClass="header"/>
+            <p:growl id="growl" showDetail="true"/>
+            <p:fileUpload cancelLabel="#{msg['cancel']}" update="growl" 
+                          fileUploadListener="#{uploadVideo.fileUpload}"
+                          multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(avi|ram)$/" />
+        </h:form>
+        <f:view>
+            <ui:repeat id="items" value="#{videoList.videoList}" var="media">
+                <p:media value="/resources/videos/tmp/#{media.fileName}" width="190" height="250">
+                    <f:param name="autoPlay" value="false" />
+                </p:media>
+                <ui:fragment rendered="#{media.kind eq 0}">
+                    <h3>AVI</h3>
+                    <p:media value="/resources/videos/tmp/#{media.fileName}" width="250" height="300" player="flash">
+                        <f:param name="autostart" value="false" />
+                        <p:outputPanel layout="block">
+                            Windows Media is required to view this media. <h:outputLink value="http://www.microsoft.com/Windows/MediaPlayer/">Download Here</h:outputLink>
+                        </p:outputPanel>
+                    </p:media>
+                </ui:fragment>
+                <ui:fragment rendered="#{media.kind eq 1}"> 
+                    <h3>Real</h3>
+                    <p:media value="/resources/videos/tmp/#{media.fileName}" width="250" height="300"  player="flash">
+                        <f:param name="autostart" value="false" />
+                        <p:outputPanel layout="block">
+                            RealPlayer is required to view this media. <h:outputLink value="http://www.real.com/player/">Download Here</h:outputLink>
+                        </p:outputPanel>
+                    </p:media>
+                </ui:fragment>
+                <br/>
+            </ui:repeat>            
+        </f:view>
+        <ui:insert name="footer" >
+            <ui:include src="/templates/footer.xhtml" />
+        </ui:insert> 
+    </h:body>
+</html>

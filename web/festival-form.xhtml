@@ -25,6 +25,9 @@
             <h:outputLink value="images-form.xhtml?dataId=#{festivalForm.festival.id}">
                 Upload images                
             </h:outputLink>><br/>
+            <h:outputLink value="video-form.xhtml?dataId=#{festivalForm.festival.id}">
+                Upload videos                
+            </h:outputLink>><br/>
             <p:commandButton  id="nest" action="#{festivalForm.save()}" value="Save"/>
             <p:commandButton onclick="window.history.back();" value="Cancel"/>
 
