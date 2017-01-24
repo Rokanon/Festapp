@@ -22,7 +22,9 @@
                     <h:outputText value="#{reservation.userId}" />
                 </p:column>
                 <p:column headerText="Time of reservation">
-                    <h:outputText value="#{reservation.timeOfReservation}" />
+                    <h:outputText value="#{reservation.timeOfReservation}" >
+                        <f:convertDateTime pattern="dd.MM.yy"/>
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Pending">
                     <h:form>
