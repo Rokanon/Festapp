@@ -48,7 +48,15 @@ create table video(
     file_size bigint(20),
     primary key(id)
 );
-
+create table artist(
+    id bigint(20) not null auto_increment,
+    festival_id bigint(20),
+    artist_name varchar(20),
+    performance_date timestamp,
+    performance_time_start time,
+    performance_time_end time,
+    primary key(id)
+);
 
 
 
