@@ -55,14 +55,14 @@
                 </p:column>
             </p:dataTable>
         </h:panelGroup>
-        <h:form rendered="#{!festivalForm.hasBoughtTicket}">
-            <h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}"/><br/>
+        <h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}" styleClass="header"/><br/>
+        <h:form id="ratingForm" rendered="#{!festivalForm.hasBoughtTicket and !festivalForm.alreadyRated()}">            
             <p:rating stars="10" value="#{festivalForm.vote}"/><br/>
-            <p:commandButton value="Rate" action="#{festivalForm.rate()}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
+            <p:commandButton value="Rate" action="#{festivalForm.rate()}" update=":rating ratingForm" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
-        <h:form rendered="#{!festivalForm.hasBoughtTicket}">
-            <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..." id="comment"/><br/>
-            <p:commandButton value="Comment" action="#{festivalForm.commentContent}" update="comment" title="comment" class="button" onclick="$(this).addClass('disabled')"/>  
+        <h:form rendered="#{!festivalForm.hasBoughtTicket and !festivalForm.hasUserCommented}">
+            <p:inputTextarea value="#{festivalForm.commentContent}" cols="30" rows="5" placeholder="Leave a comment..." id="comment"/><br/>
+            <p:commandButton value="Comment" action="#{festivalForm.comment}" update="comment :ratingForm" title="comment" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
         
         <ui:insert name="photo-galery">
@@ -71,10 +71,11 @@
         <ui:insert name="festival-galery">
             <ui:include src="/templates/video-galery.xhtml"/>
         </ui:insert>
-        <a href="https://www.facebook.com/#{festivalForm.festival.title}">Facebook</a>
-        <a href="https://twitter.com/#{festivalForm.festival.title}">Twitter</a>
-        <a href="https://www.instagram.com/#{festivalForm.festival.title}">Instagram</a>
-        <a href="https://www.youtube.com/results?search_query=#{festivalForm.festival.title}">Youtube</a>
+        <h:outputLink value="https://www.facebook.com/#{festivalForm.festival.title}">Facebook</h:outputLink><br/>
+        <h:outputLink value="https://twitter.com/#{festivalForm.festival.title}">Twitter</h:outputLink><br/>
+        <h:outputLink value="https://www.instagram.com/#{festivalForm.festival.title}">Instagram</h:outputLink><br/>
+        <h:outputLink value="https://www.youtube.com/results?search_query=#{festivalForm.festival.title}">YouTube</h:outputLink><br/>
+
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 
