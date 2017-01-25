@@ -34,8 +34,13 @@
             <h:panelGroup id="table">
                 <p:dataTable var="festival" value="#{festivalList.loadList()}">
                     <p:column headerText="Title">
-                        <c:if test="#{appAuthorization.admin || appAuthorization.member}">
-                            <h:outputLink value="festival-view.xhtml?dataId=#{festival.id}">
+                        <c:if test="#{appAuthorization.admin}">
+                            <h:outputLink value="festival-view.xhtml?dataId=#{festival.id}&amp;viewUser=0">
+                                <h:outputLabel value="#{festival.title}"></h:outputLabel>
+                            </h:outputLink>
+                        </c:if>
+                        <c:if test="#{appAuthorization.member}">
+                            <h:outputLink value="festival-view.xhtml?dataId=#{festival.id}&amp;viewUser=1">
                                 <h:outputLabel value="#{festival.title}"></h:outputLabel>
                             </h:outputLink>
                         </c:if>

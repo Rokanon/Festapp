@@ -15,14 +15,18 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import com.musicfestivals.app.JSFParamGetter;
 import com.musicfestivals.artist.Artist;
+import com.musicfestivals.comment.Comment;
 import com.musicfestivals.festival.day.FestivalDay;
 import com.musicfestivals.reservation.Reservation;
+import java.math.BigDecimal;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "festivalForm")
 @ViewScoped
 public class FestivalForm implements Serializable {
 
+    private Comment comment;
+    private List<Comment> comments;
     private List<Artist> artists;
     private List<FestivalDay> days;
     private List<Image> images;
@@ -32,6 +36,7 @@ public class FestivalForm implements Serializable {
     private boolean newData = false;
     private Integer vote;
     private String commentContent;
+    private boolean ratingSetProperly = false;
 
     @PostConstruct
     public void init() {
@@ -40,8 +45,12 @@ public class FestivalForm implements Serializable {
             FacesContext fc = FacesContext.getCurrentInstance();
             JSFParamGetter paramGeter = new JSFParamGetter(fc);
             long dataId = paramGeter.getLongParametar("dataId");
+            int updateViews = paramGeter.getIntParametar("viewUser");
             if (dataId > 0) {
                 setFestival(query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult());
+                if (updateViews == 1 && dataId > 0) {
+                    updateNumberOfViews();
+                }
             } else {
                 setFestival(new Festival());
                 newData = true;
@@ -102,11 +111,26 @@ public class FestivalForm implements Serializable {
         double finalRating = totalRating / timesRated;
         getFestival().setUsersRated(timesRated);
         getFestival().setRating((double) Math.round(finalRating * 100d) / 100d);
+        getComment().setRating(getVote());
         query.getEntityManager().getTransaction().commit();
+        ratingSetProperly = true;
     }
-    
-    public void comment(){
-        
+
+    public void comment() {
+        transactionCheck();
+        comment = new Comment();
+        comment.setFestivalId(getFestival().getId());
+        comment.setFestivalTitle(getFestival().getTitle());
+        comment.setUserId(AuthorizationBean.getLoggedInUser().getId());
+        comment.setText(getCommentContent());
+        if (ratingSetProperly) {
+            comment.setRating(getVote());
+        } else {
+            comment.setRating(-1);
+        }
+        query.getEntityManager().persist(comment);
+        query.getEntityManager().getTransaction().commit();
+
     }
 
     public Integer getVote() {
@@ -114,16 +138,19 @@ public class FestivalForm implements Serializable {
     }
 
     public void setVote(Integer vote) {
-        System.out.println("Vote set to " + vote);
         this.vote = vote;
     }
 
     public boolean isHasBoughtTicket() {
-        List<Reservation> list;        
+        List<Reservation> list;
         long userId = AuthorizationBean.getLoggedInUser().getId();
-        long festivalId = getFestival().getId();
-        list = query.getEntityManager().createNamedQuery("Reservation.findIfUserBoughtForFestival", Reservation.class).setParameter("userId", userId).setParameter("festival", festivalId).getResultList();
-        return list == null;       
+        if (getFestival() == null) {
+            return false;
+        }
+        list = query.getEntityManager().createNamedQuery("Reservation.findIfUserBoughtForFestival", Reservation.class).setParameter("userId", userId).setParameter("festival", getFestival().getId()).getResultList();
+
+        // if list is null, then reservation doesn't exist, so he didn't bought it
+        return list != null;
     }
 
     public String getCommentContent() {
@@ -132,5 +159,53 @@ public class FestivalForm implements Serializable {
 
     public void setCommentContent(String commentContent) {
         this.commentContent = commentContent;
+    }
+
+    public boolean isHasUserCommented() {
+        long userId = AuthorizationBean.getLoggedInUser().getId();
+
+        List<Comment> userComment = query.getEntityManager().createNamedQuery("Comment.findByFestIdAndUser", Comment.class).setParameter("userId", userId).setParameter("festivalId", getFestival().getId()).setMaxResults(1).getResultList();
+        if (userComment == null || userComment.isEmpty()) {
+            System.out.println("Ne postoji komentar, nije komentarisao");
+            return false;
+        } else {
+            System.out.println("Korisnik je vec komentarisao");
+            return true;
+        }
+    }
+
+    public List<Comment> getComments() {
+        long userId = AuthorizationBean.getLoggedInUser().getId();
+        comments = query.getEntityManager().createNamedQuery("Comment.findByNameAndUser", Comment.class).setParameter("userId", userId).setParameter("festivalTitle", getFestival().getTitle()).getResultList();
+        return comments != null ? comments : new ArrayList<>();
+    }
+
+    public boolean alreadyRated() {
+        if (getComment().getRating() == -1 || getComment().getRating() == 0.0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Comment getComment() {
+        List<Comment> commentsList = query.getEntityManager().createNamedQuery("Comment.findByFestIdAndUser", Comment.class).setParameter("userId", AuthorizationBean.getLoggedInUser().getId()).setParameter("festivalId", getFestival().getId()).getResultList();
+        if (commentsList == null || commentsList.isEmpty()) {
+            return new Comment();
+        }
+        System.out.println("Comment list size = " + commentsList.size());
+        comment = commentsList.get(0);
+        return comment != null ? comment : new Comment();
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
+    private void updateNumberOfViews() {
+        transactionCheck();
+        long numberOfViews = getFestival().getTimesSeen() + 1;
+        getFestival().setTimesSeen(numberOfViews);
+        query.getEntityManager().getTransaction().commit();
     }
 }

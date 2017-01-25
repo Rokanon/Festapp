@@ -8,13 +8,12 @@ create table reservation(
     primary key(id)
 );
 
-create table comments(
+create table comment(
     id bigint(20) not null auto_increment,
     festival_id bigint(20),
     festival_title varchar(50),
-    user_id bigint(20),
-    posted_time timestamp default current_timestamp,
+    user_id bigint(20),    
     text varchar(512),
-    rating decimal(4,2),
+    rating decimal(4,2) default -1,
     primary key(id)
 );
