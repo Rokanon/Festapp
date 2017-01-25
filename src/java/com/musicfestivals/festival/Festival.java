@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Festival.findByGenre", query = "SELECT f FROM Festival f WHERE f.genre = :genre and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByBeginDate", query = "SELECT f FROM Festival f WHERE f.beginDate = :beginDate and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByRateCount", query = "SELECT f FROM Festival f WHERE f.usersRated >= :usersRated and f.endDate >= CURRENT_TIMESTAMP")
-    , @NamedQuery(name = "Festival.findByRating", query = "SELECT f FROM Festival f WHERE f.rating = :rating and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByRating", query = "SELECT f FROM Festival f WHERE f.rating = :rating and f.endDate >= CURRENT_TIMESTAMP ORDER BY f.rating desc")
     , @NamedQuery(name = "Festival.findByPlace", query = "SELECT f FROM Festival f WHERE f.place = :place and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByMaxTicketsPerUser", query = "SELECT f FROM Festival f WHERE f.maxTicketsPerUser = :maxTicketsPerUser and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByEndDate", query = "SELECT f FROM Festival f WHERE f.endDate = :endDate and f.endDate >= CURRENT_TIMESTAMP")})
@@ -76,6 +76,8 @@ public class Festival implements Serializable {
     private int priceOneDay;
     @Column(name = "price_whole_festival")
     private int priceWholeFestival;
+    @Column(name = "info")
+    private String info;
     
 
     public Festival() {
@@ -218,6 +220,14 @@ public class Festival implements Serializable {
 
     public void setPriceWholeFestival(int priceWholeFestival) {
         this.priceWholeFestival = priceWholeFestival;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
     
 }
