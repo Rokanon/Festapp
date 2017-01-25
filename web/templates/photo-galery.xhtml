@@ -14,31 +14,7 @@
                 <p:galleria value="#{imageList.imageList}" var="image" panelWidth="500" panelHeight="315" showCaption="true" id="imagesList" rendered="#{not empty imageList.imageList}">
                     <p:graphicImage value="/resources/images/tmp/#{image.fileName}" title="#{image.fileName}" />
                 </p:galleria>
-            </f:view>
-            <f:view>
-                <h:outputText value="Photos" styleClass="header" rendered="#{not empty videoList.videoList}"/>
-                <ui:repeat id="items" value="#{videoList.videoList}" var="media" rendered="#{not empty videoList.videoList}">
-                    <ui:fragment rendered="#{media.kind eq 0}">
-                        <h3>AVI</h3>
-                        <p:media value="/resources/videos/tmp/#{media.fileName}" width="250" height="300" player="windows">
-                            <f:param name="autostart" value="false" />
-                            <p:outputPanel layout="block">
-                                Windows Media is required to view this media. <h:outputLink value="http://www.microsoft.com/Windows/MediaPlayer/">Download Here</h:outputLink>
-                            </p:outputPanel>
-                        </p:media>
-                    </ui:fragment>
-                    <ui:fragment rendered="#{media.kind eq 1}"> 
-                        <h3>Real</h3>
-                        <p:media value="/resources/videos/tmp/#{media.fileName}" width="250" height="300"  player="real">
-                            <f:param name="autostart" value="false" />
-                            <p:outputPanel layout="block">
-                                RealPlayer is required to view this media. <h:outputLink value="http://www.real.com/player/">Download Here</h:outputLink>
-                            </p:outputPanel>
-                        </p:media>
-                    </ui:fragment>
-                    <br/>
-                </ui:repeat>            
-            </f:view>
+            </f:view>           
         </ui:composition>	
     </body>
 </html>

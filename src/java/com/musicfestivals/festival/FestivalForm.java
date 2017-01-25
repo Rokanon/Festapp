@@ -31,6 +31,7 @@ public class FestivalForm implements Serializable {
     private String back;
     private boolean newData = false;
     private Integer vote;
+    private String commentContent;
 
     @PostConstruct
     public void init() {
@@ -103,6 +104,10 @@ public class FestivalForm implements Serializable {
         getFestival().setRating((double) Math.round(finalRating * 100d) / 100d);
         query.getEntityManager().getTransaction().commit();
     }
+    
+    public void comment(){
+        
+    }
 
     public Integer getVote() {
         return vote;
@@ -117,7 +122,15 @@ public class FestivalForm implements Serializable {
         List<Reservation> list;        
         long userId = AuthorizationBean.getLoggedInUser().getId();
         long festivalId = getFestival().getId();
-        list = query.getEntityManager().createNamedQuery("Reservation.findIfUserBoughtForFestival", Reservation.class).setParameter("userId", userId).setParameter("festivalId", festivalId).getResultList();
+        list = query.getEntityManager().createNamedQuery("Reservation.findIfUserBoughtForFestival", Reservation.class).setParameter("userId", userId).setParameter("festival", festivalId).getResultList();
         return list == null;       
+    }
+
+    public String getCommentContent() {
+        return commentContent;
+    }
+
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
     }
 }

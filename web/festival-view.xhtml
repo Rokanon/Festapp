@@ -35,14 +35,7 @@
             </p:panelGrid>
         </p:panelGrid>
 
-        <br/>
-        
-        <h:form rendered="#{appAuthorization.userProfile}">
-            <h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}"/><br/>
-            <p:rating stars="10" value="#{festivalForm.vote}"/><br/>
-            <p:commandButton value="Rate" action="#{festivalForm.rate}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
-        </h:form>
-
+        <br/>                
         <br/>
         <h:panelGroup id="table" >
             <p:dataTable var="artist" value="#{artistList.loadList()}" >
@@ -62,7 +55,16 @@
                 </p:column>
             </p:dataTable>
         </h:panelGroup>
-        <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..."/>
+        <h:form rendered="#{!festivalForm.hasBoughtTicket}">
+            <h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}"/><br/>
+            <p:rating stars="10" value="#{festivalForm.vote}"/><br/>
+            <p:commandButton value="Rate" action="#{festivalForm.rate}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
+        </h:form>
+        <h:form rendered="#{!festivalForm.hasBoughtTicket }">
+            <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..." />
+            <p:commandButton value="Rate" action="#{festivalForm.commentContent}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
+        </h:form>
+        
         <ui:insert name="photo-galery">
             <ui:include src="/templates/photo-galery.xhtml"/>
         </ui:insert>
