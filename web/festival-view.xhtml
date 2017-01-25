@@ -27,6 +27,9 @@
                 <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
             </p:inputText>
         </p:panelGrid>
+        <br/>
+        <p:commandButton value="Oceni festival" title="oceni"/> <p:rating stars="10" value="5"/>
+        <br/>
         <h:panelGroup id="table" >
             <p:dataTable var="artist" value="#{artistList.loadList()}" >
                     <p:column headerText="Artists">
@@ -45,8 +48,10 @@
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>
+        <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..."/>
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 
+        <!--js i ajax-->
     </h:body>
 </html>

@@ -22,12 +22,8 @@
                 <p:outputLabel value="Artist"/>
 
                 <p:inputText placeholder="title" value="#{festivalList.filter.title}"/>
-                <p:calendar id="from" placeholder="from" value="#{festivalList.filter.beginDate}">
-                    <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-                </p:calendar>
-                <p:calendar id="to" placeholder="to" value="#{festivalList.filter.endDate}">
-                    <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-                </p:calendar>
+                <p:calendar id="from" placeholder="from" value="#{festivalList.filter.beginDate}" pattern="dd.MM.yy"/>
+                <p:calendar id="to" placeholder="to" value="#{festivalList.filter.endDate}"  pattern="dd.MM.yy"/>
                 <p:inputText placeholder="place" value="#{festivalList.filter.place}"/>
                 <p:inputText placeholder="artist" value="#{festivalList.filter.artist}"/>
             </h:panelGrid>
@@ -38,9 +34,14 @@
             <h:panelGroup id="table">
                 <p:dataTable var="festival" value="#{festivalList.loadList()}">
                     <p:column headerText="Title">
-                        <h:outputLink value="festival-view.xhtml?dataId=#{festival.id}">
+                        <c:if test="#{appAuthorization.admin || appAuthorization.member}">
+                            <h:outputLink value="festival-view.xhtml?dataId=#{festival.id}">
+                                <h:outputLabel value="#{festival.title}"></h:outputLabel>
+                            </h:outputLink>
+                        </c:if>
+                        <c:if test="#{appAuthorization.anonymous}">
                             <h:outputLabel value="#{festival.title}"></h:outputLabel>
-                        </h:outputLink>
+                        </c:if>
                     </p:column>
                     <p:column headerText="Begin date">
                         <h:outputText value="#{festival.beginDate}" >
@@ -58,7 +59,7 @@
                     <c:if test="#{appAuthorization.admin}">
                         <p:column headerText="">                        
                             <h:outputLink value="festival-form.xhtml?dataId=#{festival.id}">Edit</h:outputLink>
-                            <h:outputLink value="festival-form.xhtml">Add</h:outputLink>
+                            <h:outputLink value="festival-form.xhtml?dataId=0">Add</h:outputLink>
                         </p:column>
                     </c:if>
                     <c:if test="#{appAuthorization.member}">

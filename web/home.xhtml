@@ -30,14 +30,14 @@
                         </h:outputText>
                     </p:column>
 
-                    <p:column headerText="Pending">
-                        <h:form>
-                            <c:if test="#{reservation.bought == 1}">
+                    <p:column headerText="">
+                        <c:if test="#{!reservation.bought}">
+                            <h:form>
                                 <h:commandButton value="Reject" actionListener="#{reservationList.rejectTicket(reservation.id)}">
                                     <f:ajax render="table"/>
-                                </h:commandButton> 
-                            </c:if>
-                        </h:form>
+                                </h:commandButton>
+                            </h:form>
+                        </c:if>
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>

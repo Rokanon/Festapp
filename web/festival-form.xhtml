@@ -18,13 +18,9 @@
                 <h:outputText value="Place" />
                 <p:inputText value="#{festivalForm.festival.place}"/>
                 <h:outputText value="Begin Date" />
-                <p:calendar id="from" placeholder="From" value="#{festivalForm.festival.beginDate}">
-                    <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-                </p:calendar>
+                <p:calendar id="from" placeholder="From" value="#{festivalForm.festival.beginDate}" pattern="dd.MM.yy"/>
                 <h:outputText value="End Date" />
-                <p:calendar id="to" placeholder="End" value="#{festivalForm.festival.endDate}">
-                    <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-                </p:calendar>
+                <p:calendar id="to" placeholder="End" value="#{festivalForm.festival.endDate}" pattern="dd.MM.yy"/>
             </p:panelGrid>
             <h:outputLink value="images-form.xhtml?dataId=#{festivalForm.festival.id}">
                 Upload images                
