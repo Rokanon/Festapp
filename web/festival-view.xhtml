@@ -58,11 +58,11 @@
         <h:form rendered="#{!festivalForm.hasBoughtTicket}">
             <h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}"/><br/>
             <p:rating stars="10" value="#{festivalForm.vote}"/><br/>
-            <p:commandButton value="Rate" action="#{festivalForm.rate}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
+            <p:commandButton value="Rate" action="#{festivalForm.rate()}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
-        <h:form rendered="#{!festivalForm.hasBoughtTicket }">
-            <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..." />
-            <p:commandButton value="Rate" action="#{festivalForm.commentContent}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
+        <h:form rendered="#{!festivalForm.hasBoughtTicket}">
+            <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..." id="comment"/>
+            <p:commandButton value="Rate" action="#{festivalForm.commentContent}" update="comment" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
         
         <ui:insert name="photo-galery">
