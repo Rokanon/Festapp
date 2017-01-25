@@ -71,6 +71,10 @@
         <ui:insert name="festival-galery">
             <ui:include src="/templates/video-galery.xhtml"/>
         </ui:insert>
+        <a href="https://www.facebook.com/#{festivalForm.festival.title}">Facebook</a>
+        <a href="https://twitter.com/#{festivalForm.festival.title}">Twitter</a>
+        <a href="https://www.instagram.com/#{festivalForm.festival.title}">Instagram</a>
+        <a href="https://www.youtube.com/results?search_query=#{festivalForm.festival.title}">Youtube</a>
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 

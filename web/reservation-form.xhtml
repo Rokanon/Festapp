@@ -30,7 +30,7 @@
             <h:selectOneMenu value="#{reservationForm.selectedItem}">
                 <f:selectItems value="#{reservationForm.selectedItems}" />
             </h:selectOneMenu>
-            <p:commandButton action="#{reservationForm.reserveTicket()}" value="Reserve"/>
+            <p:commandButton action="#{reservationForm.reserveTicket()}" value="Reserve" onclick="window.history.back();"/>
 
         </h:form>
         <ui:insert name="footer" >

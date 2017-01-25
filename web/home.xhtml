@@ -31,13 +31,12 @@
                     </p:column>
 
                     <p:column headerText="">
-                        <c:if test="#{!reservation.bought}">
-                            <h:form>
-                                <h:commandButton value="Reject" actionListener="#{reservationList.rejectTicket(reservation.id)}">
-                                    <f:ajax render="table"/>
-                                </h:commandButton>
-                            </h:form>
-                        </c:if>
+                        <h:commandButton value="Reject" actionListener="#{reservationList.rejectTicket(reservation.id)}" rendered="#{!reservation.bought}">
+                            <f:ajax render="table"/>
+                        </h:commandButton>
+
+                        <h:outputText value="Boughted" rendered="#{reservation.bought}" style="background-color: greenyellow"/>
+
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>

@@ -57,7 +57,7 @@ public class Reservation implements Serializable {
     @Column(name = "duration_time")
     private Integer durationTime;
     @Column(name = "bought")
-    private Boolean bought;
+    private boolean bought;
 
     public Reservation() {
     }
@@ -111,14 +111,6 @@ public class Reservation implements Serializable {
         this.durationTime = durationTime;
     }
 
-    public Boolean getBought() {
-        return bought;
-    }
-
-    public void setBought(Boolean bought) {
-        this.bought = bought;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -142,6 +134,14 @@ public class Reservation implements Serializable {
     @Override
     public String toString() {
         return "com.musicfestivals.reservation.Reservation[ id=" + id + " ]";
+    }
+
+    public boolean isBought() {
+        return bought;
+    }
+
+    public void setBought(boolean bought) {
+        this.bought = bought;
     }
     
 }
