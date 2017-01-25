@@ -31,6 +31,7 @@ alter table festival add column price_one_day int default 0;
 alter table festival add column price_whole_festival int default 0;
 alter table festival add column rating decimal(4,2);
 alter table festival add column users_rated int;
+alter table festival add column info varchar(1000) default "There is no info for this festival";
 
 create table festival_day(
     id bigint(20) not null auto_increment,
