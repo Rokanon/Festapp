@@ -15,7 +15,6 @@ import javax.faces.context.FacesContext;
 import com.musicfestivals.app.JSFParamGetter;
 import javax.faces.bean.ViewScoped;
 
-
 @ManagedBean(name = "festivalForm")
 @ViewScoped
 public class FestivalForm implements Serializable {
@@ -30,7 +29,7 @@ public class FestivalForm implements Serializable {
         try {
             FacesContext fc = FacesContext.getCurrentInstance();
             JSFParamGetter paramGeter = new JSFParamGetter(fc);
-            long dataId = paramGeter.getLongParametar("dataId");            
+            long dataId = paramGeter.getLongParametar("dataId");
             if (dataId > 0) {
                 setFestival(query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult());
             }
@@ -44,8 +43,8 @@ public class FestivalForm implements Serializable {
         query.getEntityManager().getTransaction().commit();
         goBack();
     }
-    
-    public void cancel(){
+
+    public void cancel() {
         goBack();
     }
 

@@ -58,6 +58,9 @@ create table artist(
     primary key(id)
 );
 
+insert into artist(festival_id, artist_name, performance_date, performance_time_start, performance_time_end) values (4, "Riblja Corba", "2017-08-23 00:00:00", "22:30:00", "00:00:00");
+insert into artist(festival_id, artist_name, performance_date, performance_time_start, performance_time_end) values (4, "Bajaga", "2017-08-23 00:00:00", "21:30:00", "22:15:00");
+
 
 
 -- inserting data

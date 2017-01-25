@@ -26,26 +26,19 @@
                     </p:column>
                     <p:column headerText="Time of reservation">
                         <h:outputText value="#{reservation.timeOfReservation}" >
-                            <f:convertDateTime pattern="dd.MM.yy"/>
+                            <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
                         </h:outputText>
                     </p:column>
-                    <c:if test="#{!reservation.bought}">
-                        <p:column headerText="Pending">
-                            <h:panelGroup  style="background-color: red" >
-                                <h:form>
-                                    <h:commandButton value="Reject" actionListener="#{reservationList.rejectTicket(reservation.id)}">
-                                        <f:ajax render="table"/>
-                                    </h:commandButton> 
-                                </h:form>
-                            </h:panelGroup>
-                        </p:column>
-                    </c:if>
-                    <c:if test="#{reservation.bought}">
-                        <p:column headerText="Pending">
-                            <h:panelGroup  style="background-color: green" ></h:panelGroup>
-                        </p:column>
-                    </c:if>
 
+                    <p:column headerText="Pending">
+                        <h:form>
+                            <c:if test="#{reservation.bought == 1}">
+                                <h:commandButton value="Reject" actionListener="#{reservationList.rejectTicket(reservation.id)}">
+                                    <f:ajax render="table"/>
+                                </h:commandButton> 
+                            </c:if>
+                        </h:form>
+                    </p:column>
                 </p:dataTable>
             </h:panelGroup>
         </c:if>

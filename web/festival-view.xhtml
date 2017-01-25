@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title> Details</title>
+        <h:outputStylesheet library="css" name="style.css"  />
+    </h:head>
+    <h:body>
+        <h3> Festival details </h3> 
+        <ui:insert name="header">
+            <ui:include src="/templates/header.xhtml" />
+        </ui:insert> 
+        <p:panelGrid columns="2">
+            <f:facet name="header">Festival</f:facet>
+            <h:outputText value="Title" />
+            <p:inputText value="#{festivalForm.festival.title}" readonly="true"/>
+            <h:outputText value="Place" />
+            <p:inputText value="#{festivalForm.festival.place}" readonly="true"/>
+            <h:outputText value="Begin Date" />
+            <p:inputText value="#{festivalForm.festival.beginDate}" readonly="true">
+                <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+            </p:inputText>
+            <h:outputText value="End Date" />
+            <p:inputText id="to" placeholder="End" value="#{festivalForm.festival.endDate}" readonly="true">
+                <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+            </p:inputText>
+        </p:panelGrid>
+        <h:panelGroup id="table" >
+            <p:dataTable var="artist" value="#{artistList.loadList()}" >
+                    <p:column headerText="Artists">
+                        <h:outputText value="#{artist.artistName}" />
+                    </p:column>
+                    <p:column headerText="Date">
+                        <h:outputText value="#{artist.performanceDate}" >
+                            <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Starts">
+                        <h:outputText value="#{artist.performanceTimeStart}" />
+                    </p:column>
+                    <p:column headerText="Ends">
+                        <h:outputText value="#{artist.performanceTimeEnd}" />
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        <ui:insert name="footer" >
+            <ui:include src="/templates/footer.xhtml" />
+        </ui:insert> 
+    </h:body>
+</html>

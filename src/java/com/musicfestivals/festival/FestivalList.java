@@ -35,7 +35,7 @@ public class FestivalList implements Serializable {
             String days;
 
             List<Predicate> predicates = new ArrayList<Predicate>();
-            // search by fields, title, dates (both), place and artist
+            // search by fields, title, dates (both), place
             if (!"".equals(filter.getTitle())) {
                 predicates.add(
                         cb.like(c.get("title"), "%" + filter.getTitle() + "%"));
