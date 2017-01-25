@@ -30,8 +30,9 @@
         <br/>
         
         <h:form>
-            <p:rating stars="10" value="#{festivalForm.vote}"/><h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}"/><br/>
-            <p:commandButton value="Rate" action="#{festivalForm.rate}" update="rating" title="oceni" id="ratebutton"/>  
+            <h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}"/><br/>
+            <p:rating stars="10" value="#{festivalForm.vote}"/><br/>
+            <p:commandButton value="Rate" action="#{festivalForm.rate}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
         
         <br/>
@@ -57,11 +58,5 @@
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 
-        <!--js i ajax-->
-        <script src="resources/js/jquery-3.1.1.min.js">
-            $("#rateButton").on("click", function (){
-                
-            });
-        </script>
     </h:body>
 </html>

@@ -35,3 +35,9 @@
 .button{
     font-size: 18px;
 }
+
+.disabled{
+    pointer-events: none;
+    cursor: default;
+    color: gray;
+}
