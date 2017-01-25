@@ -26,7 +26,7 @@ create table festival(
 alter table festival add column place varchar(20);
 alter table festival add column times_seen bigint(20) default 0;
 alter table festival add column tickets_sold bigint(20) default 0;
-alter table festival add column max_ticket_per_user int default 0;
+alter table festival add column max_tickets_per_user int default 0;
 alter table festival add column price_one_day int default 0;
 alter table festival add column price_whole_festival int default 0;
 alter table festival add column rating decimal(4,2);
