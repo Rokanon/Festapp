@@ -6,4 +6,11 @@ create table reservation(
     duration_time int,
     bought boolean,
     primary key(id)
-)
+);
+
+create table comments(
+    festival_id bigint(20),
+    user_id bigint(20),
+    posted_time timestamp default current_timestamp,
+    text varchar(512)
+);
