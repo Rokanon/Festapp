@@ -72,6 +72,10 @@ public class Festival implements Serializable {
     private double rating;
     @Column(name = "users_rated")
     private int usersRated;
+    @Column(name = "price_one_day")
+    private int priceOneDay;
+    @Column(name = "price_whole_festival")
+    private int priceWholeFestival;
     
 
     public Festival() {
@@ -198,6 +202,22 @@ public class Festival implements Serializable {
 
     public void setUsersRated(int usersRated) {
         this.usersRated = usersRated;
+    }
+
+    public int getPriceOneDay() {
+        return priceOneDay;
+    }
+
+    public void setPriceOneDay(int priceOneDay) {
+        this.priceOneDay = priceOneDay;
+    }
+
+    public int getPriceWholeFestival() {
+        return priceWholeFestival;
+    }
+
+    public void setPriceWholeFestival(int priceWholeFestival) {
+        this.priceWholeFestival = priceWholeFestival;
     }
     
 }
