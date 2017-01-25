@@ -194,7 +194,7 @@ public class FestivalList implements Serializable {
 
     public List<Festival> getLastFiveUpcoming() {
         List<Festival> list;
-        list = query.getEntityManager().createNamedQuery("Festival.upcoming", Festival.class).setMaxResults(5).getResultList();
+        list = query.getEntityManager().createNamedQuery("Festival.findByRating", Festival.class).setMaxResults(5).getResultList();
         return list;
     }
 }

@@ -38,7 +38,7 @@
             <p:commandButton action="#{festivalForm.add()}" value="Add"/>
             <p:commandButton onclick="window.history.back();" value="Cancel"/>
             <h:outputLink value="festival-add2.xhtml">
-                <f:param name="dataId" value="#{festivalForm.dataId}" />
+                <f:param name="dataId" value="#{festivalForm.festival.id}" />
                 <h:outputLabel value="Proceede next"/>
             </h:outputLink>
 

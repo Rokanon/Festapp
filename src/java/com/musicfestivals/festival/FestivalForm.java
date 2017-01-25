@@ -28,9 +28,11 @@ public class FestivalForm implements Serializable {
     private final DataQuery query = new DataQuery();
     private String back;
     private boolean newData = false;
+    private Integer vote;     
 
     @PostConstruct
     public void init() {
+        vote = 0;
         try {
             FacesContext fc = FacesContext.getCurrentInstance();
             JSFParamGetter paramGeter = new JSFParamGetter(fc);
@@ -87,4 +89,27 @@ public class FestivalForm implements Serializable {
             query.getEntityManager().getTransaction().begin();
         }
     }
+
+    public void rate() {
+        transactionCheck();
+        double currentRate = getFestival().getRating();
+        int timesRated = getFestival().getUsersRated();
+        double totalRating = currentRate*timesRated;
+        timesRated++;
+        totalRating += getVote();
+        double finalRating = totalRating/timesRated;
+        getFestival().setUsersRated(timesRated);
+        getFestival().setRating((double)Math.round(finalRating * 100d) / 100d);
+        query.getEntityManager().getTransaction().commit();                
+    }
+
+    public Integer getVote() {
+        return vote;
+    }
+
+    public void setVote(Integer vote) {
+        System.out.println("Vote set to " + vote);
+        this.vote = vote;
+    }
+
 }
