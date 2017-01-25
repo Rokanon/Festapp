@@ -5,6 +5,7 @@ import com.musicfestivals.app.JSFParamGetter;
 import com.musicfestivals.festival.Festival;
 import com.musicfestivals.query.DataQuery;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -47,7 +48,29 @@ public class VideoList implements Serializable {
         this.festival = festival;
     }
     
-    public String getPath(){
-        return GlobalVars.getPathToImages();
+    public void remove(long id) {
+        Video imgToRemove = query.getEntityManager().createNamedQuery("Image.findById", Video.class).setParameter("id", id).getSingleResult();
+        transactionCheck();
+        query.getEntityManager().remove(imgToRemove);
+        query.getEntityManager().getTransaction().commit();
+
+    }
+
+    public void approve(long id) {
+        Video imgToRemove = query.getEntityManager().createNamedQuery("Image.findById", Video.class).setParameter("id", id).getSingleResult();
+        transactionCheck();
+        query.getEntityManager().remove(imgToRemove);
+        query.getEntityManager().getTransaction().commit();
+    }
+
+        public List<Video> getImageRequests() {
+        videoList = query.getEntityManager().createNamedQuery("Image.findByFestivalId", Video.class).setParameter("festivalId", getFestival().getId()).getResultList();
+        return videoList == null ? new ArrayList<>() : videoList;
+    }
+
+    private void transactionCheck() {
+        if (!query.getEntityManager().getTransaction().isActive()) {
+            query.getEntityManager().getTransaction().begin();
+        }
     }
 }

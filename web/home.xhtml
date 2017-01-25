@@ -16,7 +16,7 @@
             <ui:include src="templates/top-festivals.xhtml" />
         </ui:insert>
         <c:if test="#{appAuthorization.member}">
-            <h:panelGroup id="table" >
+            <h:panelGroup id="table" rendered="#{not empty reservationList.reservationList}">
                 <p:dataTable var="reservation" value="#{reservationList.loadListUser()}" >
                     <p:column headerText="Festival">
                         <h:outputText value="#{reservation.festivalId}" />
@@ -29,7 +29,7 @@
                             <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
                         </h:outputText>
                     </p:column>
-
+                    
                     <p:column headerText="">
                         <h:commandButton value="Reject" actionListener="#{reservationList.rejectTicket(reservation.id)}" rendered="#{!reservation.bought}">
                             <f:ajax render="table"/>

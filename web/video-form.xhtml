@@ -19,6 +19,30 @@
                           fileUploadListener="#{uploadVideo.fileUpload}"
                           multiple="false" allowTypes="/(\.|\/)(avi|ram|wmv|AVI|RAM|WMV)$/" sizeLimit="10485760"/>
         </h:form>
+        <c:if test="#{appAuthorization.admin}">
+            <p:dataTable var="video" value="#{videoList.videoList}"  id='imageTable'>                                
+                <p:column headerText="File Name">
+                    <h:outputText value="#{video.fileName}"/>
+                </p:column>
+                <p:column headerText="File Size">
+                    <h:outputText value="#{video.fileSize}"/>
+                </p:column>
+                <p:column headerText="Action" >
+                    <h:form>
+                        <h:commandButton actionListener="#{videoList.remove(video.id)}" value="Approve" rendered="#{video.approved eq 0}">
+                            <f:ajax render="@all"/>
+                        </h:commandButton>
+                        <h:commandButton actionListener="#{videoList.remove(video.id)}" value="Reject" rendered="#{video.approved eq 0}">
+                            <f:ajax render="@all"/>
+                        </h:commandButton>
+                        <h:commandButton actionListener="#{videoList.approve(video.id)}" value="Remove" rendered="#{video.approved eq 1}">
+                            <f:ajax render="@all"/>
+                        </h:commandButton>
+                    </h:form>                    
+                </p:column>
+
+            </p:dataTable>
+        </c:if>
         <ui:insert name="video-galery" >
             <ui:include src="/templates/video-galery.xhtml" />
         </ui:insert> 

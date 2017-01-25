@@ -5,15 +5,24 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <body>
         <ui:composition> 
             <br/>
             <f:view>
-                <h:outputText value="Photos" styleClass="header" rendered="#{not empty imageList.imageList}"/>
+                <c:if test="#{appAuthorization.admin}">
+                    <h:outputText value="Photos" styleClass="header" rendered="#{not empty imageList.imageList}"/>
                 <p:galleria value="#{imageList.imageList}" var="image" panelWidth="500" panelHeight="315" showCaption="true" id="imagesList" rendered="#{not empty imageList.imageList}">
                     <p:graphicImage value="/resources/images/tmp/#{image.fileName}" title="#{image.fileName}" />
                 </p:galleria>
+                </c:if>
+                <c:if test="#{appAuthorization.member}">
+                <h:outputText value="Photos" styleClass="header" rendered="#{not empty imageList.imageList}"/>
+                <p:galleria value="#{imageList.imageList}" var="image" panelWidth="500" panelHeight="315" showCaption="true" id="imagesList" rendered="#{not empty imageList.imageList}">
+                    <p:graphicImage value="/resources/images/tmp/#{image.fileName}" title="#{image.fileName}" rendered="#{image.approved eq 1}" />
+                </p:galleria>
+                </c:if>                
             </f:view>           
         </ui:composition>	
     </body>

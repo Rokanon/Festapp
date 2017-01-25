@@ -21,7 +21,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Video.findById", query = "SELECT v FROM Video v WHERE v.id = :id")
     , @NamedQuery(name = "Video.findByFestivalId", query = "SELECT v FROM Video v WHERE v.festivalId = :festivalId")
     , @NamedQuery(name = "Video.findByFileName", query = "SELECT v FROM Video v WHERE v.fileName = :fileName")
-    , @NamedQuery(name = "Video.findByApproved", query = "SELECT v FROM Video v WHERE v.approved = :approved")
     , @NamedQuery(name = "Video.findByFileSize", query = "SELECT v FROM Video v WHERE v.fileSize = :fileSize")})
 public class Video implements Serializable {
 
