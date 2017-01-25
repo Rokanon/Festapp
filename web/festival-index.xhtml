@@ -58,8 +58,7 @@
                     </p:column>
                     <c:if test="#{appAuthorization.admin}">
                         <p:column headerText="">                        
-                            <h:outputLink value="festival-form.xhtml?dataId=#{festival.id}">Edit</h:outputLink>
-                            <h:outputLink value="festival-add.xhtml">Add</h:outputLink>
+                            <h:outputLink value="festival-form.xhtml?dataId=#{festival.id}">Edit</h:outputLink>                            
                         </p:column>
                     </c:if>
                     <c:if test="#{appAuthorization.member}">
@@ -68,7 +67,22 @@
                         </p:column>
                     </c:if>
 
+                    <c:if test="#{appAuthorization.admin}">
+                        <p:column headerText="">                        
+                            <h:outputLink value="images-form.xhtml?dataId=#{festival.id}">
+                                Upload images                
+                            </h:outputLink><br/>
+                        </p:column>
+                        <p:column headerText="">
+                            <h:outputLink value="video-form.xhtml?dataId=#{festival.id}">
+                                Upload videos                
+                            </h:outputLink><br/>
+                        </p:column>
+                    </c:if>
                 </p:dataTable>
+                <c:if test="#{appAuthorization.admin}">
+                    <h:outputLink value="festival-form.xhtml" styleClass="button">Add</h:outputLink>
+                </c:if>
             </h:panelGroup>
         </h:form>
         <ui:insert name="footer" >

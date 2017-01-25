@@ -10,34 +10,33 @@ import javax.faces.context.FacesContext;
 
 @ManagedBean(name = "artistForm")
 @ViewScoped
-public class ArtistForm  implements Serializable {
+public class ArtistForm implements Serializable {
+
     private Artist artist;
-    long dataId;
+    private long festivalId;
     private final DataQuery query = new DataQuery();
-    
+
     @PostConstruct
     public void init() {
+        artist = new Artist();
         try {
             FacesContext fc = FacesContext.getCurrentInstance();
             JSFParamGetter paramGeter = new JSFParamGetter(fc);
-            dataId = paramGeter.getLongParametar("dataId");
+            setFestivalId(paramGeter.getLongParametar("dataId"));
+            System.out.println("Festival id as data " + getFestivalId());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public void add() {
-        Artist a = new Artist();
-        a.setArtistName(artist.getArtistName());
-        a.setFestivalId(dataId);
-        a.setPerformanceDate(artist.getPerformanceDate());
-        a.setPerformanceTimeStart(artist.getPerformanceTimeStart());
-        a.setPerformanceTimeEnd(artist.getPerformanceTimeEnd());
 
-        query.getEntityManager().persist(a);
+    public void add() {
+        getArtist().setFestivalId(getFestivalId());
+        transactionCheck();
+        query.getEntityManager().persist(getArtist());
         query.getEntityManager().getTransaction().commit();
+        setArtist(new Artist());
     }
-    
+
     public Artist getArtist() {
         return artist;
     }
@@ -45,4 +44,19 @@ public class ArtistForm  implements Serializable {
     public void setArtist(Artist artist) {
         this.artist = artist;
     }
+
+    public long getFestivalId() {
+        return festivalId;
+    }
+
+    public void setFestivalId(long festivalId) {
+        this.festivalId = festivalId;
+    }
+
+    private void transactionCheck() {
+        if (!query.getEntityManager().getTransaction().isActive()) {
+            query.getEntityManager().getTransaction().begin();
+        }
+    }
+
 }

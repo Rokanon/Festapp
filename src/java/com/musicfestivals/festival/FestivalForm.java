@@ -13,17 +13,21 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import com.musicfestivals.app.JSFParamGetter;
+import com.musicfestivals.artist.Artist;
+import com.musicfestivals.festival.day.FestivalDay;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "festivalForm")
 @ViewScoped
 public class FestivalForm implements Serializable {
 
+    private List<Artist> artists;
+    private List<FestivalDay> days;
     private List<Image> images;
     private Festival festival;
     private final DataQuery query = new DataQuery();
     private String back;
-    private long dataId;
+    private boolean newData = false;
 
     @PostConstruct
     public void init() {
@@ -33,6 +37,9 @@ public class FestivalForm implements Serializable {
             long dataId = paramGeter.getLongParametar("dataId");
             if (dataId > 0) {
                 setFestival(query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult());
+            } else {
+                setFestival(new Festival());
+                newData = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -41,29 +48,18 @@ public class FestivalForm implements Serializable {
     }
 
     public void save() {
+        if (newData) {
+            getFestival().setTimesSeen(0l);
+            getFestival().setTicketsSold(0l);
+            query.getEntityManager().persist(getFestival());
+        }
+        transactionCheck();
         query.getEntityManager().getTransaction().commit();
-        goBack();
+//        goBack();
     }
 
-    public void cancel() {
-        goBack();
-    }
-    
-    public void add() {
-        Festival f = new Festival();
-        f.setTitle(festival.getTitle());
-        f.setPlace(festival.getPlace());
-        f.setBeginDate(festival.getBeginDate());
-        f.setEndDate(festival.getEndDate());
-        setDataId(f.getId());
-        query.getEntityManager().persist(f);
-        query.getEntityManager().getTransaction().commit();
-    }
-    
+
     public Festival getFestival() {
-        if (festival == null) {
-            festival = new Festival();
-        }
         return festival;
     }
 
@@ -76,21 +72,19 @@ public class FestivalForm implements Serializable {
         return images == null ? new ArrayList<>() : images;
     }
 
-    private void goBack() {
-        try {
-            System.out.println("back: " + back);
-            PageNavigation.goTo("");
-        } catch (IOException ex) {
-            Logger.getLogger(FestivalForm.class.getName()).log(Level.SEVERE, null, ex);
+    public List<Artist> getArtists() {
+        artists = query.getEntityManager().createNamedQuery("Artist.findByFestivalId", Artist.class).setParameter("festivalId", getFestival().getId()).getResultList();
+        return artists != null ? artists : new ArrayList<>();
+    }
+
+    public List<FestivalDay> getDays() {
+        days = query.getEntityManager().createNamedQuery("FestivalDay.findByFestivalId", FestivalDay.class).setParameter("festivalId", getFestival().getId()).getResultList();
+        return days != null ? days : new ArrayList<>();
+    }
+
+    private void transactionCheck() {
+        if (!query.getEntityManager().getTransaction().isActive()) {
+            query.getEntityManager().getTransaction().begin();
         }
     }
-
-    public long getDataId() {
-        return dataId;
-    }
-
-    public void setDataId(long dataId) {
-        this.dataId = dataId;
-    }
-
 }

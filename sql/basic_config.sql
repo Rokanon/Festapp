@@ -26,6 +26,15 @@ create table festival(
 alter table festival add column place varchar(20);
 alter table festival add column times_seen bigint(20) default 0;
 alter table festival add column tickets_sold bigint(20) default 0;
+alter table festival add column max_ticket_per_user int default 0;
+
+create table festival_day(
+    id bigint(20) not null auto_increment,
+    festival_id bigint(20),
+    date_of_a_day timestamp default '2000-01-01 00:00:00',
+    number_of_tickets int,
+    primary key (id)
+);
 
 create table ticket (
     id bigint(20) not null auto_increment,

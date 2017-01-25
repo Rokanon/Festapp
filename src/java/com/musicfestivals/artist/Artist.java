@@ -1,7 +1,6 @@
 package com.musicfestivals.artist;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.sql.Time;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -14,6 +13,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -132,5 +132,36 @@ public class Artist implements Serializable {
     public String toString() {
         return "com.musicfestivals.artist.Artist[ id=" + id + " ]";
     }
-    
+
+    public Date getPerformanceStart() {
+        return convertTimeToDate(getPerformanceTimeStart());
+    }
+
+    public void setPerformanceStart(Date performanceStart) {
+        setPerformanceTimeStart(convertDateToTime(performanceDate));
+    }
+
+    public Date getPerformanceEnd() {
+        return convertTimeToDate(getPerformanceTimeEnd());
+    }
+
+    public void setPerformanceEnd(Date performanceEnd) {
+        setPerformanceTimeEnd(convertDateToTime(performanceEnd));
+    }
+
+    private Time convertDateToTime(Date date) {
+        if (date == null) {
+            return new Time(0, 0, 0);
+        }
+        Time time = new Time(date.getTime());
+        return time;
+    }
+
+    private Date convertTimeToDate(Time time) {
+        if (time == null) {
+            time = new Time(0, 0, 0);
+        }
+        Date date = new Date(time.getTime());
+        return date;
+    }
 }

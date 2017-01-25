@@ -14,18 +14,18 @@
         </ui:insert> 
         <p:panelGrid columns="2">
             <f:facet name="header">Festival</f:facet>
-            <h:outputText value="Title" />
-            <p:inputText value="#{festivalForm.festival.title}" readonly="true"/>
-            <h:outputText value="Place" />
-            <p:inputText value="#{festivalForm.festival.place}" readonly="true"/>
-            <h:outputText value="Begin Date" />
-            <p:inputText value="#{festivalForm.festival.beginDate}" readonly="true">
+            <h:outputLabel value="Title" />
+            <h:outputText value="#{festivalForm.festival.title}"/>
+            <h:outputLabel value="Place" />
+            <h:outputText value="#{festivalForm.festival.place}"/>
+            <h:outputLabel value="Begin Date" />
+            <h:outputText value="#{festivalForm.festival.beginDate}">
                 <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-            </p:inputText>
-            <h:outputText value="End Date" />
-            <p:inputText id="to" placeholder="End" value="#{festivalForm.festival.endDate}" readonly="true">
+            </h:outputText>
+            <h:outputLabel value="End Date" />
+            <h:outputText id="to" value="#{festivalForm.festival.endDate}">
                 <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-            </p:inputText>
+            </h:outputText>
         </p:panelGrid>
         <br/>
         <p:commandButton value="Oceni festival" title="oceni"/> <p:rating stars="10" value="5"/>
