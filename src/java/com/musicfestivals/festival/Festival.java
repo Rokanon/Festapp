@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Festival.findByTitle", query = "SELECT f FROM Festival f WHERE f.title = :title and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByGenre", query = "SELECT f FROM Festival f WHERE f.genre = :genre and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByBeginDate", query = "SELECT f FROM Festival f WHERE f.beginDate = :beginDate and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByRateCount", query = "SELECT f FROM Festival f WHERE f.usersRated >= :usersRated and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByRating", query = "SELECT f FROM Festival f WHERE f.rating = :rating and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByPlace", query = "SELECT f FROM Festival f WHERE f.place = :place and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByMaxTicketsPerUser", query = "SELECT f FROM Festival f WHERE f.maxTicketsPerUser = :maxTicketsPerUser and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByEndDate", query = "SELECT f FROM Festival f WHERE f.endDate = :endDate and f.endDate >= CURRENT_TIMESTAMP")})
@@ -66,6 +68,10 @@ public class Festival implements Serializable {
     private String place;
     @Column(name = "max_tickets_per_user")
     private int maxTicketsPerUser;
+    @Column(name = "rating")
+    private double rating;
+    @Column(name = "users_rated")
+    private int usersRated;
     
 
     public Festival() {
@@ -176,6 +182,22 @@ public class Festival implements Serializable {
 
     public void setMaxTicketsPerUser(int maxTicketsPerUser) {
         this.maxTicketsPerUser = maxTicketsPerUser;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public int getUsersRated() {
+        return usersRated;
+    }
+
+    public void setUsersRated(int usersRated) {
+        this.usersRated = usersRated;
     }
     
 }

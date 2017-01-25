@@ -28,7 +28,12 @@
             </h:outputText>
         </p:panelGrid>
         <br/>
-        <p:commandButton value="Oceni festival" title="oceni"/> <p:rating stars="10" value="5"/>
+        
+        <h:form>
+            <p:rating stars="10" value="#{festivalForm.vote}"/><h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}"/><br/>
+            <p:commandButton value="Rate" action="#{festivalForm.rate}" update="rating" title="oceni" id="ratebutton"/>  
+        </h:form>
+        
         <br/>
         <h:panelGroup id="table" >
             <p:dataTable var="artist" value="#{artistList.loadList()}" >
@@ -53,5 +58,10 @@
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 
         <!--js i ajax-->
+        <script src="resources/js/jquery-3.1.1.min.js">
+            $("#rateButton").on("click", function (){
+                
+            });
+        </script>
     </h:body>
 </html>
