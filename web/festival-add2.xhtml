@@ -17,10 +17,10 @@
             <p:panelGrid columns="2">
                 <f:facet name="header">Artist</f:facet>
                 <h:outputText value="Artist Name" />
-                <p:inputText value="#{artistForm.artist.artistName}"/>
+                <p:inputText value="#{artistForm.artist.artistName}" id="textfield1"/>
 
                 <h:outputText value="Date" />
-                <p:calendar value="#{artistForm.artist.performanceDate}" pattern="dd.MM.yy"/>
+                <p:calendar value="#{artistForm.artist.performanceDate}" pattern="dd.MM.yy" id="textfield2"/>
 
                 <p:outputLabel for="startTime" value="Start time"/>
                 <p:calendar id="startTime" value="#{artistForm.artist.performanceStart}" pattern="HH:mm" timeOnly="true"  />
@@ -28,33 +28,33 @@
                 <h:outputLabel for="endTime" value="End time" />
                 <p:calendar id="endTime" value="#{artistForm.artist.performanceEnd}" pattern="HH:mm" timeOnly="true"  />
             </p:panelGrid>
-            <p:commandButton id="addArtist" action="#{artistForm.add()}" value="Add" update=":artistTable">
-                <f:ajax render="artistTable"/>
+            <p:commandButton id="addArtist" action="#{artistForm.add()}" value="Add" update=":artistTable" onclick="ClearFields()" >
+                <f:ajax render="artistTable" />
             </p:commandButton>
         </h:form>
-       
-            <c:if test="#{appAuthorization.admin}">
-                <h:panelGroup id="artistTable">
-                    <p:dataTable var="artist" value="#{festivalForm.artists}" >
-                        <p:column headerText="Artists">
-                            <h:outputText value="#{artist.artistName}" />
-                        </p:column>
-                        <p:column headerText="Date">
-                            <h:outputText value="#{artist.performanceDate}" >
-                                <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Starts">
-                            <h:outputText value="#{artist.performanceTimeStart}" />
-                        </p:column>
-                        <p:column headerText="Ends">
-                            <h:outputText value="#{artist.performanceTimeEnd}" />
-                        </p:column>
-                    </p:dataTable>
-                </h:panelGroup>
-            </c:if>
 
-        
+        <c:if test="#{appAuthorization.admin}">
+            <h:panelGroup id="artistTable">
+                <p:dataTable var="artist" value="#{artistList.loadList()}" >
+                    <p:column headerText="Artists">
+                        <h:outputText value="#{artist.artistName}" />
+                    </p:column>
+                    <p:column headerText="Date">
+                        <h:outputText value="#{artist.performanceDate}" >
+                            <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Starts">
+                        <h:outputText value="#{artist.performanceTimeStart}" />
+                    </p:column>
+                    <p:column headerText="Ends">
+                        <h:outputText value="#{artist.performanceTimeEnd}" />
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </c:if>
+
+
         <h:outputLink value="home.xhtml">
             <h:outputLabel value="Finish"/>
         </h:outputLink>
@@ -63,6 +63,9 @@
         </ui:insert> 
     </h:body>
     <script src="jquery-3.1.1.min.js">
-
+        $(document).ready(function ClearFields() {
+            document.getElementById("textfield1").value = "";
+            document.getElementById("textfield2").value = "";
+        });
     </script>
 </html>

@@ -1,6 +1,7 @@
 package com.musicfestivals.artist;
 
 import com.musicfestivals.app.JSFParamGetter;
+import com.musicfestivals.festival.Festival;
 import com.musicfestivals.query.DataQuery;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -20,7 +21,12 @@ public class ArtistList implements Serializable {
     public List<Artist> loadList() {
         FacesContext fc = FacesContext.getCurrentInstance();
         JSFParamGetter paramGeter = new JSFParamGetter(fc);
-        long dataId = paramGeter.getLongParametar("dataId");
+        long dataId;
+        if (paramGeter.getLongParametar("dataId") == 0) {
+                dataId = query.getEntityManager().createNamedQuery("Festival.lastFestival", Festival.class).setMaxResults(1).getSingleResult().getId();
+            } else {
+                dataId = paramGeter.getLongParametar("dataId");
+            }
         List<Artist> list = null;
         list = query.getEntityManager().createNamedQuery("Artist.findByFestivalId").setParameter("festivalId", dataId).getResultList();
         return list;
