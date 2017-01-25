@@ -61,8 +61,8 @@
             <p:commandButton value="Rate" action="#{festivalForm.rate()}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
         <h:form rendered="#{!festivalForm.hasBoughtTicket}">
-            <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..." id="comment"/>
-            <p:commandButton value="Rate" action="#{festivalForm.commentContent}" update="comment" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
+            <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..." id="comment"/><br/>
+            <p:commandButton value="Comment" action="#{festivalForm.commentContent}" update="comment" title="comment" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
         
         <ui:insert name="photo-galery">
