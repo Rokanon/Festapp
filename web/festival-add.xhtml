@@ -15,14 +15,19 @@
         <h:form>
             <p:panelGrid columns="2">
                 <f:facet name="header">Festival</f:facet>
+                
                 <h:outputText value="Title" />
                 <p:inputText value="#{festivalForm.festival.title}"/>
+                
                 <h:outputText value="Place" />
                 <p:inputText value="#{festivalForm.festival.place}"/>
+                
                 <h:outputText value="Begin Date" />
                 <p:calendar id="from" placeholder="From" value="#{festivalForm.festival.beginDate}" pattern="dd.MM.yy"/>
+                
                 <h:outputText value="End Date" />
                 <p:calendar id="to" placeholder="End" value="#{festivalForm.festival.endDate}" pattern="dd.MM.yy"/>
+                
             </p:panelGrid>
             <h:outputLink value="images-form.xhtml?dataId=#{festivalForm.festival.id}">
                 Upload images                
@@ -32,7 +37,8 @@
             </h:outputLink>><br/>
             <p:commandButton action="#{festivalForm.add()}" value="Add"/>
             <p:commandButton onclick="window.history.back();" value="Cancel"/>
-            <h:outputLink value="festival-add2.xhtml?dataId=#{festivalForm.festival.id}">
+            <h:outputLink value="festival-add2.xhtml">
+                <f:param name="dataId" value="#{festivalForm.dataId}" />
                 <h:outputLabel value="Proceede next"/>
             </h:outputLink>
 

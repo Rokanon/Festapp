@@ -23,6 +23,7 @@ public class FestivalForm implements Serializable {
     private Festival festival;
     private final DataQuery query = new DataQuery();
     private String back;
+    private long dataId;
 
     @PostConstruct
     public void init() {
@@ -54,7 +55,7 @@ public class FestivalForm implements Serializable {
         f.setPlace(festival.getPlace());
         f.setBeginDate(festival.getBeginDate());
         f.setEndDate(festival.getEndDate());
-        
+        setDataId(f.getId());
         query.getEntityManager().persist(f);
         query.getEntityManager().getTransaction().commit();
     }
@@ -82,6 +83,14 @@ public class FestivalForm implements Serializable {
         } catch (IOException ex) {
             Logger.getLogger(FestivalForm.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public long getDataId() {
+        return dataId;
+    }
+
+    public void setDataId(long dataId) {
+        this.dataId = dataId;
     }
 
 }
