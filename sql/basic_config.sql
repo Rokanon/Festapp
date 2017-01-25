@@ -104,3 +104,39 @@ insert into festival(title, genre, begin_date, end_date, place, times_seen, tick
 insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Exit", "multiple" ,"2017-07-08 00:00:00", "2017-07-12 00:00:00", "Novi Sad",100, 78);
 insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Novogodisnji festival", "Rock" ,"2016-12-25 00:00:00", "2017-01-05 00:00:00", "Trg", 32, 17);
 insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Lim fest", "Rock" ,"2017-08-01 00:00:00", "2017-08-04 00:00:00", "Lim",4, 2);
+
+
+create table reservation(
+    id bigint(20) not null auto_increment,
+    festival_id bigint(20),
+    user_id bigint(20),
+    time_of_reservation timestamp default current_timestamp,
+    duration_time int,
+    bought boolean default false,
+    primary key(id)
+);
+
+create table comment(
+    id bigint(20) not null auto_increment,
+    festival_id bigint(20),
+    festival_title varchar(50),
+    user_id bigint(20),    
+    text varchar(512),
+    rating decimal(4,2) default -1,
+    primary key(id)
+);
+
+
+
+DELIMITER $$
+CREATE TRIGGER update_festival_tickets
+  AFTER UPDATE ON reservation
+  for each row
+    UPDATE festival
+      SET festival.tickets_sold = festival.tickets_sold + 1
+       
+      WHERE reservation.festival_id = festival.id;
+$$
+DELIMITER ;
+
+
