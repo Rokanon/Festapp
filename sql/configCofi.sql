@@ -8,7 +8,7 @@ create table reservation(
     primary key(id)
 );
 
-create table comments(
+create table comment(
     id bigint(20) not null auto_increment,
     festival_id bigint(20),
     festival_title varchar(50),

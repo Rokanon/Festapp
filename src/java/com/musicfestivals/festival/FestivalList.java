@@ -1,5 +1,6 @@
 package com.musicfestivals.festival;
 
+import com.musicfestivals.artist.Artist;
 import com.musicfestivals.query.DataQuery;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class FestivalList implements Serializable {
 
     private List<Festival> festList;
     private final DataQuery query = new DataQuery();
+    private final DataQuery query2 = new DataQuery();
     private boolean filterSet = false;
     private FestivalFilter filter;
 
@@ -28,17 +30,23 @@ public class FestivalList implements Serializable {
             list = query.getEntityManager().createNamedQuery("Festival.findAll").getResultList();
         } else {
             CriteriaBuilder cb = query.getEntityManager().getCriteriaBuilder();
+            CriteriaBuilder cb2 = query2.getEntityManager().getCriteriaBuilder();
+
             CriteriaQuery q = cb.createQuery(Festival.class);
+            CriteriaQuery q2 = cb2.createQuery(Artist.class);
+
             Root<Festival> c = q.from(Festival.class);
+            Root<Artist> c2 = q2.from(Artist.class);
             String years;
             String months;
             String days;
 
             List<Predicate> predicates = new ArrayList<Predicate>();
+            List<Predicate> predicates2 = new ArrayList<Predicate>();
             // search by fields, title, dates (both), place
             if (!"".equals(filter.getTitle())) {
                 predicates.add(
-                        cb.like(c.get("title"), "%" + filter.getTitle() + "%"));
+                        cb.like(c.get("title"), filter.getTitle() + "%"));
             }
             if (filter.getBeginDate() != null) {
                 Date datum = filter.getBeginDate();
@@ -104,15 +112,20 @@ public class FestivalList implements Serializable {
             }
             if (!"".equals(filter.getPlace())) {
                 predicates.add(
-                        cb.like(c.get("place"), "%" + filter.getPlace() + "%"));
+                        cb.like(c.get("place"), filter.getPlace() + "%"));
             }
-                q.select(c).where(predicates.toArray(new Predicate[]{}));
-
-            System.out.println("BeginDate: " + filter.getBeginDate());
+            if (!"".equals(filter.getArtist())) {
+                List<Long> list2 = null;
+                list2 = query2.getEntityManager().createNamedQuery("Artist.findByArtistNameFestivalId").setParameter("artistName", filter.getArtist() + "%").getResultList();
+                        
+                for (int i = 0; i < list2.size(); i++) {
+                    System.out.println(i + " : " + list2.get(i));
+                    predicates.add(
+                            cb.or(cb.equal(c.get("id"), list2.get(i))));
+                }
+            }
+            q.select(c).where(predicates.toArray(new Predicate[]{}));
             list = query.getEntityManager().createQuery(q).getResultList();
-            for (int i = 0; i < list.size(); i++) {
-                System.out.println("List Size: " + list.size() + " List title: " + list.get(i).getTitle() + "\nBeginDate" + list.get(i).getBeginDate() + " \nEndDate: " + list.get(i).getEndDate());
-            }
         }
         return list;
     }
@@ -166,6 +179,7 @@ public class FestivalList implements Serializable {
         list = query.getEntityManager().createNamedQuery("Festival.upcoming", Festival.class).setMaxResults(5).getResultList();
         return list;
     }
+
     public List<Festival> getLastTop5Rated() {
         List<Festival> list;
         list = query.getEntityManager().createNamedQuery("Festival.findByRating", Festival.class).setMaxResults(5).getResultList();

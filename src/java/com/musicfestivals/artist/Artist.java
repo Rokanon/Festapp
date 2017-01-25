@@ -13,7 +13,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -24,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Artist.findById", query = "SELECT a FROM Artist a WHERE a.id = :id")
     , @NamedQuery(name = "Artist.findByFestivalId", query = "SELECT a FROM Artist a WHERE a.festivalId = :festivalId")
     , @NamedQuery(name = "Artist.findByArtistName", query = "SELECT a FROM Artist a WHERE a.artistName = :artistName")
+    , @NamedQuery(name = "Artist.findByArtistNameFestivalId", query = "SELECT a.festivalId FROM Artist a WHERE a.artistName LIKE :artistName")
     , @NamedQuery(name = "Artist.findByPerformanceDate", query = "SELECT a FROM Artist a WHERE a.performanceDate = :performanceDate")
     , @NamedQuery(name = "Artist.findByPerformanceTimeStart", query = "SELECT a FROM Artist a WHERE a.performanceTimeStart = :performanceTimeStart")
     , @NamedQuery(name = "Artist.findByPerformanceTimeEnd", query = "SELECT a FROM Artist a WHERE a.performanceTimeEnd = :performanceTimeEnd")})

@@ -14,21 +14,21 @@
         </ui:insert> 
 
         <h:form id="filter">
-            <h:panelGrid columns="5" cellpadding="5">
+            <h:panelGrid columns="5" cellpadding="5" id="panGrid">
                 <p:outputLabel value="Title"/>
                 <p:outputLabel for="from" value="From"/>
                 <p:outputLabel for="to" value="To"/>
                 <p:outputLabel value="Place"/>
                 <p:outputLabel value="Artist"/>
 
-                <p:inputText placeholder="title" value="#{festivalList.filter.title}"/>
+                <p:inputText placeholder="title" value="#{festivalList.filter.title}" id="textfield1"/>
                 <p:calendar id="from" placeholder="from" value="#{festivalList.filter.beginDate}" pattern="dd.MM.yy"/>
                 <p:calendar id="to" placeholder="to" value="#{festivalList.filter.endDate}"  pattern="dd.MM.yy"/>
-                <p:inputText placeholder="place" value="#{festivalList.filter.place}"/>
-                <p:inputText placeholder="artist" value="#{festivalList.filter.artist}"/>
+                <p:inputText placeholder="place" value="#{festivalList.filter.place}" id="textfield2"/>
+                <p:inputText placeholder="artist" value="#{festivalList.filter.artist}" id="textfield3"/>
             </h:panelGrid>
-            <p:commandButton value="Search" action="#{festivalList.setFilterSet(true)}" update="table">
-                <f:ajax render="table"/>
+            <p:commandButton value="Search" action="#{festivalList.setFilterSet(true)}" update="table" onclick="ClearFields()">
+                <f:ajax render="table panGrid"/>
             </p:commandButton>
             <br/>
             <h:panelGroup id="table">
@@ -89,4 +89,13 @@
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 
     </h:body>
+    <script src="jquery-3.1.1.min.js">
+        $(document).ready(function ClearFields() {
+            document.getElementById("textfield1").value = "";
+            document.getElementById("textfield2").value = "";
+            document.getElementById("textfield3").value = "";
+            document.getElementById("from").value = "";
+            document.getElementById("to").value = "";
+        });
+    </script>
 </html>
