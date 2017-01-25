@@ -13,28 +13,38 @@
         <h:form>
             <p:panelGrid columns="2">
                 <f:facet name="header">Festival</f:facet>
+
                 <h:outputText value="Title" />
                 <p:inputText value="#{festivalForm.festival.title}"/>
+
                 <h:outputText value="Genre" />
                 <p:inputText value="#{festivalForm.festival.genre}"/>
+
                 <h:outputText value="Place" />
                 <p:inputText value="#{festivalForm.festival.place}"/>
+
                 <h:outputText value="Begin Date" />
                 <p:calendar id="from" placeholder="From" value="#{festivalForm.festival.beginDate}" pattern="dd.MM.yy"/>
+
                 <h:outputText value="End Date" />
                 <p:calendar id="to" placeholder="End" value="#{festivalForm.festival.endDate}" pattern="dd.MM.yy"/>
+
                 <h:outputText value="Maximum reservations per user"/>
                 <p:inputText value="#{festivalForm.festival.maxTicketsPerUser}"/>
+
+                <h:outputText value="Price for one day"/>
+                <p:inputText value="#{festivalForm.festival.priceOneDay}"/>
+
+                <h:outputText value="Price for whole festival"/>
+                <p:inputText value="#{festivalForm.festival.priceWholeFestival}"/>
+
             </p:panelGrid>
-            
-            <h:outputLink value="festival-add2.xhtml" styleClass="button">
-                <f:param name="dataId" value="#{festivalForm.festival.id}" />
-                <h:outputLabel value="Manage artists"/>
-            </h:outputLink>
-             <br/>
-            <p:commandButton action="#{festivalForm.save()}" onclick="window.history.back();"  value="Save"/>
+            <br/>
+
+            <p:commandButton action="#{festivalForm.save()}" onclick="window.location.href = 'festival-add2.xhtml'" value="Add Artists">
+
+            </p:commandButton>
             <p:commandButton onclick="window.history.back();" value="Cancel"/>
         </h:form>
-
     </h:body>
 </html>
