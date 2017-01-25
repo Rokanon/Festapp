@@ -3,6 +3,7 @@ package com.musicfestivals.artist;
 import com.musicfestivals.app.JSFParamGetter;
 import com.musicfestivals.query.DataQuery;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -24,7 +25,7 @@ public class ArtistList implements Serializable {
         list = query.getEntityManager().createNamedQuery("Artist.findByFestivalId").setParameter("festivalId", dataId).getResultList();
         return list;
     }
-
+    
     public List<Artist> getArtists() {
         if (artists == null) {
             artists = loadList();

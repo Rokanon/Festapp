@@ -47,7 +47,18 @@ public class FestivalForm implements Serializable {
     public void cancel() {
         goBack();
     }
-
+    
+    public void add() {
+        Festival f = new Festival();
+        f.setTitle(festival.getTitle());
+        f.setPlace(festival.getPlace());
+        f.setBeginDate(festival.getBeginDate());
+        f.setEndDate(festival.getEndDate());
+        
+        query.getEntityManager().persist(f);
+        query.getEntityManager().getTransaction().commit();
+    }
+    
     public Festival getFestival() {
         if (festival == null) {
             festival = new Festival();

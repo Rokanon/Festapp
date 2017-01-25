@@ -59,7 +59,7 @@
                     <c:if test="#{appAuthorization.admin}">
                         <p:column headerText="">                        
                             <h:outputLink value="festival-form.xhtml?dataId=#{festival.id}">Edit</h:outputLink>
-                            <h:outputLink value="festival-form.xhtml?dataId=0">Add</h:outputLink>
+                            <h:outputLink value="festival-add.xhtml">Add</h:outputLink>
                         </p:column>
                     </c:if>
                     <c:if test="#{appAuthorization.member}">

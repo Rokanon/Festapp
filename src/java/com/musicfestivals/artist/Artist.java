@@ -36,7 +36,7 @@ public class Artist implements Serializable {
     @Column(name = "id")
     private Long id;
     @Column(name = "festival_id")
-    private BigInteger festivalId;
+    private Long festivalId;
     @Column(name = "artist_name")
     private String artistName;
     @Basic(optional = false)
@@ -68,11 +68,11 @@ public class Artist implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getFestivalId() {
+    public Long getFestivalId() {
         return festivalId;
     }
 
-    public void setFestivalId(BigInteger festivalId) {
+    public void setFestivalId(Long festivalId) {
         this.festivalId = festivalId;
     }
 
