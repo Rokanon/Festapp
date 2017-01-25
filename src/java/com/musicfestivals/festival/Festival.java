@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Festival.findByRating", query = "SELECT f FROM Festival f WHERE f.rating = :rating and f.endDate >= CURRENT_TIMESTAMP ORDER BY f.rating desc")
     , @NamedQuery(name = "Festival.findByPlace", query = "SELECT f FROM Festival f WHERE f.place = :place and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByMaxTicketsPerUser", query = "SELECT f FROM Festival f WHERE f.maxTicketsPerUser = :maxTicketsPerUser and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByMaxTicketsPerDay", query = "SELECT f FROM Festival f WHERE f.maxTicketsPerUserPerDay = :maxTicketsPerUserPerDay and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByEndDate", query = "SELECT f FROM Festival f WHERE f.endDate = :endDate and f.endDate >= CURRENT_TIMESTAMP")})
 public class Festival implements Serializable {
 
@@ -67,6 +68,8 @@ public class Festival implements Serializable {
     private Date endDate;
     @Column(name = "place")
     private String place;
+    @Column(name = "max_tickets_per_user_per_day")
+    private int maxTicketsPerUserPerDay;
     @Column(name = "max_tickets_per_user")
     private int maxTicketsPerUser;
     @Column(name = "rating")
@@ -229,6 +232,14 @@ public class Festival implements Serializable {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public int getMaxTicketsPerUserPerDay() {
+        return maxTicketsPerUserPerDay;
+    }
+
+    public void setMaxTicketsPerUserPerDay(int maxTicketsPerUserPerDay) {
+        this.maxTicketsPerUserPerDay = maxTicketsPerUserPerDay;
     }
     
 }

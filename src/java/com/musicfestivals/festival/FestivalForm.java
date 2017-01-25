@@ -179,6 +179,10 @@ public class FestivalForm implements Serializable {
         comments = query.getEntityManager().createNamedQuery("Comment.findByNameAndUser", Comment.class).setParameter("userId", userId).setParameter("festivalTitle", getFestival().getTitle()).getResultList();
         return comments != null ? comments : new ArrayList<>();
     }
+    public List<Comment> getAllComments() {
+        comments = query.getEntityManager().createNamedQuery("Comment.findByFestivalId", Comment.class).setParameter("festivalId", getFestival().getId()).getResultList();
+        return comments != null ? comments : new ArrayList<>();
+    }
 
     public boolean alreadyRated() {
         if (getComment().getRating() == -1 || getComment().getRating() == 0.0) {

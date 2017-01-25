@@ -1,5 +1,6 @@
 package com.musicfestivals.img;
 
+import com.musicfestivals.app.AuthorizationBean;
 import com.musicfestivals.app.GlobalVars;
 import com.musicfestivals.app.JSFParamGetter;
 import com.musicfestivals.festival.Festival;
@@ -67,6 +68,11 @@ public class ImageForm implements Serializable {
         uploadedImage.setFestivalId(getFestival().getId());
         uploadedImage.setFileName(name);
         uploadedImage.setFileSize(fileSize);
+        if (AuthorizationBean.getLoggedInUser().getKind() == 1) {
+            uploadedImage.setApproved(1);
+        } else {
+            uploadedImage.setApproved(0);
+        }
         transactionCheck();
         query.getEntityManager().persist(uploadedImage);
         query.getEntityManager().getTransaction().commit();

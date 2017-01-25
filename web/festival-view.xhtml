@@ -30,8 +30,8 @@
                 </h:outputText>
             </p:panelGrid>
             <p:panelGrid columns="1">
-                    <f:facet name="header">Info</f:facet>
-                    <h:outputText value="#{festivalForm.festival.info}" />
+                <f:facet name="header">Info</f:facet>
+                <h:outputText value="#{festivalForm.festival.info}" />
             </p:panelGrid>
         </p:panelGrid>
 
@@ -64,11 +64,21 @@
             <p:inputTextarea value="#{festivalForm.commentContent}" cols="30" rows="5" placeholder="Leave a comment..." id="comment"/><br/>
             <p:commandButton value="Comment" action="#{festivalForm.comment}" update="comment :ratingForm" title="comment" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
-        
+
+        <ui:repeat var="comment" value="#{festivalForm.allComments}" rendered="#{not empty festivalForm.allComments}">
+            <h:outputText value="#{comment.text}"/> <br/>
+        </ui:repeat>
+
+        <h:outputLink value="images-form.xhtml?dataId=#{festivalForm.festival.id}">
+            Upload images                
+        </h:outputLink><br/>
+        <h:outputLink value="videos-form.xhtml?dataId=#{festivalForm.festival.id}">
+            Upload images                
+        </h:outputLink><br/>
         <ui:insert name="photo-galery">
             <ui:include src="/templates/photo-galery.xhtml"/>
         </ui:insert>
-        <ui:insert name="festival-galery">
+        <ui:insert name="video-galery">
             <ui:include src="/templates/video-galery.xhtml"/>
         </ui:insert>
         <h:outputLink value="https://www.facebook.com/#{festivalForm.festival.title}">Facebook</h:outputLink><br/>

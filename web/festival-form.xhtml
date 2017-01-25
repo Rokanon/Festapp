@@ -29,8 +29,10 @@
                 <h:outputText value="End Date" />
                 <p:calendar id="to" placeholder="End" value="#{festivalForm.festival.endDate}" pattern="dd.MM.yy"/>
 
-                <h:outputText value="Maximum reservations per user"/>
+                <h:outputText value="Maximum Tickets Per Pser"/>
                 <p:inputText value="#{festivalForm.festival.maxTicketsPerUser}"/>
+                <h:outputText value="Maximum Tickets Per Day"/>
+                <p:inputText value="#{festivalForm.festival.maxTicketsPerUserPerDay}"/>
 
                 <h:outputText value="Price for one day"/>
                 <p:inputText value="#{festivalForm.festival.priceOneDay}"/>

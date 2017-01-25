@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Image.findAll", query = "SELECT i FROM Image i")
     , @NamedQuery(name = "Image.findById", query = "SELECT i FROM Image i WHERE i.id = :id")
     , @NamedQuery(name = "Image.findByFestivalId", query = "SELECT i FROM Image i WHERE i.festivalId = :festivalId")
+    , @NamedQuery(name = "Image.findByApproved", query = "SELECT i FROM Image i WHERE i.approved :approved")
     , @NamedQuery(name = "Image.findByFileName", query = "SELECT i FROM Image i WHERE i.fileName = :fileName")
     , @NamedQuery(name = "Image.findByFileSize", query = "SELECT i FROM Image i WHERE i.fileSize = :fileSize")})
 public class Image implements Serializable {
@@ -45,6 +46,8 @@ public class Image implements Serializable {
     private String fileName;
     @Column(name = "file_size")
     private long fileSize;
+    @Column(name = "approved")
+    private long approved;
 
     public Image() {
     }
@@ -108,6 +111,14 @@ public class Image implements Serializable {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public long getApproved() {
+        return approved;
+    }
+
+    public void setApproved(long approved) {
+        this.approved = approved;
     }
     
 }
