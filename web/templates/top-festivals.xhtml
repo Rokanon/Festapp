@@ -80,7 +80,25 @@
                 </p:dataTable><br/>
             </c:if>
             <c:if test="#{appAuthorization.anonymous}">
-                <p:outputLabel value="Why so guest?" style="background-color: #bedbed"/>
+                <h:outputText class="header" value="Upcoming festivals"/> <br/>
+                <p:dataTable id="Upcoming" var="festival" value="#{festivalList.lastFiveUpcoming}" >
+                    <p:column headerText="Title">
+                        <h:outputText value="#{festival.title}" />
+                    </p:column>
+                    <p:column headerText="Place">
+                        <h:outputText value="#{festival.place}" />
+                    </p:column>
+                    <p:column headerText="Begin Date">
+                        <h:outputText value="#{festival.beginDate}" >
+                            <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="End Date">
+                        <h:outputText value="#{festival.endDate}" >
+                            <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+                        </h:outputText>
+                    </p:column>                                   
+                </p:dataTable><br/>
             </c:if>
         </ui:composition>	
     </body>

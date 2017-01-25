@@ -16,9 +16,9 @@
             </c:if>
             <c:if test="#{appAuthorization.anonymous}">
                 <h:form class="logoutButton">
-                    <h:outputLink value="login.xhtml">
-                        Login                
-                    </h:outputLink>
+                    <h:form class="logoutButton">
+                    <p:commandButton value="Login" action="#{login.logoutControl()}"/> 
+                </h:form>
                 </h:form>
             </c:if>
             <h:panelGroup layout="cols" class="navMenu">
@@ -37,6 +37,7 @@
             <c:if test="#{appAuthorization.anonymous}">
                 <p:outputLabel value="Why so guest?" style="background-color: #bedbed"/>
             </c:if>
+            <br/>
         </ui:composition>	
     </body>
 </html>

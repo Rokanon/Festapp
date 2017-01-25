@@ -19,11 +19,9 @@
                           fileUploadListener="#{uploadImage.fileUpload}"
                           multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
         </h:form>
-        <f:view>
-            <p:galleria value="#{imageList.imageList}" var="image" panelWidth="500" panelHeight="315" showCaption="true" id="imagesList" rendered="#{not empty imageList.imageList}">
-                <p:graphicImage value="/resources/images/tmp/#{image.fileName}" title="#{image.fileName}" />
-            </p:galleria>
-        </f:view>
+        <ui:insert name="photo-galery">
+            <ui:include src="/templates/photo-galery.xhtml"/>
+        </ui:insert>
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 

@@ -5,7 +5,10 @@
  */
 package com.musicfestivals.user;
 
+import com.musicfestivals.query.DataQuery;
+import com.musicfestivals.reservation.Reservation;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;

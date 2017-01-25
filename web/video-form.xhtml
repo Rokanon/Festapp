@@ -19,29 +19,9 @@
                           fileUploadListener="#{uploadVideo.fileUpload}"
                           multiple="false" allowTypes="/(\.|\/)(avi|ram|wmv|AVI|RAM|WMV)$/" sizeLimit="10485760"/>
         </h:form>
-        <f:view>
-            <ui:repeat id="items" value="#{videoList.videoList}" var="media" rendered="#{not empty videoList.videoList}">
-                <ui:fragment rendered="#{media.kind eq 0}">
-                    <h3>AVI</h3>
-                    <p:media value="/resources/videos/tmp/#{media.fileName}" width="250" height="300" player="windows">
-                        <f:param name="autostart" value="false" />
-                        <p:outputPanel layout="block">
-                            Windows Media is required to view this media. <h:outputLink value="http://www.microsoft.com/Windows/MediaPlayer/">Download Here</h:outputLink>
-                        </p:outputPanel>
-                    </p:media>
-                </ui:fragment>
-                <ui:fragment rendered="#{media.kind eq 1}"> 
-                    <h3>Real</h3>
-                    <p:media value="/resources/videos/tmp/#{media.fileName}" width="250" height="300"  player="real">
-                        <f:param name="autostart" value="false" />
-                        <p:outputPanel layout="block">
-                            RealPlayer is required to view this media. <h:outputLink value="http://www.real.com/player/">Download Here</h:outputLink>
-                        </p:outputPanel>
-                    </p:media>
-                </ui:fragment>
-                <br/>
-            </ui:repeat>            
-        </f:view>
+        <ui:insert name="video-galery" >
+            <ui:include src="/templates/video-galery.xhtml" />
+        </ui:insert> 
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 

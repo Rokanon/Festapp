@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Reservation.findAll", query = "SELECT r FROM Reservation r")
+    , @NamedQuery(name = "Reservation.findIfUserBoughtForFestival", query = "SELECT r FROM Reservation r WHERE r.userId = :userId AND r.festivalId = :festival AND r.bought =TRUE")
     , @NamedQuery(name = "Reservation.findById", query = "SELECT r FROM Reservation r WHERE r.id = :id")
     , @NamedQuery(name = "Reservation.findByFestivalId", query = "SELECT r FROM Reservation r WHERE r.festivalId = :festivalId")
     , @NamedQuery(name = "Reservation.findByUserId", query = "SELECT r FROM Reservation r WHERE r.userId = :userId")

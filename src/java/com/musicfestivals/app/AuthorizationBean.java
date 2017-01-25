@@ -38,4 +38,8 @@ public class AuthorizationBean implements Serializable {
     public String getUserName() {
         return getLoggedInUser().getUsername();
     }
+    
+    public UserProfile getUserProfile(){
+        return getLoggedInUser();
+    }
 }

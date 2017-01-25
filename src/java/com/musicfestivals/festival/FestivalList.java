@@ -106,37 +106,6 @@ public class FestivalList implements Serializable {
                 predicates.add(
                         cb.like(c.get("place"), "%" + filter.getPlace() + "%"));
             }
-
-//            if (predicates == null) {
-//                Date datum = new Date(System.currentTimeMillis());
-//                Calendar cal = Calendar.getInstance();
-//                int year = cal.get(Calendar.YEAR);
-//                years = "" + year;
-//                int month = cal.get(Calendar.MONTH);
-//                month = month + 1;
-//                if (month / 10 == 0) {
-//                    StringBuilder m = new StringBuilder("0");
-//                    m.append(month % 10);
-//                    months = m.toString();
-//                } else {
-//                    StringBuilder m = new StringBuilder();
-//                    m.append(month);
-//                    months = m.toString();
-//                }
-//                int day = cal.get(Calendar.DAY_OF_MONTH);
-//                day = day + 1;
-//                if (day / 10 == 0) {
-//                    StringBuilder m = new StringBuilder("0");
-//                    m.append(day % 10);
-//                    days = m.toString();
-//                } else {
-//                    StringBuilder m = new StringBuilder();
-//                    m.append(day);
-//                    days = m.toString();
-//                }
-//                predicates.add(
-//                        cb.(c.get("endDate"), years + "-" + months + "-" + days + "%"));
-//            }
                 q.select(c).where(predicates.toArray(new Predicate[]{}));
 
             System.out.println("BeginDate: " + filter.getBeginDate());
@@ -193,6 +162,11 @@ public class FestivalList implements Serializable {
     }
 
     public List<Festival> getLastFiveUpcoming() {
+        List<Festival> list;
+        list = query.getEntityManager().createNamedQuery("Festival.upcoming", Festival.class).setMaxResults(5).getResultList();
+        return list;
+    }
+    public List<Festival> getLastTop5Rated() {
         List<Festival> list;
         list = query.getEntityManager().createNamedQuery("Festival.findByRating", Festival.class).setMaxResults(5).getResultList();
         return list;

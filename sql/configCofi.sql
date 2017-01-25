@@ -4,6 +4,6 @@ create table reservation(
     user_id bigint(20),
     time_of_reservation timestamp default current_timestamp,
     duration_time int,
-    bought boolean,
+    bought boolean default false,
     primary key(id)
 )

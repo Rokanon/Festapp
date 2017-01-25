@@ -11,50 +11,64 @@
         <h3> Festival details </h3> 
         <ui:insert name="header">
             <ui:include src="/templates/header.xhtml" />
-        </ui:insert> 
-        <p:panelGrid columns="2">
-            <f:facet name="header">Festival</f:facet>
-            <h:outputLabel value="Title" />
-            <h:outputText value="#{festivalForm.festival.title}"/>
-            <h:outputLabel value="Place" />
-            <h:outputText value="#{festivalForm.festival.place}"/>
-            <h:outputLabel value="Begin Date" />
-            <h:outputText value="#{festivalForm.festival.beginDate}">
-                <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-            </h:outputText>
-            <h:outputLabel value="End Date" />
-            <h:outputText id="to" value="#{festivalForm.festival.endDate}">
-                <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-            </h:outputText>
+        </ui:insert>
+        <br/>
+        <p:panelGrid columns="2" >
+            <p:panelGrid columns="2"> 
+                <f:facet name="header">Festival</f:facet>
+                <h:outputLabel value="Title" />
+                <h:outputText value="#{festivalForm.festival.title}"/>
+                <h:outputLabel value="Place" />
+                <h:outputText value="#{festivalForm.festival.place}"/>
+                <h:outputLabel value="Begin Date" />
+                <h:outputText value="#{festivalForm.festival.beginDate}">
+                    <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+                </h:outputText>
+                <h:outputLabel value="End Date" />
+                <h:outputText id="to" value="#{festivalForm.festival.endDate}">
+                    <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+                </h:outputText>
+            </p:panelGrid>
+            <p:panelGrid columns="1">
+                    <f:facet name="header">Info</f:facet>
+                    <h:outputText value="#{festivalForm.festival.info}" />
+            </p:panelGrid>
         </p:panelGrid>
+
         <br/>
         
-        <h:form>
+        <h:form rendered="#{appAuthorization.userProfile}">
             <h:outputText id="rating" value="Current rating: #{festivalForm.festival.rating}"/><br/>
             <p:rating stars="10" value="#{festivalForm.vote}"/><br/>
             <p:commandButton value="Rate" action="#{festivalForm.rate}" update="rating" title="oceni" class="button" onclick="$(this).addClass('disabled')"/>  
         </h:form>
-        
+
         <br/>
         <h:panelGroup id="table" >
             <p:dataTable var="artist" value="#{artistList.loadList()}" >
-                    <p:column headerText="Artists">
-                        <h:outputText value="#{artist.artistName}" />
-                    </p:column>
-                    <p:column headerText="Date">
-                        <h:outputText value="#{artist.performanceDate}" >
-                            <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Starts">
-                        <h:outputText value="#{artist.performanceTimeStart}" />
-                    </p:column>
-                    <p:column headerText="Ends">
-                        <h:outputText value="#{artist.performanceTimeEnd}" />
-                    </p:column>
-                </p:dataTable>
-            </h:panelGroup>
+                <p:column headerText="Artists">
+                    <h:outputText value="#{artist.artistName}" />
+                </p:column>
+                <p:column headerText="Date">
+                    <h:outputText value="#{artist.performanceDate}" >
+                        <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Starts">
+                    <h:outputText value="#{artist.performanceTimeStart}" />
+                </p:column>
+                <p:column headerText="Ends">
+                    <h:outputText value="#{artist.performanceTimeEnd}" />
+                </p:column>
+            </p:dataTable>
+        </h:panelGroup>
         <p:inputTextarea cols="30" rows="5" placeholder="Leave a comment..."/>
+        <ui:insert name="photo-galery">
+            <ui:include src="/templates/photo-galery.xhtml"/>
+        </ui:insert>
+        <ui:insert name="festival-galery">
+            <ui:include src="/templates/video-galery.xhtml"/>
+        </ui:insert>
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 

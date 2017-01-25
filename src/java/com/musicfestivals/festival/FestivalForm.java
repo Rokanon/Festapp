@@ -1,5 +1,6 @@
 package com.musicfestivals.festival;
 
+import com.musicfestivals.app.AuthorizationBean;
 import com.musicfestivals.app.PageNavigation;
 import com.musicfestivals.img.Image;
 import com.musicfestivals.query.DataQuery;
@@ -15,6 +16,7 @@ import javax.faces.context.FacesContext;
 import com.musicfestivals.app.JSFParamGetter;
 import com.musicfestivals.artist.Artist;
 import com.musicfestivals.festival.day.FestivalDay;
+import com.musicfestivals.reservation.Reservation;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "festivalForm")
@@ -28,7 +30,7 @@ public class FestivalForm implements Serializable {
     private final DataQuery query = new DataQuery();
     private String back;
     private boolean newData = false;
-    private Integer vote;     
+    private Integer vote;
 
     @PostConstruct
     public void init() {
@@ -59,7 +61,6 @@ public class FestivalForm implements Serializable {
         query.getEntityManager().getTransaction().commit();
 //        goBack();
     }
-
 
     public Festival getFestival() {
         return festival;
@@ -94,13 +95,13 @@ public class FestivalForm implements Serializable {
         transactionCheck();
         double currentRate = getFestival().getRating();
         int timesRated = getFestival().getUsersRated();
-        double totalRating = currentRate*timesRated;
+        double totalRating = currentRate * timesRated;
         timesRated++;
         totalRating += getVote();
-        double finalRating = totalRating/timesRated;
+        double finalRating = totalRating / timesRated;
         getFestival().setUsersRated(timesRated);
-        getFestival().setRating((double)Math.round(finalRating * 100d) / 100d);
-        query.getEntityManager().getTransaction().commit();                
+        getFestival().setRating((double) Math.round(finalRating * 100d) / 100d);
+        query.getEntityManager().getTransaction().commit();
     }
 
     public Integer getVote() {
@@ -112,4 +113,11 @@ public class FestivalForm implements Serializable {
         this.vote = vote;
     }
 
+    public boolean isHasBoughtTicket() {
+        List<Reservation> list;        
+        long userId = AuthorizationBean.getLoggedInUser().getId();
+        long festivalId = getFestival().getId();
+        list = query.getEntityManager().createNamedQuery("Reservation.findIfUserBoughtForFestival", Reservation.class).setParameter("userId", userId).setParameter("festivalId", festivalId).getResultList();
+        return list == null;       
+    }
 }
