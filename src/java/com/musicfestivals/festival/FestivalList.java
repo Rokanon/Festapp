@@ -30,25 +30,25 @@ public class FestivalList implements Serializable {
             list = query.getEntityManager().createNamedQuery("Festival.findAll").getResultList();
         } else {
             CriteriaBuilder cb = query.getEntityManager().getCriteriaBuilder();
-            CriteriaBuilder cb2 = query2.getEntityManager().getCriteriaBuilder();
 
             CriteriaQuery q = cb.createQuery(Festival.class);
-            CriteriaQuery q2 = cb2.createQuery(Artist.class);
 
             Root<Festival> c = q.from(Festival.class);
-            Root<Artist> c2 = q2.from(Artist.class);
             String years;
             String months;
             String days;
 
             List<Predicate> predicates = new ArrayList<Predicate>();
-            List<Predicate> predicates2 = new ArrayList<Predicate>();
             // search by fields, title, dates (both), place
+            
+            int indicator = 0;
             if (!"".equals(filter.getTitle())) {
+                indicator++;
                 predicates.add(
                         cb.like(c.get("title"), filter.getTitle() + "%"));
             }
             if (filter.getBeginDate() != null) {
+                indicator++;
                 Date datum = filter.getBeginDate();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(datum);
@@ -80,6 +80,7 @@ public class FestivalList implements Serializable {
                         cb.like(c.get("beginDate"), years + "-" + months + "-" + days + "%"));
             }
             if (filter.getEndDate() != null) {
+                indicator++;
                 Date datum = filter.getEndDate();
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(datum);
@@ -111,21 +112,29 @@ public class FestivalList implements Serializable {
                         cb.like(c.get("endDate"), years + "-" + months + "-" + days + "%"));
             }
             if (!"".equals(filter.getPlace())) {
+                indicator++;
                 predicates.add(
                         cb.like(c.get("place"), filter.getPlace() + "%"));
             }
             if (!"".equals(filter.getArtist())) {
+                indicator++;
                 List<Long> list2 = null;
                 list2 = query2.getEntityManager().createNamedQuery("Artist.findByArtistNameFestivalId").setParameter("artistName", filter.getArtist() + "%").getResultList();
-                        
+
                 for (int i = 0; i < list2.size(); i++) {
                     System.out.println(i + " : " + list2.get(i));
                     predicates.add(
                             cb.or(cb.equal(c.get("id"), list2.get(i))));
                 }
             }
-            q.select(c).where(predicates.toArray(new Predicate[]{}));
-            list = query.getEntityManager().createQuery(q).getResultList();
+
+            if (indicator > 0){
+                q.select(c).where(predicates.toArray(new Predicate[]{}));
+                list = query.getEntityManager().createQuery(q).getResultList();
+            } else {
+                list = query.getEntityManager().createNamedQuery("Festival.findAll").getResultList();
+            }
+
         }
         return list;
     }
