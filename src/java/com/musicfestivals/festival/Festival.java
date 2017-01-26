@@ -82,6 +82,8 @@ public class Festival implements Serializable {
     private int priceWholeFestival;
     @Column(name = "info")
     private String info;
+    @Column(name = "verified")
+    private boolean verified;
     
 
     public Festival() {
@@ -240,6 +242,14 @@ public class Festival implements Serializable {
 
     public void setMaxTicketsPerUserPerDay(int maxTicketsPerUserPerDay) {
         this.maxTicketsPerUserPerDay = maxTicketsPerUserPerDay;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
     }
     
 }

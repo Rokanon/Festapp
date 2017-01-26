@@ -20,8 +20,6 @@ public class UserList implements Serializable {
     }
 
     public List<UserProfile> loadList() {
-        StringBuilder sb = new StringBuilder("SELECT * FROM user_profile");
-//        sb.append(sqlSearchCondition());
         List<UserProfile> list;
         Connection conn;
         list = query.getEntityManager().createNamedQuery("UserProfile.findAll", UserProfile.class).getResultList();

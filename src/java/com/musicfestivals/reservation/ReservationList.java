@@ -6,9 +6,10 @@ import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 @ManagedBean(name = "reservationList")
-@RequestScoped
+@ViewScoped
 public class ReservationList implements Serializable {
     
     private final DataQuery query = new DataQuery();

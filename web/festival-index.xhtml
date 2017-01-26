@@ -62,31 +62,39 @@
                         <h:outputText value="#{festival.place}" />
                     </p:column>
                     <c:if test="#{appAuthorization.admin}">
-                        <p:column headerText="">                        
-                            <h:outputLink value="festival-form.xhtml?dataId=#{festival.id}">Edit</h:outputLink>                            
+                        <p:column headerText=""> 
+                            <p:commandButton onclick="window.location.href = 'festival-form.xhtml?dataId=#{festival.id}'" value="Edit   "/>
+                            <!--<h:outputLink value="festival-form.xhtml?dataId=#{festival.id}">Edit</h:outputLink>-->                            
                         </p:column>
                     </c:if>
                     <c:if test="#{appAuthorization.member}">
-                        <p:column headerText="">                        
-                            <h:outputLink value="reservation-form.xhtml?dataId=#{festival.id}">Buy</h:outputLink>
+                        <p:column headerText=""> 
+                            <p:commandButton onclick="window.location.href = 'reservation-form.xhtml?dataId=#{festival.id}'" value="Buy   "/>
+                            <!--<h:outputLink value="reservation-form.xhtml?dataId=#{festival.id}">Buy</h:outputLink>-->
                         </p:column>
                     </c:if>
 
                     <c:if test="#{appAuthorization.admin}">
                         <p:column headerText="">                        
-                            <h:outputLink value="images-form.xhtml?dataId=#{festival.id}">
+                            <p:commandButton onclick="window.location.href = 'images-form.xhtml?dataId=#{festival.id}'" value="Upload images   "/>
+<!--                            <h:outputLink value="images-form.xhtml?dataId=#{festival.id}">
                                 Upload images                
-                            </h:outputLink><br/>
+                            </h:outputLink><br/>-->
                         </p:column>
                         <p:column headerText="">
-                            <h:outputLink value="video-form.xhtml?dataId=#{festival.id}">
+                            <p:commandButton onclick="window.location.href = 'video-form.xhtml?dataId=#{festival.id}'" value="Upload videos   "/>
+<!--                            <h:outputLink value="video-form.xhtml?dataId=#{festival.id}">
                                 Upload videos                
-                            </h:outputLink><br/>
+                            </h:outputLink><br/>-->
                         </p:column>
                     </c:if>
                 </p:dataTable>
                 <c:if test="#{appAuthorization.admin}">
-                    <h:outputLink value="festival-form.xhtml" styleClass="button">Add</h:outputLink>
+                    <p:commandButton onclick="window.location.href = 'festival-form.xhtml'" value="Add festival   "/>
+                    <!--<h:outputLink value="festival-form.xhtml" styleClass="button">Add</h:outputLink>-->
+                    <br/>
+                    <p:commandButton onclick="window.location.href = 'festival-upload.xhtml'" value="Upload festival"/>
+                    <!--<h:outputLink value="festival-upload.xhtml" styleClass="button">Upload festival</h:outputLink>-->
                 </c:if>
             </h:panelGroup>
         </h:form>

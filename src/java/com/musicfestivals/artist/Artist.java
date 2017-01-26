@@ -47,6 +47,10 @@ public class Artist implements Serializable {
     private Time performanceTimeStart;
     @Column(name = "performance_time_end")
     private Time performanceTimeEnd;
+    @Basic(optional = false)
+    @Column(name = "performance_end_date")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date performanceEndDate;
 
     public Artist() {
     }
@@ -163,5 +167,13 @@ public class Artist implements Serializable {
         }
         Date date = new Date(time.getTime());
         return date;
+    }
+
+    public Date getPerformanceEndDate() {
+        return performanceEndDate;
+    }
+
+    public void setPerformanceEndDate(Date performanceEndDate) {
+        this.performanceEndDate = performanceEndDate;
     }
 }
