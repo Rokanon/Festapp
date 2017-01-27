@@ -17,11 +17,11 @@
 
         <h:form enctype="multipart/form-data">
             <p:growl id="growl" showDetail="true"/>
-            <p:fileUpload cancelLabel="#{msg['cancel']}" update="growl" 
+            <p:fileUpload cancelLabel="#{msg['cancel']}" update="growl viewButton" 
                           fileUploadListener="#{festivalUpload.fileUpload}"
-                          multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(json)$/" />
+                          multiple="false" sizeLimit="1000000" allowTypes="/(\.|\/)(json)$/" oncomplete="#{festivalUpload.setTest(true)}"/>
+            <p:commandButton id="viewButton" rendered="#{festivalUpload.test}" value="View" onclick="window.location.href='festival-view.xhtml?dataId=#{festivalUpload.festival.id}'"/>
         </h:form>
-
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />
         </ui:insert> 

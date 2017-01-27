@@ -1,7 +1,9 @@
 package com.musicfestivals.reservation;
 
 import com.musicfestivals.app.AuthorizationBean;
+import com.musicfestivals.festival.Festival;
 import com.musicfestivals.query.DataQuery;
+import com.musicfestivals.user.UserProfile;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -86,5 +88,15 @@ public class ReservationList implements Serializable {
 
     public void setReservationListUser(List<Reservation> reservationListUser) {
         this.reservationListUser = reservationListUser;
+    }
+    
+    public String festName(long id) {
+        Festival f = query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", id).getSingleResult();
+        return f.getTitle();
+    }
+    
+    public String userName(long id) {
+        UserProfile up = query.getEntityManager().createNamedQuery("UserProfile.findById", UserProfile.class).setParameter("id", id).getSingleResult();
+        return up.getFirstName() + " " + up.getLastName();
     }
 }

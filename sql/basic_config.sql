@@ -89,6 +89,7 @@ create table artist(
     performance_time_end time,
     primary key(id)
 );
+alter table artist add column performance_end_date timestamp default current_timestamp;
 
 create table comment(
     id bigint(20) not null auto_increment,
@@ -98,6 +99,14 @@ create table comment(
     text varchar(512),
     rating decimal(4,2) default -1,
     primary key(id)
+);
+
+create table social_networks(
+    festival_id bigint(20) not null,
+    facebook varchar(20),
+    twitter varchar(20),
+    youtube varchar(20),
+    primary key(festival_id)
 );
 
 -- inserting data
@@ -111,11 +120,11 @@ insert into user_profile(first_name,last_name,username, password, phone, email, 
 insert into user_profile(first_name,last_name,username, password, phone, email, kind, verified) VALUES ('Mika', 'Peric', 'Mika987', 'mikaperic555', '0645555555', 'mika.peric@gmail.com', 0, 0);
 
 
-insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Beer fest", "Rock" ,"2017-08-22 00:00:00", "2017-08-26 00:00:00", "Usce", 25, 7);
-insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Guca", "Folk" ,"2017-08-12 00:00:00", "2017-08-20 00:00:00", "Guca", 55, 15);
-insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Foam fest", "Techno" ,"2017-08-28 00:00:00", "2017-09-02 00:00:00", "Beograd", 56, 25);
-insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Exit", "multiple" ,"2017-07-08 00:00:00", "2017-07-12 00:00:00", "Novi Sad",100, 78);
-insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Novogodisnji festival", "Rock" ,"2016-12-25 00:00:00", "2017-01-05 00:00:00", "Trg", 32, 17);
+insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold, verified) values ("Beer fest", "Rock" ,"2017-08-22 00:00:00", "2017-08-26 00:00:00", "Usce", 25, 7, true);
+insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold, verified) values ("Guca", "Folk" ,"2017-08-12 00:00:00", "2017-08-20 00:00:00", "Guca", 55, 15, false);
+insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold, verified) values ("Foam fest", "Techno" ,"2017-08-28 00:00:00", "2017-09-02 00:00:00", "Beograd", 56, 25, true);
+insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold, verified) values ("Exit", "multiple" ,"2017-07-08 00:00:00", "2017-07-12 00:00:00", "Novi Sad",100, 78, true);
+insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold, verified) values ("Novogodisnji festival", "Rock" ,"2016-12-25 00:00:00", "2017-01-05 00:00:00", "Trg", 32, 17, true);
 insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Lim fest", "Rock" ,"2017-08-01 00:00:00", "2017-08-04 00:00:00", "Lim",4, 2);
 
 -- Triger

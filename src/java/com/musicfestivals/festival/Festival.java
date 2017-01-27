@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
       @NamedQuery(name = "Festival.findAll", query = "SELECT f FROM Festival f WHERE f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findAllVerified", query = "SELECT f FROM Festival f WHERE f.endDate >= CURRENT_TIMESTAMP and f.verified = :verified")
     , @NamedQuery(name = "Festival.false", query = "SELECT f FROM Festival f WHERE 1=0")
     , @NamedQuery(name = "Festival.lastFestival", query = "SELECT f FROM Festival f ORDER BY f.id desc")
     , @NamedQuery(name = "Festival.findById", query = "SELECT f FROM Festival f WHERE f.id = :id")
@@ -39,6 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Festival.findByRateCount", query = "SELECT f FROM Festival f WHERE f.usersRated >= :usersRated and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByRating", query = "SELECT f FROM Festival f WHERE f.rating = :rating and f.endDate >= CURRENT_TIMESTAMP ORDER BY f.rating desc")
     , @NamedQuery(name = "Festival.findByPlace", query = "SELECT f FROM Festival f WHERE f.place = :place and f.endDate >= CURRENT_TIMESTAMP")
+    , @NamedQuery(name = "Festival.findByNotVerified", query = "SELECT f FROM Festival f WHERE f.verified <> :verified")
+    , @NamedQuery(name = "Festival.findByVerified", query = "SELECT f FROM Festival f WHERE f.verified = :verified")
     , @NamedQuery(name = "Festival.findByMaxTicketsPerUser", query = "SELECT f FROM Festival f WHERE f.maxTicketsPerUser = :maxTicketsPerUser and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByMaxTicketsPerDay", query = "SELECT f FROM Festival f WHERE f.maxTicketsPerUserPerDay = :maxTicketsPerUserPerDay and f.endDate >= CURRENT_TIMESTAMP")
     , @NamedQuery(name = "Festival.findByEndDate", query = "SELECT f FROM Festival f WHERE f.endDate = :endDate and f.endDate >= CURRENT_TIMESTAMP")})

@@ -18,6 +18,7 @@ import com.musicfestivals.artist.Artist;
 import com.musicfestivals.comment.Comment;
 import com.musicfestivals.festival.day.FestivalDay;
 import com.musicfestivals.reservation.Reservation;
+import com.musicfestivals.social.SocialNetworks;
 import java.math.BigDecimal;
 import javax.faces.bean.ViewScoped;
 
@@ -37,6 +38,7 @@ public class FestivalForm implements Serializable {
     private Integer vote;
     private String commentContent;
     private boolean ratingSetProperly = false;
+    private SocialNetworks social;
 
     @PostConstruct
     public void init() {
@@ -48,6 +50,7 @@ public class FestivalForm implements Serializable {
             int updateViews = paramGeter.getIntParametar("viewUser");
             if (dataId > 0) {
                 setFestival(query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", dataId).getSingleResult());
+                setSocial(query.getEntityManager().createNamedQuery("SocialNetworks.findByFestivalId", SocialNetworks.class).setParameter("festivalId", dataId).getSingleResult());
                 if (updateViews == 1 && dataId > 0) {
                     updateNumberOfViews();
                 }
@@ -211,5 +214,13 @@ public class FestivalForm implements Serializable {
         long numberOfViews = getFestival().getTimesSeen() + 1;
         getFestival().setTimesSeen(numberOfViews);
         query.getEntityManager().getTransaction().commit();
+    }
+
+    public SocialNetworks getSocial() {
+        return social;
+    }
+
+    public void setSocial(SocialNetworks social) {
+        this.social = social;
     }
 }

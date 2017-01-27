@@ -2,6 +2,7 @@ package com.musicfestivals.festival;
 
 import com.musicfestivals.artist.Artist;
 import com.musicfestivals.query.DataQuery;
+import com.musicfestivals.social.SocialNetworks;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -33,11 +34,14 @@ public class FestivalUpload implements Serializable {
     private final DataQuery query = new DataQuery();
     private Festival festival;
     private Artist artist;
-
+    private SocialNetworks social;
+    private boolean test = false;
+    
     @PostConstruct
     public void init() {
         festival = new Festival();
         artist = new Artist();
+        social = new SocialNetworks();
     }
 
     public void fileUpload(FileUploadEvent event) throws IOException {
@@ -56,24 +60,10 @@ public class FestivalUpload implements Serializable {
             is.close();
             outputStream.close();
             JSONParser parser = new JSONParser();
-//            InputStreamReader reader = new InputStreamReader(is);
-//            int partition = 1024;
-//            int length = 0;
-//            int position = 0;
-//            char[] buffer = new char[partition];
-//            FileWriter fstream = new FileWriter("out.tmp");
-//            do {
-//                length = reader.read(buffer, position, partition);
-//                fstream.write(buffer, position, length);
-//            } while (length > 0);
-//           
-//            File file = new File("out.tmp");
 
             Object obj = parser.parse(new FileReader(file));
 
-            // festival
             JSONObject jo = (JSONObject) obj;
-//            JSONObject jo = new JSONObject(obj);
             JSONObject jsonObject = (JSONObject) jo.get("Festival");
             long t = 0;
             int m = 0;
@@ -101,13 +91,8 @@ public class FestivalUpload implements Serializable {
             query.getEntityManager().persist(getFestival());
             query.getEntityManager().getTransaction().commit();
 
-//            Iterator<String> iterator = msg.iterator();
-//            while (iterator.hasNext()) {
-//                System.out.println(iterator.next());
-//            }
-            // festival ^^^^
             JSONArray artists = (JSONArray) jsonObject.get("PerformersList");
-            for (int i = 0; i < artists.size() ; i++) {
+            for (int i = 0; i < artists.size(); i++) {
                 transactionCheck();
                 artist = new Artist();
                 JSONObject a = (JSONObject) artists.get(i);
@@ -120,6 +105,23 @@ public class FestivalUpload implements Serializable {
                 query.getEntityManager().persist(getArtist());
                 query.getEntityManager().getTransaction().commit();
             }
+
+            JSONArray socialNetworks = (JSONArray) jsonObject.get("SocialNetworks");
+            
+            JSONObject a = (JSONObject) socialNetworks.get(0);
+            JSONObject b = (JSONObject) socialNetworks.get(1);
+            JSONObject c = (JSONObject) socialNetworks.get(2);
+            
+            transactionCheck();
+            
+            social.setFestivalId(festival.getId());
+            social.setFacebook((String) a.get("Link"));
+            social.setTwitter((String) b.get("Link"));
+            social.setYoutube((String) c.get("Link"));
+
+            query.getEntityManager().persist(getSocial());
+            query.getEntityManager().getTransaction().commit();
+            setTest(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,13 +161,29 @@ public class FestivalUpload implements Serializable {
         }
         return startDate;
     }
-    
-    private Time convertStringToTime(String s){
+
+    private Time convertStringToTime(String s) {
         Time time = null;
         time = Time.valueOf(s.substring(0, 8));
-        if (s.substring(s.length()-2, s.length()).equals("PM")) {
+        if (s.substring(s.length() - 2, s.length()).equals("PM")) {
             time.setHours(time.getHours() + 12);
         }
         return time;
+    }
+
+    public SocialNetworks getSocial() {
+        return social;
+    }
+
+    public void setSocial(SocialNetworks social) {
+        this.social = social;
+    }
+
+    public boolean isTest() {
+        return test;
+    }
+
+    public void setTest(boolean test) {
+        this.test = test;
     }
 }

@@ -23,11 +23,12 @@ public class FestivalList implements Serializable {
     private final DataQuery query2 = new DataQuery();
     private boolean filterSet = false;
     private FestivalFilter filter;
+    private List<Festival> unVerifiedList;
 
     public List<Festival> loadList() {
         List<Festival> list = null;
         if (!filterSet) {
-            list = query.getEntityManager().createNamedQuery("Festival.findAll").getResultList();
+            list = query.getEntityManager().createNamedQuery("Festival.findAllVerified").setParameter("verified", true).getResultList();
         } else {
             CriteriaBuilder cb = query.getEntityManager().getCriteriaBuilder();
 
@@ -129,10 +130,12 @@ public class FestivalList implements Serializable {
             }
 
             if (indicator > 0){
+                predicates.add(
+                        cb.equal(c.get("verified"), true));
                 q.select(c).where(predicates.toArray(new Predicate[]{}));
                 list = query.getEntityManager().createQuery(q).getResultList();
             } else {
-                list = query.getEntityManager().createNamedQuery("Festival.findAll").getResultList();
+                list = query.getEntityManager().createNamedQuery("Festival.findAllVerified").setParameter("verified", true).getResultList();
             }
 
         }
@@ -193,5 +196,47 @@ public class FestivalList implements Serializable {
         List<Festival> list;
         list = query.getEntityManager().createNamedQuery("Festival.findByRating", Festival.class).setMaxResults(5).getResultList();
         return list;
+    }
+    
+    public List<Festival> unVerified() {
+        List<Festival> list;
+        list = query.getEntityManager().createNamedQuery("Festival.findByVerified", Festival.class).setParameter("verified", false).getResultList();
+        return list;
+    }
+    
+    public void accept(long id) {
+        transactionCheck();
+        Festival fest = query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", id).getSingleResult();
+        if (fest != null) {
+            fest.setVerified(true);
+            query.getEntityManager().getTransaction().commit();
+        }
+    }
+
+    public void reject(long id) {
+        transactionCheck(); 
+        Festival fest = query.getEntityManager().createNamedQuery("Festival.findById", Festival.class).setParameter("id", id).getSingleResult();
+        if (fest != null) {
+            query.getEntityManager().remove(fest);
+            query.getEntityManager().getTransaction().commit();
+            getUnVerifiedList().remove(fest);
+        }
+    }
+    
+    private void transactionCheck() {
+        if (!query.getEntityManager().getTransaction().isActive()) {
+            query.getEntityManager().getTransaction().begin();
+        }
+    }
+
+    public List<Festival> getUnVerifiedList() {
+        if (unVerifiedList == null) {
+            unVerifiedList = unVerified();
+        }
+        return unVerifiedList;
+    }
+
+    public void setUnVerifiedList(List<Festival> unVerifiedList) {
+        this.unVerifiedList = unVerifiedList;
     }
 }

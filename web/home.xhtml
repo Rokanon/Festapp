@@ -19,17 +19,19 @@
             <h:panelGroup id="table" rendered="#{not empty reservationList.reservationList}">
                 <p:dataTable var="reservation" value="#{reservationList.loadListUser()}" >
                     <p:column headerText="Festival">
-                        <h:outputText value="#{reservation.festivalId}" />
+                        <h:outputText value="#{reservationList.festName(reservation.festivalId)}" />
+                        <!--<h:outputText value="#{reservation.festivalId}" />-->
                     </p:column>
                     <p:column headerText="User">
-                        <h:outputText value="#{reservation.userId}" />
+                        <h:outputText value="#{reservationList.userName(reservation.userId)}" />
+                        <!--<h:outputText value="#{reservation.userId}" />-->
                     </p:column>
                     <p:column headerText="Time of reservation">
                         <h:outputText value="#{reservation.timeOfReservation}" >
                             <f:convertDateTime pattern="dd.MM.yy" dateStyle="medium"/>
                         </h:outputText>
                     </p:column>
-                    
+
                     <p:column headerText="">
                         <h:commandButton value="Reject" actionListener="#{reservationList.rejectTicket(reservation.id)}" rendered="#{!reservation.bought}">
                             <f:ajax render="table"/>
@@ -37,6 +39,25 @@
 
                         <h:outputText value="Boughted" rendered="#{reservation.bought}" style="background-color: greenyellow"/>
 
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </c:if>
+        <c:if test="#{appAuthorization.admin}">
+            <h:panelGroup id="table2" rendered="true">
+                <p:dataTable var="festivals" value="#{festivalList.unVerified()}">
+                    <p:column headerText="Festival">
+                        <h:outputText value="#{festivals.title}"/>
+                    </p:column>
+                    <p:column headerText="">
+                        <h:form>
+                            <h:commandButton value="Accept"  actionListener="#{festivalList.accept(festivals.id)}">
+                                <f:ajax render="table2"/>
+                            </h:commandButton>
+                            <h:commandButton value="Reject" actionListener="#{festivalList.reject(festivals.id)}">
+                                <f:ajax render="table2"/>
+                            </h:commandButton>
+                        </h:form>
                     </p:column>
                 </p:dataTable>
             </h:panelGroup>

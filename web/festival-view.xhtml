@@ -86,10 +86,9 @@
         <ui:insert name="video-galery">
             <ui:include src="/templates/video-galery.xhtml"/>
         </ui:insert>
-        <h:outputLink value="https://www.facebook.com/#{festivalForm.festival.title}">Facebook</h:outputLink><br/>
-        <h:outputLink value="https://twitter.com/#{festivalForm.festival.title}">Twitter</h:outputLink><br/>
-        <h:outputLink value="https://www.instagram.com/#{festivalForm.festival.title}">Instagram</h:outputLink><br/>
-        <h:outputLink value="https://www.youtube.com/results?search_query=#{festivalForm.festival.title}">YouTube</h:outputLink><br/>
+        <h:outputLink value="#{festivalForm.social.facebook}" target="_blank">Facebook</h:outputLink><br/>
+        <h:outputLink value="#{festivalForm.social.twitter}" target="_blank">Twitter</h:outputLink><br/>
+        <h:outputLink value="#{festivalForm.social.youtube}" target="_blank">YouTube</h:outputLink><br/>
 
         <ui:insert name="footer" >
             <ui:include src="/templates/footer.xhtml" />

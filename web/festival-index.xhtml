@@ -92,7 +92,9 @@
                 <c:if test="#{appAuthorization.admin}">
                     <p:commandButton onclick="window.location.href = 'festival-form.xhtml'" value="Add festival   "/>
                     <!--<h:outputLink value="festival-form.xhtml" styleClass="button">Add</h:outputLink>-->
-                    <br/>
+                </c:if>
+                <br/>
+                <c:if test="#{appAuthorization.member}">
                     <p:commandButton onclick="window.location.href = 'festival-upload.xhtml'" value="Upload festival"/>
                     <!--<h:outputLink value="festival-upload.xhtml" styleClass="button">Upload festival</h:outputLink>-->
                 </c:if>
@@ -103,12 +105,12 @@
         </ui:insert> 
     </h:body>
     <script src="jquery-3.1.1.min.js">
-        $(document).ready(function ClearFields() {
-            document.getElementById("textfield1").value = "";
-            document.getElementById("textfield2").value = "";
-            document.getElementById("textfield3").value = "";
-            document.getElementById("from").value = "";
-            document.getElementById("to").value = "";
-        });
+                        $(document).ready(function ClearFields() {
+                            document.getElementById("textfield1").value = "";
+                            document.getElementById("textfield2").value = "";
+                            document.getElementById("textfield3").value = "";
+                            document.getElementById("from").value = "";
+                            document.getElementById("to").value = "";
+                        });
     </script>
 </html>
