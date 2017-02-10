@@ -57,6 +57,10 @@ public class UserProfile implements Serializable {
     private Short kind;
     @Column(name = "verified")
     private Short verified;
+    @Column(name = "blocked")
+    private Short blocked;
+    @Column(name = "times_not_bought_reserved_ticket")
+    private Short timesNotBoughtReservedTicket;
 
     public UserProfile() {
         firstName = "";
@@ -68,6 +72,8 @@ public class UserProfile implements Serializable {
         id = 0l;
         kind = -1;
         verified = 0;
+        blocked=0;
+        timesNotBoughtReservedTicket = 0;
     }
 
     public UserProfile(Long id) {
@@ -183,5 +189,21 @@ public class UserProfile implements Serializable {
                     return "Unknown";
             }
         }
+    }
+
+    public Short getBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(Short blocked) {
+        this.blocked = blocked;
+    }
+
+    public Short getTimesNotBoughtReservedTicket() {
+        return timesNotBoughtReservedTicket;
+    }
+
+    public void setTimesNotBoughtReservedTicket(Short timesNotBoughtReservedTicket) {
+        this.timesNotBoughtReservedTicket = timesNotBoughtReservedTicket;
     }
 }

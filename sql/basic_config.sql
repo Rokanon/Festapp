@@ -16,6 +16,8 @@ create table user_profile(
     primary key(id)
 );
 alter table user_profile add column verified tinyint(2) default 0;
+alter table user_profile add column blocked tinyint(2) default 0;
+alter table user_profile add column times_not_bought_reserved_ticket int default 0;
 
 create table festival(
     id bigint(20) not null auto_increment,
@@ -128,16 +130,56 @@ insert into festival(title, genre, begin_date, end_date, place, times_seen, tick
 insert into festival(title, genre, begin_date, end_date, place, times_seen, tickets_sold) values ("Lim fest", "Rock" ,"2017-08-01 00:00:00", "2017-08-04 00:00:00", "Lim",4, 2);
 
 -- Triger
+drop update_festival_tickets;
 
--- DELIMITER $$
--- CREATE TRIGGER update_festival_tickets
---   AFTER UPDATE ON reservation
---   for each row
---     UPDATE festival
---       SET festival.tickets_sold = festival.tickets_sold + 1
---        
---       WHERE reservation.festival_id = festival.id;
--- $$
--- DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER update_festival_tickets
+  AFTER UPDATE ON reservation
+  for each row
+    UPDATE festival f
+      when NEW.bought=1 then SET f.tickets_sold = f.tickets_sold + 1 
+      WHERE NEW.festival_id = f.id ;
+$$;
 
 
+drop delete_reservation;
+-- event to delete reservation after two days if ticket is not bought
+DELIMITER $$
+    CREATE EVENT delete_reservation
+    ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL 1 DAY
+    ON COMPLETION PRESERVE
+    DO
+      DELETE FROM reservation WHERE time_of_reservation < (CURDATE() - INTERVAL 2 DAY) and bought=0;
+$$;
+
+drop trigger success_times_not_bought;
+
+DELIMITER $$
+    CREATE TRIGGER success_times_not_bought 
+    BEFORE DELETE on reservation
+    FOR EACH ROW
+    BEGIN
+    UPDATE USER_PROFILE u SET u.times_not_bought_reserved_ticket=u.times_not_bought_reserved_ticket+1 
+        WHERE u.id=OLD.user_id;
+    END
+$$;
+
+drop trigger set_bought;
+
+DELIMITER $$
+CREATE TRIGGER set_bought
+  BEFORE UPDATE ON user_profile
+  for each row
+    BEGIN
+      IF (NEW.times_not_bought_reserved_ticket=3)
+      THEN SET NEW.blocked=1;
+      END IF;
+    END
+$$;
+
+create table logged_in_users(
+    id bigint(20) NOT NULL auto_increment,
+    user_name varchar(20),
+    user_id bigint(20),
+    primary key(id)
+);

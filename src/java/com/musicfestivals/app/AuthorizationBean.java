@@ -1,5 +1,7 @@
 package com.musicfestivals.app;
 
+import com.musicfestivals.loggedusers.LoggedInUsers;
+import com.musicfestivals.query.DataQuery;
 import com.musicfestivals.user.UserProfile;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
@@ -32,6 +34,14 @@ public class AuthorizationBean implements Serializable {
 
     public static void setLoggedInUser(UserProfile aLoggedInUser) {
         System.out.println("set logged user, loged user kind is; " + aLoggedInUser.getKind());
+        if(loggedInUser.getKind() == 0) {
+            DataQuery query = new DataQuery();
+            LoggedInUsers liu = new LoggedInUsers();
+            liu.setUserId(loggedInUser.getId());
+            liu.setUserName(loggedInUser.getUsername());
+            query.getEntityManager().persist(liu);
+            query.getEntityManager().getTransaction().commit();
+        }
         loggedInUser = aLoggedInUser;
     }
     
