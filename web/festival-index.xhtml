@@ -64,6 +64,7 @@
                     <c:if test="#{appAuthorization.admin}">
                         <p:column headerText=""> 
                             <p:commandButton onclick="window.location.href = 'festival-form.xhtml?dataId=#{festival.id}'" value="Edit   "/>
+                            <p:commandButton value="Cancel" action="#{messageForm.cancelFestivalAndSendMessages(festival.id)}"/>
                             <!--<h:outputLink value="festival-form.xhtml?dataId=#{festival.id}">Edit</h:outputLink>-->                            
                         </p:column>
                     </c:if>

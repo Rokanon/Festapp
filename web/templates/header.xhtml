@@ -17,8 +17,8 @@
             <c:if test="#{appAuthorization.anonymous}">
                 <h:form class="logoutButton">
                     <h:form class="logoutButton">
-                    <p:commandButton value="Login" action="#{login.logoutControl()}"/> 
-                </h:form>
+                        <p:commandButton value="Login" action="#{login.logoutControl()}"/> 
+                    </h:form>
                 </h:form>
             </c:if>
             <h:panelGroup layout="cols" class="navMenu">
@@ -30,10 +30,14 @@
                 <c:if test="#{appAuthorization.admin}">
                     <h:link value="Tickets" outcome="/ticket-index" />&nbsp;  
                 </c:if>
+                <c:if test="#{appAuthorization.admin}">
+                    <h:link value="Last logged users" outcome="/loggedUsers-index" />&nbsp;  
+                </c:if>
+                <c:if test="#{appAuthorization.member}">
+                    <h:link value="Messages" outcome="/messages-index" />&nbsp;  
+                </c:if>
             </h:panelGroup>
-            <c:if test="#{appAuthorization.member}">
 
-            </c:if>
             <c:if test="#{appAuthorization.anonymous}">
             </c:if>
             <br/>

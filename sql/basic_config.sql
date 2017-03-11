@@ -183,3 +183,11 @@ create table logged_in_users(
     user_id bigint(20),
     primary key(id)
 );
+
+create table message(
+    id bigint(20) NOT NULL auto_increment,
+    user_id bigint(20),
+    festival_id bigint(20),
+    primary key(id)
+);
+

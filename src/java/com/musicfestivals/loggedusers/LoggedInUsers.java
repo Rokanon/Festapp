@@ -18,10 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author johnnybre
- */
 @Entity
 @Table(name = "logged_in_users")
 @XmlRootElement
